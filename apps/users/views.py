@@ -50,6 +50,8 @@ class VerifyOTPAPIView(generics.GenericAPIView):
                 'message': 'Account verified successfully.',
                 'user': result['user'],
                 'tokens': result['tokens'],
+                'access': result['tokens']['access'],
+                'refresh': result['tokens']['refresh'],
             },
             status=status.HTTP_200_OK,
         )
@@ -93,6 +95,8 @@ class LoginAPIView(generics.GenericAPIView):
                 'message': 'Login successful.',
                 'user': result['user'],
                 'tokens': result['tokens'],
+                'access': result['tokens']['access'],
+                'refresh': result['tokens']['refresh'],
             },
             status=status.HTTP_200_OK,
         )
