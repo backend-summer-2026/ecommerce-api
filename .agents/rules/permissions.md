@@ -8,9 +8,10 @@ This document specifies the permissions and operational authority granted to the
 
 ## 1. `.agents` Folder Permissions
 
-The agent has full read and write permissions inside the `.agents/` directory and related project configuration:
+The agent has full read and write permissions inside the `.agents/` and `plans/` directories and related project configuration:
 - **Rules Management**: Create, edit, and update rule files in `.agents/rules/`.
 - **Permissions Management**: Maintain `.agents/permissions.json` and rule references.
+- **Plans & Checklist Management**: Create, edit, and dynamically update plans and task checklists in `plans/` (see [.agents/rules/planning-workflow.md](file:///.agents/rules/planning-workflow.md)).
 - **Skills & Hooks**: Create and configure custom skills (`.agents/skills/`) and lifecycle hooks (`.agents/hooks.json`).
 - **Root References**: Maintain `AGENTS.md` and related root-level configuration files.
 

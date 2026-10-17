@@ -23,3 +23,14 @@ The `agy` agent is granted autonomous permissions within the workspace:
 - **Code Inspection & Search**: Full permission to use `grep`, `egrep`, `rg`, and `find` across the codebase.
 
 For fine-grained permission grants, see [.agents/permissions.json](file:///.agents/permissions.json) and [.agents/rules/permissions.md](file:///.agents/rules/permissions.md).
+
+---
+
+### Planning and Execution Workflow
+Every new feature, refactoring, or architectural change must follow a strict planning lifecycle:
+- **Plan Persistence in `plans/`**: Every plan created must be saved as a Markdown file in `plans/<topic-name>.md`. Plans must not exist only in transient chat messages.
+- **Plan Approval**: Do not start code implementation until the plan is reviewed and approved by the user.
+- **Checklist Breakdown**: Upon approval, decompose the plan into small, atomic, sequential checklist items (`- [ ] Step ...`).
+- **Real-Time Checklist Updates**: Execute tasks sequentially and update the checklist in the plan file immediately as each task is completed (`- [ ]` -> `- [x]`). Do not batch checklist updates at the end.
+
+For the complete planning rules, see [.agents/rules/planning-workflow.md](file:///.agents/rules/planning-workflow.md).
