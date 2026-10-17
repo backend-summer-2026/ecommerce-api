@@ -34,3 +34,14 @@ Every new feature, refactoring, or architectural change must follow a strict pla
 - **Real-Time Checklist Updates**: Execute tasks sequentially and update the checklist in the plan file immediately as each task is completed (`- [ ]` -> `- [x]`). Do not batch checklist updates at the end.
 
 For the complete planning rules, see [.agents/rules/planning-workflow.md](file:///.agents/rules/planning-workflow.md).
+
+---
+
+### API & Postman Collection Maintenance
+The master Postman collection serves as the central specification for testing business logic end-to-end:
+- **Mandatory Synchronization**: Whenever an API endpoint is created, updated (URL, parameters, headers, body), or removed, the master Postman collection in `postman/ecommerce_api_collection.json` must be updated immediately.
+- **Business Logic Testing**: Every request in the collection must include realistic request payloads, authentication headers, and automatic token-chaining scripts where applicable.
+- **Checklist Requirement**: Every API plan's checklist must include a task to update the Postman collection before task completion.
+
+For full Postman maintenance rules, see [.agents/rules/postman-workflow.md](file:///.agents/rules/postman-workflow.md).
+

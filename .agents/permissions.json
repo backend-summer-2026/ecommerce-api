@@ -6,6 +6,8 @@
       "write_file(.agents/**)",
       "read_file(plans/**)",
       "write_file(plans/**)",
+      "read_file(postman/**)",
+      "write_file(postman/**)",
       "command(python manage.py *)",
       "command(python manage.py test*)",
       "command(python manage.py runserver*)",
