@@ -86,6 +86,8 @@ class Cart(models.Model):
         """
         Number of distinct variant lines in the cart.
         """
+        if hasattr(self, '_prefetched_objects_cache') and 'items' in self._prefetched_objects_cache:
+            return len(self.items.all())
         return self.items.count()
 
     @property
@@ -117,6 +119,8 @@ class Cart(models.Model):
         """
         Returns True if cart has no items.
         """
+        if hasattr(self, '_prefetched_objects_cache') and 'items' in self._prefetched_objects_cache:
+            return len(self.items.all()) == 0
         return not self.items.exists()
 
     @property
@@ -124,7 +128,7 @@ class Cart(models.Model):
         """
         Returns True if any item in the cart is inactive or out of stock.
         """
-        return any(not item.is_available for item in self.items.select_related('variant__inventory').all())
+        return any(not item.is_available for item in self.items.all())
 
     def clear(self):
         """
