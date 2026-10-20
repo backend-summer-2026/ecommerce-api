@@ -1,0 +1,46 @@
+{
+  "$schema": "https://antigravity.google/schemas/permissions.json",
+  "permissions": {
+    "allow": [
+      "read_file(*)",
+      "write_file(*)",
+      "command(python)",
+      "command(python3)",
+      "command(pytest)",
+      "command(git)",
+      "command(grep)",
+      "command(egrep)",
+      "command(fgrep)",
+      "command(find)",
+      "command(rg)",
+      "command(ls)",
+      "command(cat)",
+      "command(mkdir)",
+      "command(touch)",
+      "command(cp)",
+      "command(mv)",
+      "command(rm)",
+      "command(echo)",
+      "command(pip)",
+      "command(pip3)",
+      "command(poetry)",
+      "command(source)",
+      "command(which)",
+      "command(head)",
+      "command(tail)",
+      "command(sed)",
+      "command(awk)",
+      "command(curl)",
+      "command(psql)",
+      "command(docker)",
+      "command(docker-compose)"
+    ],
+    "ask": [],
+    "deny": [
+      "command(rm -rf /)",
+      "command(rm -rf ~)",
+      "command(sudo)",
+      "write_file(.git/)"
+    ]
+  }
+}
