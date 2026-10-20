@@ -286,44 +286,176 @@
 		},
 		{
 			"name": "2. Products & Categories",
-			"description": "Catalog endpoints for browsing categories, filtering and searching products, and viewing product details.",
+			"description": "Catalog endpoints for browsing categories tree, brand directory, filtering products with dynamic attributes, stock verification, search suggestions, and featured collections.",
 			"item": [
 				{
-					"name": "List Products",
+					"name": "List Categories Tree",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/products/?page=1&limit=20&search=&category=",
+							"raw": "{{base_url}}/api/v1/catalog/categories/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
 								"v1",
+								"catalog",
+								"categories",
+								""
+							]
+						},
+						"description": "Retrieves full hierarchical category tree starting from top-level root categories with nested children."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/catalog/categories/laptops/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"catalog",
+								"categories",
+								"laptops",
+								""
+							]
+						},
+						"description": "Retrieves single category detail with breadcrumb path, immediate active children, and products count."
+					},
+					"response": []
+				},
+				{
+					"name": "List Brands",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/catalog/brands/?q=",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"catalog",
+								"brands",
+								""
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "",
+									"description": "Optional search term to filter brands by name"
+								}
+							]
+						},
+						"description": "Lists all active brands with logo, website, and products count."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Brand Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/catalog/brands/apple/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"catalog",
+								"brands",
+								"apple",
+								""
+							]
+						},
+						"description": "Retrieves detailed information for a specific brand by slug."
+					},
+					"response": []
+				},
+				{
+					"name": "List Products (Faceted Filters & Pagination)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/catalog/products/?category=electronics&brand=apple&min_price=1000&max_price=3000&in_stock=true&q=macbook&attr_color=space-gray&ordering=-created_at&page=1&page_size=20",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"catalog",
 								"products",
 								""
 							],
 							"query": [
 								{
-									"key": "page",
-									"value": "1"
-								},
-								{
-									"key": "limit",
-									"value": "20"
-								},
-								{
-									"key": "search",
-									"value": ""
-								},
-								{
 									"key": "category",
-									"value": ""
+									"value": "electronics",
+									"description": "Filter by category slug (matches category and all recursive descendants)"
+								},
+								{
+									"key": "brand",
+									"value": "apple",
+									"description": "Filter by brand slug (or comma-separated slugs e.g. apple,dell)"
+								},
+								{
+									"key": "min_price",
+									"value": "1000",
+									"description": "Filter products with effective price >= min_price"
+								},
+								{
+									"key": "max_price",
+									"value": "3000",
+									"description": "Filter products with effective price <= max_price"
+								},
+								{
+									"key": "in_stock",
+									"value": "true",
+									"description": "Filter products with active inventory available (true/false)"
+								},
+								{
+									"key": "q",
+									"value": "macbook",
+									"description": "Full-text search across product name, description, brand, variant SKU"
+								},
+								{
+									"key": "attr_color",
+									"value": "space-gray",
+									"description": "Dynamic attribute filter: attr_<attribute_slug>=<value_slug>"
+								},
+								{
+									"key": "ordering",
+									"value": "-created_at",
+									"description": "Sort order: -created_at, created_at, price, -price, name, -name"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number for pagination"
+								},
+								{
+									"key": "page_size",
+									"value": "20",
+									"description": "Number of items per page (up to max 100)"
 								}
 							]
 						},
-						"description": "Lists paginated products with optional filtering by search query or category."
+						"description": "Lists catalog products with comprehensive filtering, price range, stock verification, and pagination."
 					},
 					"response": []
 				},
@@ -333,40 +465,126 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/products/1/",
+							"raw": "{{base_url}}/api/v1/catalog/products/macbook-pro-16/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
 								"v1",
+								"catalog",
 								"products",
-								"1",
+								"macbook-pro-16",
 								""
 							]
 						},
-						"description": "Retrieves full details of a specific product by ID."
+						"description": "Retrieves complete product page data: variants, media gallery, dynamic attributes matrix, breadcrumbs, and default variant."
 					},
 					"response": []
 				},
 				{
-					"name": "List Categories",
+					"name": "Get Product Variant Details",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/categories/",
+							"raw": "{{base_url}}/api/v1/catalog/products/macbook-pro-16/variants/MBP-16-SG-16/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"categories",
+								"catalog",
+								"products",
+								"macbook-pro-16",
+								"variants",
+								"MBP-16-SG-16",
 								""
 							]
 						},
-						"description": "Lists all product categories with hierarchy."
+						"description": "Retrieves specific variant information, real-time stock availability, attributes, and discount pricing."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Catalog Dynamic Filters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/catalog/filters/?category=electronics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"catalog",
+								"filters",
+								""
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "electronics",
+									"description": "Optional category slug to get scoped facet options"
+								}
+							]
+						},
+						"description": "Returns dynamic filter facets: available brands, subcategories, price range, and dynamic attribute options with counts."
+					},
+					"response": []
+				},
+				{
+					"name": "Search Suggestions (Autocomplete)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/catalog/search/suggest/?q=mac",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"catalog",
+								"search",
+								"suggest",
+								""
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "mac",
+									"description": "Search query prefix (minimum 2 characters)"
+								}
+							]
+						},
+						"description": "Instant autocomplete suggestions returning top matching products, categories, and brands."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Featured Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/catalog/featured/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"catalog",
+								"featured",
+								""
+							]
+						},
+						"description": "Retrieves collections of featured products including new arrivals and on-sale items."
 					},
 					"response": []
 				}
