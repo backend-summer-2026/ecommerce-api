@@ -1,0 +1,906 @@
+[
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$Z5DKWMRZaswcNpUs9Me8RI$LfM2FQTHtDgO1Jn1L4eNLTYaihm6jbqfq9NbV4/pK3o=",
+      "last_login": null,
+      "is_superuser": true,
+      "email": "admin@ecommerce.uz",
+      "first_name": "Admin",
+      "last_name": "Superuser",
+      "phone_number": "+998901234567",
+      "role": "admin",
+      "is_active": true,
+      "is_staff": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$Z5DKWMRZaswcNpUs9Me8RI$LfM2FQTHtDgO1Jn1L4eNLTYaihm6jbqfq9NbV4/pK3o=",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "john.doe@example.com",
+      "first_name": "John",
+      "last_name": "Doe",
+      "phone_number": "+998902345678",
+      "role": "customer",
+      "is_active": true,
+      "is_staff": false,
+      "created_at": "2026-01-02T00:00:00Z",
+      "updated_at": "2026-01-02T00:00:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$Z5DKWMRZaswcNpUs9Me8RI$LfM2FQTHtDgO1Jn1L4eNLTYaihm6jbqfq9NbV4/pK3o=",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "jane.doe@example.com",
+      "first_name": "Jane",
+      "last_name": "Doe",
+      "phone_number": "+998903456789",
+      "role": "customer",
+      "is_active": true,
+      "is_staff": false,
+      "created_at": "2026-01-03T00:00:00Z",
+      "updated_at": "2026-01-03T00:00:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$Z5DKWMRZaswcNpUs9Me8RI$LfM2FQTHtDgO1Jn1L4eNLTYaihm6jbqfq9NbV4/pK3o=",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "inactive.user@example.com",
+      "first_name": "Inactive",
+      "last_name": "User",
+      "phone_number": "+998904567890",
+      "role": "customer",
+      "is_active": false,
+      "is_staff": false,
+      "created_at": "2026-01-04T00:00:00Z",
+      "updated_at": "2026-01-04T00:00:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.otpcode",
+    "pk": 1,
+    "fields": {
+      "user": 4,
+      "code": "777111",
+      "otp_type": "register",
+      "expires_at": "2026-12-31T23:59:59Z",
+      "is_used": false,
+      "created_at": "2026-01-04T00:00:00Z"
+    }
+  },
+  {
+    "model": "users.otpcode",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "code": "888222",
+      "otp_type": "password_reset",
+      "expires_at": "2026-12-31T23:59:59Z",
+      "is_used": false,
+      "created_at": "2026-01-04T00:00:00Z"
+    }
+  },
+  {
+    "model": "users.otpcode",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "code": "999333",
+      "otp_type": "login",
+      "expires_at": "2026-01-01T00:00:00Z",
+      "is_used": false,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 1,
+    "fields": {
+      "name": "Electronics",
+      "slug": "electronics",
+      "parent": null,
+      "icon": null,
+      "image": null,
+      "description": "All electronic devices and accessories",
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 2,
+    "fields": {
+      "name": "Computers",
+      "slug": "computers",
+      "parent": 1,
+      "icon": null,
+      "image": null,
+      "description": "Computers, workstations and hardware",
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 3,
+    "fields": {
+      "name": "Laptops",
+      "slug": "laptops",
+      "parent": 2,
+      "icon": null,
+      "image": null,
+      "description": "Portable notebook computers",
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 4,
+    "fields": {
+      "name": "Smartphones",
+      "slug": "smartphones",
+      "parent": 1,
+      "icon": null,
+      "image": null,
+      "description": "Mobile phones and smart devices",
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 5,
+    "fields": {
+      "name": "Fashion",
+      "slug": "fashion",
+      "parent": null,
+      "icon": null,
+      "image": null,
+      "description": "Clothing, shoes and apparel",
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 6,
+    "fields": {
+      "name": "Footwear",
+      "slug": "footwear",
+      "parent": 5,
+      "icon": null,
+      "image": null,
+      "description": "Sneakers, boots and casual footwear",
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.brand",
+    "pk": 1,
+    "fields": {
+      "name": "Apple",
+      "slug": "apple",
+      "logo": null,
+      "description": "Apple Inc. premium consumer tech",
+      "website": "https://www.apple.com",
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.brand",
+    "pk": 2,
+    "fields": {
+      "name": "Samsung",
+      "slug": "samsung",
+      "logo": null,
+      "description": "Samsung Electronics Corporation",
+      "website": "https://www.samsung.com",
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.brand",
+    "pk": 3,
+    "fields": {
+      "name": "Nike",
+      "slug": "nike",
+      "logo": null,
+      "description": "Nike athletic apparel and footwear",
+      "website": "https://www.nike.com",
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.brand",
+    "pk": 4,
+    "fields": {
+      "name": "Sony",
+      "slug": "sony",
+      "logo": null,
+      "description": "Sony multimedia and entertainment electronics",
+      "website": "https://www.sony.com",
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.attribute",
+    "pk": 1,
+    "fields": {
+      "name": "Color",
+      "slug": "color",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.attribute",
+    "pk": 2,
+    "fields": {
+      "name": "Storage",
+      "slug": "storage",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.attribute",
+    "pk": 3,
+    "fields": {
+      "name": "RAM",
+      "slug": "ram",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.attribute",
+    "pk": 4,
+    "fields": {
+      "name": "Size",
+      "slug": "size",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.attributevalue",
+    "pk": 1,
+    "fields": {
+      "attribute": 1,
+      "value": "Space Gray",
+      "slug": "space-gray",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.attributevalue",
+    "pk": 2,
+    "fields": {
+      "attribute": 1,
+      "value": "Natural Titanium",
+      "slug": "natural-titanium",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.attributevalue",
+    "pk": 3,
+    "fields": {
+      "attribute": 1,
+      "value": "Black",
+      "slug": "black",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.attributevalue",
+    "pk": 4,
+    "fields": {
+      "attribute": 2,
+      "value": "128GB",
+      "slug": "128gb",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.attributevalue",
+    "pk": 5,
+    "fields": {
+      "attribute": 2,
+      "value": "256GB",
+      "slug": "256gb",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.attributevalue",
+    "pk": 6,
+    "fields": {
+      "attribute": 2,
+      "value": "512GB",
+      "slug": "512gb",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.attributevalue",
+    "pk": 7,
+    "fields": {
+      "attribute": 2,
+      "value": "1TB",
+      "slug": "1tb",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.attributevalue",
+    "pk": 8,
+    "fields": {
+      "attribute": 3,
+      "value": "16GB",
+      "slug": "16gb",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.attributevalue",
+    "pk": 9,
+    "fields": {
+      "attribute": 3,
+      "value": "32GB",
+      "slug": "32gb",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.attributevalue",
+    "pk": 10,
+    "fields": {
+      "attribute": 4,
+      "value": "42",
+      "slug": "size-42",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+      "name": "Apple MacBook Pro 16\" M3 Max",
+      "slug": "macbook-pro-16-m3-max",
+      "brand": 1,
+      "description": "Top-tier MacBook Pro featuring Apple Silicon M3 Max, Liquid Retina XDR display, and supreme battery life.",
+      "short_description": "Apple Silicon M3 Max workstation powerhouse.",
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+      "name": "Apple iPhone 15 Pro",
+      "slug": "iphone-15-pro",
+      "brand": 1,
+      "description": "Flagship iPhone featuring Aerospace-grade titanium design, A17 Pro chip, and advanced 48MP camera system.",
+      "short_description": "Forged in titanium, powered by A17 Pro.",
+      "is_active": true,
+      "created_at": "2026-01-02T00:00:00Z",
+      "updated_at": "2026-01-02T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+      "name": "Samsung Galaxy S24 Ultra",
+      "slug": "samsung-galaxy-s24-ultra",
+      "brand": 2,
+      "description": "Galaxy AI powerhouse with Snapdragon 8 Gen 3, titanium armor, and embedded S-Pen.",
+      "short_description": "Epic Galaxy AI smartphone with titanium design.",
+      "is_active": true,
+      "created_at": "2026-01-03T00:00:00Z",
+      "updated_at": "2026-01-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+      "name": "Nike Air Max 270",
+      "slug": "nike-air-max-270",
+      "brand": 3,
+      "description": "Legendary lifestyle sneakers featuring Nike's biggest heel Air unit yet for a super-soft ride.",
+      "short_description": "Bold comfort meets modern streetwear icon.",
+      "is_active": true,
+      "created_at": "2026-01-04T00:00:00Z",
+      "updated_at": "2026-01-04T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.productcategory",
+    "pk": 1,
+    "fields": {
+      "product": 1,
+      "category": 3,
+      "is_primary": true,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.productcategory",
+    "pk": 2,
+    "fields": {
+      "product": 1,
+      "category": 1,
+      "is_primary": false,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.productcategory",
+    "pk": 3,
+    "fields": {
+      "product": 2,
+      "category": 4,
+      "is_primary": true,
+      "created_at": "2026-01-02T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.productcategory",
+    "pk": 4,
+    "fields": {
+      "product": 3,
+      "category": 4,
+      "is_primary": true,
+      "created_at": "2026-01-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.productcategory",
+    "pk": 5,
+    "fields": {
+      "product": 4,
+      "category": 6,
+      "is_primary": true,
+      "created_at": "2026-01-04T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.productvariant",
+    "pk": 1,
+    "fields": {
+      "product": 1,
+      "title": "16GB RAM / 512GB SSD / Space Gray",
+      "sku": "MBP16-M3-16-512-SG",
+      "price": "2499.00",
+      "discount_price": "2299.00",
+      "is_default": true,
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.productvariant",
+    "pk": 2,
+    "fields": {
+      "product": 1,
+      "title": "32GB RAM / 1TB SSD / Space Gray",
+      "sku": "MBP16-M3-32-1TB-SG",
+      "price": "2999.00",
+      "discount_price": null,
+      "is_default": false,
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.productvariant",
+    "pk": 3,
+    "fields": {
+      "product": 2,
+      "title": "128GB / Natural Titanium",
+      "sku": "IPH15P-128-TI",
+      "price": "999.00",
+      "discount_price": null,
+      "is_default": true,
+      "is_active": true,
+      "created_at": "2026-01-02T00:00:00Z",
+      "updated_at": "2026-01-02T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.productvariant",
+    "pk": 4,
+    "fields": {
+      "product": 3,
+      "title": "256GB / Black",
+      "sku": "GALS24-256-BLK",
+      "price": "1199.00",
+      "discount_price": "1099.00",
+      "is_default": true,
+      "is_active": true,
+      "created_at": "2026-01-03T00:00:00Z",
+      "updated_at": "2026-01-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.productvariant",
+    "pk": 5,
+    "fields": {
+      "product": 4,
+      "title": "Size 42 / Black",
+      "sku": "NIKE-AM270-BLK-42",
+      "price": "160.00",
+      "discount_price": "130.00",
+      "is_default": true,
+      "is_active": true,
+      "created_at": "2026-01-04T00:00:00Z",
+      "updated_at": "2026-01-04T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.productvariantattributevalue",
+    "pk": 1,
+    "fields": {
+      "variant": 1,
+      "attribute_value": 1
+    }
+  },
+  {
+    "model": "products.productvariantattributevalue",
+    "pk": 2,
+    "fields": {
+      "variant": 1,
+      "attribute_value": 6
+    }
+  },
+  {
+    "model": "products.productvariantattributevalue",
+    "pk": 3,
+    "fields": {
+      "variant": 1,
+      "attribute_value": 8
+    }
+  },
+  {
+    "model": "products.productvariantattributevalue",
+    "pk": 4,
+    "fields": {
+      "variant": 2,
+      "attribute_value": 1
+    }
+  },
+  {
+    "model": "products.productvariantattributevalue",
+    "pk": 5,
+    "fields": {
+      "variant": 2,
+      "attribute_value": 7
+    }
+  },
+  {
+    "model": "products.productvariantattributevalue",
+    "pk": 6,
+    "fields": {
+      "variant": 2,
+      "attribute_value": 9
+    }
+  },
+  {
+    "model": "products.productvariantattributevalue",
+    "pk": 7,
+    "fields": {
+      "variant": 3,
+      "attribute_value": 2
+    }
+  },
+  {
+    "model": "products.productvariantattributevalue",
+    "pk": 8,
+    "fields": {
+      "variant": 3,
+      "attribute_value": 4
+    }
+  },
+  {
+    "model": "products.productvariantattributevalue",
+    "pk": 9,
+    "fields": {
+      "variant": 4,
+      "attribute_value": 3
+    }
+  },
+  {
+    "model": "products.productvariantattributevalue",
+    "pk": 10,
+    "fields": {
+      "variant": 4,
+      "attribute_value": 5
+    }
+  },
+  {
+    "model": "products.productvariantattributevalue",
+    "pk": 11,
+    "fields": {
+      "variant": 5,
+      "attribute_value": 3
+    }
+  },
+  {
+    "model": "products.productvariantattributevalue",
+    "pk": 12,
+    "fields": {
+      "variant": 5,
+      "attribute_value": 10
+    }
+  },
+  {
+    "model": "products.productmedia",
+    "pk": 1,
+    "fields": {
+      "product": 1,
+      "variant": 1,
+      "file": "products/2026/01/macbook-pro-16.jpg",
+      "alt_text": "MacBook Pro 16 Space Gray Front View",
+      "media_type": "image",
+      "is_main": true,
+      "order": 1,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.productmedia",
+    "pk": 2,
+    "fields": {
+      "product": 2,
+      "variant": 3,
+      "file": "products/2026/01/iphone-15-pro.jpg",
+      "alt_text": "Apple iPhone 15 Pro Natural Titanium",
+      "media_type": "image",
+      "is_main": true,
+      "order": 1,
+      "created_at": "2026-01-02T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.productmedia",
+    "pk": 3,
+    "fields": {
+      "product": 3,
+      "variant": 4,
+      "file": "products/2026/01/samsung-s24.jpg",
+      "alt_text": "Samsung Galaxy S24 Ultra Black",
+      "media_type": "image",
+      "is_main": true,
+      "order": 1,
+      "created_at": "2026-01-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.productmedia",
+    "pk": 4,
+    "fields": {
+      "product": 4,
+      "variant": 5,
+      "file": "products/2026/01/nike-air-max-270.jpg",
+      "alt_text": "Nike Air Max 270 Black Sneakers",
+      "media_type": "image",
+      "is_main": true,
+      "order": 1,
+      "created_at": "2026-01-04T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.inventory",
+    "pk": 1,
+    "fields": {
+      "variant": 1,
+      "quantity": 50,
+      "reserved_quantity": 2,
+      "low_stock_threshold": 5,
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.inventory",
+    "pk": 2,
+    "fields": {
+      "variant": 2,
+      "quantity": 15,
+      "reserved_quantity": 0,
+      "low_stock_threshold": 5,
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.inventory",
+    "pk": 3,
+    "fields": {
+      "variant": 3,
+      "quantity": 3,
+      "reserved_quantity": 0,
+      "low_stock_threshold": 5,
+      "updated_at": "2026-01-02T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.inventory",
+    "pk": 4,
+    "fields": {
+      "variant": 4,
+      "quantity": 0,
+      "reserved_quantity": 0,
+      "low_stock_threshold": 5,
+      "updated_at": "2026-01-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "products.inventory",
+    "pk": 5,
+    "fields": {
+      "variant": 5,
+      "quantity": 25,
+      "reserved_quantity": 1,
+      "low_stock_threshold": 5,
+      "updated_at": "2026-01-04T00:00:00Z"
+    }
+  },
+  {
+    "model": "carts.cart",
+    "pk": "c1000000-0000-0000-0000-000000000001",
+    "fields": {
+      "user": 2,
+      "session_key": null,
+      "status": "OPEN",
+      "created_at": "2026-01-05T10:00:00Z",
+      "updated_at": "2026-01-05T10:00:00Z"
+    }
+  },
+  {
+    "model": "carts.cart",
+    "pk": "c2000000-0000-0000-0000-000000000002",
+    "fields": {
+      "user": null,
+      "session_key": "guest_session_alpha_123",
+      "status": "OPEN",
+      "created_at": "2026-01-06T11:00:00Z",
+      "updated_at": "2026-01-06T11:00:00Z"
+    }
+  },
+  {
+    "model": "carts.cart",
+    "pk": "c3000000-0000-0000-0000-000000000003",
+    "fields": {
+      "user": 2,
+      "session_key": "old_guest_session_456",
+      "status": "MERGED",
+      "created_at": "2026-01-04T09:00:00Z",
+      "updated_at": "2026-01-05T10:00:00Z"
+    }
+  },
+  {
+    "model": "carts.cart",
+    "pk": "c4000000-0000-0000-0000-000000000004",
+    "fields": {
+      "user": 3,
+      "session_key": null,
+      "status": "CONVERTED",
+      "created_at": "2026-01-03T08:00:00Z",
+      "updated_at": "2026-01-03T12:00:00Z"
+    }
+  },
+  {
+    "model": "carts.cartitem",
+    "pk": 1,
+    "fields": {
+      "cart": "c1000000-0000-0000-0000-000000000001",
+      "variant": 1,
+      "quantity": 1,
+      "unit_price_at_addition": "2299.00",
+      "created_at": "2026-01-05T10:05:00Z",
+      "updated_at": "2026-01-05T10:05:00Z"
+    }
+  },
+  {
+    "model": "carts.cartitem",
+    "pk": 2,
+    "fields": {
+      "cart": "c1000000-0000-0000-0000-000000000001",
+      "variant": 5,
+      "quantity": 2,
+      "unit_price_at_addition": "130.00",
+      "created_at": "2026-01-05T10:10:00Z",
+      "updated_at": "2026-01-05T10:10:00Z"
+    }
+  },
+  {
+    "model": "carts.cartitem",
+    "pk": 3,
+    "fields": {
+      "cart": "c2000000-0000-0000-0000-000000000002",
+      "variant": 3,
+      "quantity": 1,
+      "unit_price_at_addition": "999.00",
+      "created_at": "2026-01-06T11:05:00Z",
+      "updated_at": "2026-01-06T11:05:00Z"
+    }
+  },
+  {
+    "model": "carts.cartitem",
+    "pk": 4,
+    "fields": {
+      "cart": "c3000000-0000-0000-0000-000000000003",
+      "variant": 4,
+      "quantity": 1,
+      "unit_price_at_addition": "1099.00",
+      "created_at": "2026-01-04T09:05:00Z",
+      "updated_at": "2026-01-04T09:05:00Z"
+    }
+  },
+  {
+    "model": "carts.cartitem",
+    "pk": 5,
+    "fields": {
+      "cart": "c4000000-0000-0000-0000-000000000004",
+      "variant": 2,
+      "quantity": 1,
+      "unit_price_at_addition": "2999.00",
+      "created_at": "2026-01-03T08:05:00Z",
+      "updated_at": "2026-01-03T08:05:00Z"
+    }
+  }
+]
