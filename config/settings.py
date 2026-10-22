@@ -52,7 +52,9 @@ INSTALLED_APPS = [
     # Local apps
     'apps.carts',
     'apps.dashboard',
+    'apps.notifications',
     'apps.orders',
+    'apps.payments',
     'apps.products',
     'apps.reviews',
     'apps.users',
