@@ -854,8 +854,80 @@
         },
         {
             "name": "4. Orders & Checkout",
-            "description": "Order placement, order history, order details, and payment status checks.",
+            "description": "Order placement, checkout preview, coupon validation, order history, order details, cancellation, tracking timeline, invoice, and admin management.",
             "item": [
+                {
+                    "name": "Checkout Preview",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"shipping_method\": \"STANDARD\",\n    \"coupon_code\": \"SAVE20\",\n    \"region\": \"Tashkent\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/orders/checkout/preview/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "orders",
+                                "checkout",
+                                "preview",
+                                ""
+                            ]
+                        },
+                        "description": "Precomputes subtotal, delivery fee, coupon discounts, stock availability, and line items before final order placement."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Validate Coupon Code",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"code\": \"SAVE20\",\n    \"subtotal\": \"1500000.00\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/orders/coupons/validate/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "orders",
+                                "coupons",
+                                "validate",
+                                ""
+                            ]
+                        },
+                        "description": "Validates promo coupon voucher against user limits, expiration, and order subtotal."
+                    },
+                    "response": []
+                },
                 {
                     "name": "Checkout / Create Order",
                     "event": [
@@ -865,6 +937,9 @@
                                 "exec": [
                                     "if (pm.response.code === 201) {",
                                     "    var data = pm.response.json();",
+                                    "    if (data.order_number) {",
+                                    "        pm.collectionVariables.set(\"order_number\", data.order_number);",
+                                    "    }",
                                     "    if (data.id) {",
                                     "        pm.collectionVariables.set(\"order_id\", data.id);",
                                     "    }",
@@ -888,7 +963,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"shipping_address\": \"123 Amir Temur Street, Tashkent, Uzbekistan\",\n    \"payment_method\": \"payme\",\n    \"phone_number\": \"+998901234567\"\n}"
+                            "raw": "{\n    \"shipping_address\": {\n        \"recipient_name\": \"Alisher Navoiy\",\n        \"phone_number\": \"+998901234567\",\n        \"alternative_phone_number\": \"+998909876543\",\n        \"region\": \"Tashkent\",\n        \"district\": \"Mirabad\",\n        \"street_address\": \"Amir Temur shoh ko'chasi 15\",\n        \"apartment_office\": \"Apt 24\",\n        \"postal_code\": \"100000\",\n        \"landmark\": \"Near Oybek metro station\",\n        \"delivery_instructions\": \"Leave with concierge if not available\"\n    },\n    \"shipping_method\": \"STANDARD\",\n    \"payment_method\": \"CASH_ON_DELIVERY\",\n    \"coupon_code\": \"SAVE20\",\n    \"customer_notes\": \"Please deliver after 2 PM\"\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/api/v1/orders/",
@@ -902,7 +977,7 @@
                                 ""
                             ]
                         },
-                        "description": "Creates an order from current cart items."
+                        "description": "Converts customer's active cart into an immutable order with stock reservation."
                     },
                     "response": []
                 },
@@ -917,7 +992,7 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/api/v1/orders/",
+                            "raw": "{{base_url}}/api/v1/orders/?status=PENDING&page=1",
                             "host": [
                                 "{{base_url}}"
                             ],
@@ -926,9 +1001,19 @@
                                 "v1",
                                 "orders",
                                 ""
+                            ],
+                            "query": [
+                                {
+                                    "key": "status",
+                                    "value": "PENDING"
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                }
                             ]
                         },
-                        "description": "Lists past orders placed by authenticated user."
+                        "description": "Lists past orders placed by authenticated user with status filters and pagination."
                     },
                     "response": []
                 },
@@ -943,7 +1028,7 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{base_url}}/api/v1/orders/{{order_id}}/",
+                            "raw": "{{base_url}}/api/v1/orders/{{order_number}}/",
                             "host": [
                                 "{{base_url}}"
                             ],
@@ -951,11 +1036,214 @@
                                 "api",
                                 "v1",
                                 "orders",
-                                "{{order_id}}",
+                                "{{order_number}}",
                                 ""
                             ]
                         },
-                        "description": "Retrieves itemized breakdown and status of an order."
+                        "description": "Retrieves itemized breakdown, address, items, and status history of an order."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Cancel Order",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"reason\": \"Changed mind before shipment processing.\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/orders/{{order_number}}/cancel/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "orders",
+                                "{{order_number}}",
+                                "cancel",
+                                ""
+                            ]
+                        },
+                        "description": "Cancels an order and automatically releases reserved inventory stock."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Order Tracking Timeline",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/orders/{{order_number}}/tracking/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "orders",
+                                "{{order_number}}",
+                                "tracking",
+                                ""
+                            ]
+                        },
+                        "description": "Chronological milestones, courier tracking number, and delivery status."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Order Invoice / Receipt",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/orders/{{order_number}}/invoice/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "orders",
+                                "{{order_number}}",
+                                "invoice",
+                                ""
+                            ]
+                        },
+                        "description": "Itemized billing summary, address details, and financial totals for invoicing."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Admin - List All Orders",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/orders/admin/?status=PENDING&page=1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "orders",
+                                "admin",
+                                ""
+                            ],
+                            "query": [
+                                {
+                                    "key": "status",
+                                    "value": "PENDING"
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                }
+                            ]
+                        },
+                        "description": "Staff administrator view to search, filter, and inspect all customer orders."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Admin - Update Order Status & Tracking",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"new_status\": \"SHIPPED\",\n    \"comment\": \"Dispatched via Express Courier.\",\n    \"tracking_number\": \"UZEX-20261022-9988\",\n    \"is_customer_visible\": true\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/orders/admin/{{order_number}}/status/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "orders",
+                                "admin",
+                                "{{order_number}}",
+                                "status",
+                                ""
+                            ]
+                        },
+                        "description": "Staff administrator endpoint to progress lifecycle state, assign tracking, and log notes."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Admin - Append Internal Order Notes",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"admin_notes\": \"Customer confirmed phone number via WhatsApp. Priority delivery scheduled.\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/orders/admin/{{order_number}}/notes/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "orders",
+                                "admin",
+                                "{{order_number}}",
+                                "notes",
+                                ""
+                            ]
+                        },
+                        "description": "Staff administrator endpoint to record internal notes visible only to employees."
                     },
                     "response": []
                 }

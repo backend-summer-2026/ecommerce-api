@@ -24,6 +24,7 @@ urlpatterns = [
     path('api/v1/auth/', include('apps.users.urls')),
     path('api/v1/catalog/', include('apps.products.urls', namespace='catalog')),
     path('api/v1/cart/', include('apps.carts.urls', namespace='cart')),
+    path('api/v1/orders/', include('apps.orders.urls', namespace='orders')),
 ]
 
 if settings.DEBUG:
