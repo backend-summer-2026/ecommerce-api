@@ -190,3 +190,24 @@ if not EMAIL_HOST_USER:
 else:
     EMAIL_BACKEND = env('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
 
+# Payment Gateways Configuration
+PAYME_SETTINGS = {
+    'MERCHANT_ID': env('PAYME_MERCHANT_ID', default='test_merchant_id'),
+    'SECRET_KEY': env('PAYME_SECRET_KEY', default='test_secret_key'),
+    'CHECKOUT_URL': env('PAYME_CHECKOUT_URL', default='https://checkout.paycom.uz'),
+}
+
+CLICK_SETTINGS = {
+    'SERVICE_ID': env('CLICK_SERVICE_ID', default='test_service_id'),
+    'MERCHANT_ID': env('CLICK_MERCHANT_ID', default='test_merchant_id'),
+    'SECRET_KEY': env('CLICK_SECRET_KEY', default='test_secret_key'),
+    'MERCHANT_USER_ID': env('CLICK_MERCHANT_USER_ID', default='test_merchant_user_id'),
+    'CHECKOUT_URL': env('CLICK_CHECKOUT_URL', default='https://my.click.uz/services/pay'),
+}
+
+UZUM_SETTINGS = {
+    'MERCHANT_ID': env('UZUM_MERCHANT_ID', default='test_uzum_merchant_id'),
+    'SECRET_KEY': env('UZUM_SECRET_KEY', default='test_uzum_secret_key'),
+    'CHECKOUT_URL': env('UZUM_CHECKOUT_URL', default='https://www.uzumbank.uz/open-service'),
+}
+
