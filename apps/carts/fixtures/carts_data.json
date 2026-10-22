@@ -1,0 +1,106 @@
+[
+  {
+    "model": "carts.cart",
+    "pk": "c1000000-0000-0000-0000-000000000001",
+    "fields": {
+      "user": 2,
+      "session_key": null,
+      "status": "OPEN",
+      "created_at": "2026-01-05T10:00:00Z",
+      "updated_at": "2026-01-05T10:00:00Z"
+    }
+  },
+  {
+    "model": "carts.cart",
+    "pk": "c2000000-0000-0000-0000-000000000002",
+    "fields": {
+      "user": null,
+      "session_key": "guest_session_alpha_123",
+      "status": "OPEN",
+      "created_at": "2026-01-06T11:00:00Z",
+      "updated_at": "2026-01-06T11:00:00Z"
+    }
+  },
+  {
+    "model": "carts.cart",
+    "pk": "c3000000-0000-0000-0000-000000000003",
+    "fields": {
+      "user": 2,
+      "session_key": "old_guest_session_456",
+      "status": "MERGED",
+      "created_at": "2026-01-04T09:00:00Z",
+      "updated_at": "2026-01-05T10:00:00Z"
+    }
+  },
+  {
+    "model": "carts.cart",
+    "pk": "c4000000-0000-0000-0000-000000000004",
+    "fields": {
+      "user": 3,
+      "session_key": null,
+      "status": "CONVERTED",
+      "created_at": "2026-01-03T08:00:00Z",
+      "updated_at": "2026-01-03T12:00:00Z"
+    }
+  },
+  {
+    "model": "carts.cartitem",
+    "pk": 1,
+    "fields": {
+      "cart": "c1000000-0000-0000-0000-000000000001",
+      "variant": 1,
+      "quantity": 1,
+      "unit_price_at_addition": "2299.00",
+      "created_at": "2026-01-05T10:05:00Z",
+      "updated_at": "2026-01-05T10:05:00Z"
+    }
+  },
+  {
+    "model": "carts.cartitem",
+    "pk": 2,
+    "fields": {
+      "cart": "c1000000-0000-0000-0000-000000000001",
+      "variant": 5,
+      "quantity": 2,
+      "unit_price_at_addition": "130.00",
+      "created_at": "2026-01-05T10:10:00Z",
+      "updated_at": "2026-01-05T10:10:00Z"
+    }
+  },
+  {
+    "model": "carts.cartitem",
+    "pk": 3,
+    "fields": {
+      "cart": "c2000000-0000-0000-0000-000000000002",
+      "variant": 3,
+      "quantity": 1,
+      "unit_price_at_addition": "999.00",
+      "created_at": "2026-01-06T11:05:00Z",
+      "updated_at": "2026-01-06T11:05:00Z"
+    }
+  },
+  {
+    "model": "carts.cartitem",
+    "pk": 4,
+    "fields": {
+      "cart": "c3000000-0000-0000-0000-000000000003",
+      "variant": 4,
+      "quantity": 1,
+      "unit_price_at_addition": "1099.00",
+      "created_at": "2026-01-04T09:05:00Z",
+      "updated_at": "2026-01-04T09:05:00Z"
+    }
+  },
+  {
+    "model": "carts.cartitem",
+    "pk": 5,
+    "fields": {
+      "cart": "c4000000-0000-0000-0000-000000000004",
+      "variant": 2,
+      "quantity": 1,
+      "unit_price_at_addition": "2999.00",
+      "created_at": "2026-01-03T08:05:00Z",
+      "updated_at": "2026-01-03T08:05:00Z"
+    }
+  }
+]
