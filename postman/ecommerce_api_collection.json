@@ -35,6 +35,21 @@
             "key": "order_id",
             "value": "",
             "type": "string"
+        },
+        {
+            "key": "notif_id",
+            "value": "1",
+            "type": "string"
+        },
+        {
+            "key": "email_id",
+            "value": "1",
+            "type": "string"
+        },
+        {
+            "key": "template_code",
+            "value": "order_confirmed",
+            "type": "string"
         }
     ],
     "item": [
@@ -1315,7 +1330,645 @@
             ]
         },
         {
-            "name": "6. Dashboard & Admin APIs",
+            "name": "6. Notifications",
+            "description": "In-app account notifications, user notification preferences, outbound email logs and dynamic templates.",
+            "item": [
+                {
+                    "name": "Customer - List Notifications",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/?is_read=false&type=ORDER",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                ""
+                            ],
+                            "query": [
+                                {
+                                    "key": "is_read",
+                                    "value": "false"
+                                },
+                                {
+                                    "key": "type",
+                                    "value": "ORDER"
+                                }
+                            ]
+                        },
+                        "description": "Lists in-app notifications for authenticated user with optional filtering by is_read, type, priority, and text search."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Customer - Get Unread & Urgent Count",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/unread-count/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "unread-count",
+                                ""
+                            ]
+                        },
+                        "description": "Quick lightweight endpoint returning unread_count and urgent_count for navbar bell icon."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Customer - Get Notification Detail",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/{{notif_id}}/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "{{notif_id}}",
+                                ""
+                            ]
+                        },
+                        "description": "Fetches complete notification details including message body, action URL, and metadata payload."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Customer - Mark Single Notification Read",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/{{notif_id}}/read/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "{{notif_id}}",
+                                "read",
+                                ""
+                            ]
+                        },
+                        "description": "Sets is_read=true and populates read_at timestamp for a single notification."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Customer - Mark Single Notification Unread",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/{{notif_id}}/unread/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "{{notif_id}}",
+                                "unread",
+                                ""
+                            ]
+                        },
+                        "description": "Reverts notification is_read to false and resets read_at."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Customer - Mark All Notifications Read",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/read-all/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "read-all",
+                                ""
+                            ]
+                        },
+                        "description": "Batch marks all unread notifications of current user as read in a single atomic SQL query."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Customer - Delete Single Notification",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/{{notif_id}}/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "{{notif_id}}",
+                                ""
+                            ]
+                        },
+                        "description": "Deletes notification from user's personal alert feed."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Customer - Clear All Read Notifications",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/clear-read/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "clear-read",
+                                ""
+                            ]
+                        },
+                        "description": "Bulk deletes all read notifications for the current user."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Customer - Get Notification Preferences",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/preferences/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "preferences",
+                                ""
+                            ]
+                        },
+                        "description": "Retrieves user channel opt-in/opt-out preferences."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Customer - Update Notification Preferences",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email_promotions\": true,\n    \"in_app_promotions\": false\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/preferences/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "preferences",
+                                ""
+                            ]
+                        },
+                        "description": "Partially updates user notification preference flags."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Admin - List All In-App Notifications",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/admin/in-app/?type=SYSTEM&priority=HIGH",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "admin",
+                                "in-app",
+                                ""
+                            ],
+                            "query": [
+                                {
+                                    "key": "type",
+                                    "value": "SYSTEM"
+                                },
+                                {
+                                    "key": "priority",
+                                    "value": "HIGH"
+                                }
+                            ]
+                        },
+                        "description": "Administrative overview of all notifications with advanced filters and customer search."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Admin - Broadcast In-App Notification",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"title\": \"Platform Scheduled Maintenance\",\n    \"message\": \"The system will be undergoing performance maintenance on Sunday at 02:00 AM.\",\n    \"notification_type\": \"SYSTEM\",\n    \"priority\": \"HIGH\",\n    \"broadcast\": true,\n    \"action_url\": \"/announcements/maintenance\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/admin/in-app/broadcast/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "admin",
+                                "in-app",
+                                "broadcast",
+                                ""
+                            ]
+                        },
+                        "description": "Broadcasts notifications to all active users or targeted user IDs using high-speed bulk_create."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Admin - List Outbound Emails Queue",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/admin/emails/?status=FAILED",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "admin",
+                                "emails",
+                                ""
+                            ],
+                            "query": [
+                                {
+                                    "key": "status",
+                                    "value": "FAILED"
+                                }
+                            ]
+                        },
+                        "description": "Lists outbound email dispatch queue with status, retry counters, and error summaries."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Admin - Get Outbound Email Detail",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/admin/emails/{{email_id}}/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "admin",
+                                "emails",
+                                "{{email_id}}",
+                                ""
+                            ]
+                        },
+                        "description": "Inspects full email log, rendered HTML body, recipient, and provider message ID."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Admin - Retry Failed Email",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/admin/emails/{{email_id}}/retry/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "admin",
+                                "emails",
+                                "{{email_id}}",
+                                "retry",
+                                ""
+                            ]
+                        },
+                        "description": "Manually triggers a dispatch attempt for a failed email notification."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Admin - Cancel Pending Email",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/admin/emails/{{email_id}}/cancel/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "admin",
+                                "emails",
+                                "{{email_id}}",
+                                "cancel",
+                                ""
+                            ]
+                        },
+                        "description": "Cancels a pending email in the dispatch queue."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Admin - List Notification Templates",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/admin/templates/?is_active=true",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "admin",
+                                "templates",
+                                ""
+                            ],
+                            "query": [
+                                {
+                                    "key": "is_active",
+                                    "value": "true"
+                                }
+                            ]
+                        },
+                        "description": "Lists all dynamic notification templates."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Admin - Create Notification Template",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"code\": \"order_confirmed\",\n    \"name\": \"Order Confirmation Notice\",\n    \"description\": \"Dispatched upon successful order creation\",\n    \"notification_type\": \"ORDER\",\n    \"email_subject_template\": \"Order #{{ order_number }} Confirmed\",\n    \"email_body_html_template\": \"<h2>Thank you {{ customer_name }}!</h2><p>Your order #{{ order_number }} is received.</p>\",\n    \"email_body_text_template\": \"Thank you {{ customer_name }}! Your order #{{ order_number }} is received.\",\n    \"in_app_title_template\": \"Order #{{ order_number }} Confirmed\",\n    \"in_app_message_template\": \"Your order #{{ order_number }} has been confirmed.\",\n    \"is_active\": true\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/admin/templates/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "admin",
+                                "templates",
+                                ""
+                            ]
+                        },
+                        "description": "Creates a new dynamic template."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Admin - Get & Update Notification Template",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Updated Order Confirmation Notice\",\n    \"is_active\": true\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/admin/templates/{{template_code}}/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "admin",
+                                "templates",
+                                "{{template_code}}",
+                                ""
+                            ]
+                        },
+                        "description": "Retrieves or partially updates a notification template by unique code."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Admin - Test-Send Notification Template",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"test_email\": \"admin@ecommerce.local\",\n    \"context_data\": {\n        \"order_number\": \"ORD-20261022-9999\",\n        \"customer_name\": \"Test Administrator\"\n    },\n    \"send_email\": true,\n    \"send_in_app\": false\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/notifications/admin/templates/{{template_code}}/test-send/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "notifications",
+                                "admin",
+                                "templates",
+                                "{{template_code}}",
+                                "test-send",
+                                ""
+                            ]
+                        },
+                        "description": "Renders a template with provided sample context and test-dispatches it to verified test addresses."
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "7. Dashboard & Admin APIs",
             "description": "Administrative metrics, inventory reports, and operational analytics.",
             "item": [
                 {
