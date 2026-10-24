@@ -27,6 +27,7 @@ urlpatterns = [
     path('api/v1/orders/', include('apps.orders.urls', namespace='orders')),
     path('api/v1/payments/', include('apps.payments.urls', namespace='payments')),
     path('api/v1/notifications/', include('apps.notifications.urls', namespace='notifications')),
+    path('api/v1/dashboard/', include('apps.dashboard.urls', namespace='dashboard')),
 ]
 
 if settings.DEBUG:
