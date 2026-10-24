@@ -3,7 +3,7 @@
 ## Metadata
 - **Title**: Payment REST API: Multi-Provider Checkout (Payme, Click, Uzum, COD), Saved Cards (1-Click Pay), Webhooks, Audit Logs, Refunds, and Order-Notification Synchronization
 - **Date**: 2026-10-22
-- **Status**: IN_PROGRESS
+- **Status**: COMPLETED
 - **Branch**: `feat/payments-api`
 - **Author**: Antigravity
 
@@ -235,15 +235,15 @@ apps/payments/
 
 - [x] Step 1: Git branch yaratish (`feat/payments-api`) va `config/settings.py` da to'lov shlyuzlari (Payme, Click, Uzum) sozlamalarini tayyorlash
 - [x] Step 2: `apps/payments/pagination.py` va `apps/payments/permissions.py` xavfsizlik vositalarini yaratish
-- [ ] Step 3: `apps/payments/services/` (Gateways: Payme, Click, Uzum; PaymentService, RefundService, CardService) xizmatlar qatlamini yaratish va `apps/orders`, `apps/notifications` integratsiyasini ulash
-- [ ] Step 4: `apps/payments/serializers/` (payment, card, refund, transaction, webhook serializers) yaratish
-- [ ] Step 5: `apps/payments/views.py` da mijozlar (Customer) to'lov va saqlangan kartalar endpointlarini yaratish
-- [ ] Step 6: `apps/payments/views.py` da Payme, Click, Uzum webhook API endpointlarini yaratish
-- [ ] Step 7: `apps/payments/views.py` da Admin / Staff (Payments, Refunds, Transactions audit) endpointlarini yaratish
-- [ ] Step 8: `apps/payments/urls.py` ni yaratish va `config/urls.py` ga ulash
+- [x] Step 3: `apps/payments/services/` (Gateways: Payme, Click, Uzum; PaymentService, RefundService, CardService) xizmatlar qatlamini yaratish va `apps/orders`, `apps/notifications` integratsiyasini ulash
+- [x] Step 4: `apps/payments/serializers/` (payment, card, refund, transaction, webhook serializers) yaratish
+- [x] Step 5: `apps/payments/views.py` da mijozlar (Customer) to'lov va saqlangan kartalar endpointlarini yaratish
+- [x] Step 6: `apps/payments/views.py` da Payme, Click, Uzum webhook API endpointlarini yaratish
+- [x] Step 7: `apps/payments/views.py` da Admin / Staff (Payments, Refunds, Transactions audit) endpointlarini yaratish
+- [x] Step 8: `apps/payments/urls.py` ni yaratish va `config/urls.py` ga ulash
 - [x] Step 9: `apps/payments/tests/` to'liq testlar to'plamini (services, customer API, webhooks, admin API) yozish va barcha testlarni muvaffaqiyatli ishga tushirish
 - [x] Step 10: `postman/ecommerce_api_collection.json` to'plamiga to'lovlar, webhooklar va admin API larni to'liq integratsiya qilish
-- [ ] Step 11: Yakuniy tekshiruv, reja holatini `COMPLETED` ga o'tkazish va o'zgarishlarni git ga commit qilish
+- [x] Step 11: Yakuniy tekshiruv, reja holatini `COMPLETED` ga o'tkazish va o'zgarishlarni git ga commit qilish
 
 ---
 
