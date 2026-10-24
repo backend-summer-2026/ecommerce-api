@@ -143,6 +143,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 
 # Media files (User uploaded files)
 MEDIA_URL = '/media/'
@@ -282,7 +285,7 @@ JAZZMIN_SETTINGS = {
 
     # Navigation layout & ordering
     "show_sidebar": True,
-    "navigation_expanded": True,
+    "navigation_expanded": False,
     "hide_apps": [],
     "hide_models": [],
 
@@ -357,9 +360,10 @@ JAZZMIN_SETTINGS = {
     # UI Options
     "related_modal_active": True,
     "custom_css": None,
-    "custom_js": None,
+    "custom_js": "admin/js/custom_sidebar.js",
     "use_google_fonts_cdn": True,
     "show_ui_builder": False,
+    "show_theme_chooser": True,
     "changeform_format": "horizontal_tabs",
 }
 
@@ -384,7 +388,7 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_legacy_style": False,
     "sidebar_nav_flat_style": True,
     "theme": "flatly",
-    "default_theme_mode": "auto",
+    "default_theme_mode": "light",
     "button_classes": {
         "primary": "btn-primary",
         "secondary": "btn-secondary",
