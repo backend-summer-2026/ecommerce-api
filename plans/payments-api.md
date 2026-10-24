@@ -241,8 +241,8 @@ apps/payments/
 - [ ] Step 6: `apps/payments/views.py` da Payme, Click, Uzum webhook API endpointlarini yaratish
 - [ ] Step 7: `apps/payments/views.py` da Admin / Staff (Payments, Refunds, Transactions audit) endpointlarini yaratish
 - [ ] Step 8: `apps/payments/urls.py` ni yaratish va `config/urls.py` ga ulash
-- [ ] Step 9: `apps/payments/tests/` to'liq testlar to'plamini (services, customer API, webhooks, admin API) yozish va barcha testlarni muvaffaqiyatli ishga tushirish
-- [ ] Step 10: `postman/ecommerce_api_collection.json` to'plamiga to'lovlar, webhooklar va admin API larni to'liq integratsiya qilish
+- [x] Step 9: `apps/payments/tests/` to'liq testlar to'plamini (services, customer API, webhooks, admin API) yozish va barcha testlarni muvaffaqiyatli ishga tushirish
+- [x] Step 10: `postman/ecommerce_api_collection.json` to'plamiga to'lovlar, webhooklar va admin API larni to'liq integratsiya qilish
 - [ ] Step 11: Yakuniy tekshiruv, reja holatini `COMPLETED` ga o'tkazish va o'zgarishlarni git ga commit qilish
 
 ---
