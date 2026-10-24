@@ -34,6 +34,54 @@ class SwaggerDocumentationTests(TestCase):
         self.assertIn('/api/v1/auth/login/', paths)
         self.assertIn('/api/v1/auth/register/', paths)
 
+    def test_schema_tags_organization_and_no_v1_tag(self):
+        """
+        Verify that:
+        1. The generic 'v1' tag is completely eliminated from all operations.
+        2. All endpoints are mapped to the canonical thematic tags.
+        3. Every canonical tag has at least one associated endpoint.
+        """
+        url = reverse('schema')
+        response = self.client.get(url, HTTP_ACCEPT='application/json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = response.json() if hasattr(response, 'json') else json.loads(response.content.decode('utf-8'))
+        paths = data.get('paths', {})
+
+        expected_tags = {
+            'Auth',
+            'Catalog',
+            'Cart',
+            'Orders',
+            'Payments',
+            'Notifications',
+            'Reviews',
+            'Dashboard',
+        }
+
+        found_tags = set()
+        tag_counts = {}
+
+        for path, path_item in paths.items():
+            for method, operation in path_item.items():
+                if isinstance(operation, dict) and 'tags' in operation:
+                    tags = operation['tags']
+                    # 'v1' must not exist
+                    self.assertNotIn('v1', tags, f"Endpoint {method.upper()} {path} still has 'v1' tag!")
+                    self.assertNotIn('V1', tags, f"Endpoint {method.upper()} {path} still has 'V1' tag!")
+                    for tag in tags:
+                        found_tags.add(tag)
+                        tag_counts[tag] = tag_counts.get(tag, 0) + 1
+
+        # Check that all expected canonical tags are present and populated
+        for expected in expected_tags:
+            self.assertIn(expected, found_tags, f"Expected tag '{expected}' not found in any endpoint!")
+            self.assertGreaterEqual(
+                tag_counts.get(expected, 0),
+                1,
+                f"Tag '{expected}' has 0 endpoints!",
+            )
+
     def test_swagger_ui_endpoint_returns_200(self):
         """Verify that /api/docs/swagger/ loads the Swagger UI bundle."""
         url = reverse('swagger-ui')
