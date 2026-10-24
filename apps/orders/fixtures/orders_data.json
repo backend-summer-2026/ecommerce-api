@@ -1,0 +1,474 @@
+[
+  {
+    "model": "orders.coupon",
+    "pk": 1,
+    "fields": {
+      "code": "WELCOME10",
+      "discount_type": "PERCENTAGE",
+      "discount_value": "10.00",
+      "min_order_amount": "200.00",
+      "max_discount_amount": "50.00",
+      "usage_limit": 100,
+      "usage_limit_per_user": 1,
+      "used_count": 0,
+      "valid_from": "2026-01-01T00:00:00Z",
+      "valid_until": "2026-12-31T23:59:59Z",
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "orders.coupon",
+    "pk": 2,
+    "fields": {
+      "code": "SUMMER50",
+      "discount_type": "FIXED_AMOUNT",
+      "discount_value": "50.00",
+      "min_order_amount": "300.00",
+      "max_discount_amount": null,
+      "usage_limit": 50,
+      "usage_limit_per_user": 2,
+      "used_count": 1,
+      "valid_from": "2026-06-01T00:00:00Z",
+      "valid_until": "2026-12-31T23:59:59Z",
+      "is_active": true,
+      "created_at": "2026-06-01T00:00:00Z",
+      "updated_at": "2026-10-20T10:00:00Z"
+    }
+  },
+  {
+    "model": "orders.coupon",
+    "pk": 3,
+    "fields": {
+      "code": "EXPIRED20",
+      "discount_type": "PERCENTAGE",
+      "discount_value": "20.00",
+      "min_order_amount": "100.00",
+      "max_discount_amount": "40.00",
+      "usage_limit": 10,
+      "usage_limit_per_user": 1,
+      "used_count": 10,
+      "valid_from": "2025-01-01T00:00:00Z",
+      "valid_until": "2025-12-31T23:59:59Z",
+      "is_active": false,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-12-31T23:59:59Z"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 1,
+    "fields": {
+      "order_number": "ORD-20261024-0001",
+      "user": 2,
+      "cart": "c1000000-0000-0000-0000-000000000001",
+      "coupon": 2,
+      "status": "DELIVERED",
+      "payment_status": "PAID",
+      "payment_method": "PAYME",
+      "shipping_method": "STANDARD",
+      "subtotal": "2299.00",
+      "shipping_fee": "0.00",
+      "discount_amount": "50.00",
+      "total_price": "2249.00",
+      "currency": "UZS",
+      "tracking_number": "TRK-UZ-987654",
+      "customer_notes": "Iltimos, soat 18:00 dan keyin yetkazing.",
+      "cancellation_reason": "",
+      "admin_notes": "Muvaffaqiyatli yetkazildi.",
+      "paid_at": "2026-10-20T10:15:00Z",
+      "delivered_at": "2026-10-22T14:30:00Z",
+      "cancelled_at": null,
+      "created_at": "2026-10-20T10:00:00Z",
+      "updated_at": "2026-10-22T14:30:00Z"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 2,
+    "fields": {
+      "order_number": "ORD-20261024-0002",
+      "user": 3,
+      "cart": null,
+      "coupon": null,
+      "status": "PROCESSING",
+      "payment_status": "PAID",
+      "payment_method": "CLICK",
+      "shipping_method": "EXPRESS",
+      "subtotal": "999.00",
+      "shipping_fee": "20.00",
+      "discount_amount": "0.00",
+      "total_price": "1019.00",
+      "currency": "UZS",
+      "tracking_number": "TRK-UZ-112233",
+      "customer_notes": "Eshik qo'ng'irog'i ishlamaydi, telefon qiling.",
+      "cancellation_reason": "",
+      "admin_notes": "Kuryerga topshirildi.",
+      "paid_at": "2026-10-23T12:00:00Z",
+      "delivered_at": null,
+      "cancelled_at": null,
+      "created_at": "2026-10-23T11:45:00Z",
+      "updated_at": "2026-10-23T12:05:00Z"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 3,
+    "fields": {
+      "order_number": "ORD-20261024-0003",
+      "user": 2,
+      "cart": null,
+      "coupon": null,
+      "status": "PENDING",
+      "payment_status": "PENDING",
+      "payment_method": "UZUM",
+      "shipping_method": "STANDARD",
+      "subtotal": "130.00",
+      "shipping_fee": "0.00",
+      "discount_amount": "0.00",
+      "total_price": "130.00",
+      "currency": "UZS",
+      "tracking_number": "",
+      "customer_notes": "",
+      "cancellation_reason": "",
+      "admin_notes": "",
+      "paid_at": null,
+      "delivered_at": null,
+      "cancelled_at": null,
+      "created_at": "2026-10-24T09:00:00Z",
+      "updated_at": "2026-10-24T09:00:00Z"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 4,
+    "fields": {
+      "order_number": "ORD-20261024-0004",
+      "user": 3,
+      "cart": null,
+      "coupon": null,
+      "status": "CANCELLED",
+      "payment_status": "REFUNDED",
+      "payment_method": "PAYME",
+      "shipping_method": "STANDARD",
+      "subtotal": "2499.00",
+      "shipping_fee": "0.00",
+      "discount_amount": "0.00",
+      "total_price": "2499.00",
+      "currency": "UZS",
+      "tracking_number": "",
+      "customer_notes": "Xato model tanlangan.",
+      "cancellation_reason": "Mijoz so'roviga binoan bekor qilindi.",
+      "admin_notes": "Refund to'liq amalga oshirildi.",
+      "paid_at": "2026-10-21T08:00:00Z",
+      "delivered_at": null,
+      "cancelled_at": "2026-10-21T09:30:00Z",
+      "created_at": "2026-10-21T07:50:00Z",
+      "updated_at": "2026-10-21T09:30:00Z"
+    }
+  },
+  {
+    "model": "orders.orderaddress",
+    "pk": 1,
+    "fields": {
+      "order": 1,
+      "recipient_name": "John Doe",
+      "phone_number": "+998901234567",
+      "alternative_phone_number": "+998907654321",
+      "region": "Toshkent shahri",
+      "district": "Mirobod tumani",
+      "street_address": "Amir Temur shox ko'chasi 45-uy",
+      "apartment_office": "Kvartira 12",
+      "postal_code": "100000",
+      "landmark": "Grand Mir Hotel yonida",
+      "latitude": "41.311081",
+      "longitude": "69.240562",
+      "delivery_instructions": "Podyezd kodi: 123",
+      "created_at": "2026-10-20T10:00:00Z"
+    }
+  },
+  {
+    "model": "orders.orderaddress",
+    "pk": 2,
+    "fields": {
+      "order": 2,
+      "recipient_name": "Jane Doe",
+      "phone_number": "+998912345678",
+      "alternative_phone_number": null,
+      "region": "Samarqand viloyati",
+      "district": "Samarqand shahri",
+      "street_address": "Registon ko'chasi 18-uy",
+      "apartment_office": "5-xonadon",
+      "postal_code": "140100",
+      "landmark": "Registon maydoni yaqinida",
+      "latitude": "39.654321",
+      "longitude": "66.975432",
+      "delivery_instructions": "",
+      "created_at": "2026-10-23T11:45:00Z"
+    }
+  },
+  {
+    "model": "orders.orderaddress",
+    "pk": 3,
+    "fields": {
+      "order": 3,
+      "recipient_name": "John Doe",
+      "phone_number": "+998901234567",
+      "alternative_phone_number": null,
+      "region": "Toshkent shahri",
+      "district": "Yunusobod tumani",
+      "street_address": "Ahmad Donish ko'chasi 10-uy",
+      "apartment_office": "Kvartira 4",
+      "postal_code": "100180",
+      "landmark": "Mega Planet savdo majmuasi",
+      "latitude": "41.365432",
+      "longitude": "69.289123",
+      "delivery_instructions": "",
+      "created_at": "2026-10-24T09:00:00Z"
+    }
+  },
+  {
+    "model": "orders.orderaddress",
+    "pk": 4,
+    "fields": {
+      "order": 4,
+      "recipient_name": "Jane Doe",
+      "phone_number": "+998912345678",
+      "alternative_phone_number": null,
+      "region": "Toshkent shahri",
+      "district": "Chilonzor tumani",
+      "street_address": "Bunyodkor shox ko'chasi 2-uy",
+      "apartment_office": "",
+      "postal_code": "100115",
+      "landmark": "Novza metrosi",
+      "latitude": "41.285432",
+      "longitude": "69.215432",
+      "delivery_instructions": "",
+      "created_at": "2026-10-21T07:50:00Z"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 1,
+    "fields": {
+      "order": 1,
+      "variant": 1,
+      "product_name": "Apple MacBook Pro 16\" M3 Max",
+      "variant_sku": "MBP16-M3-16-512-SG",
+      "variant_attributes_display": "Color: Space Gray, RAM: 16GB, Storage: 512GB",
+      "attributes_snapshot": {
+        "Color": "Space Gray",
+        "RAM": "16GB",
+        "Storage": "512GB"
+      },
+      "unit_price": "2299.00",
+      "quantity": 1,
+      "total_price": "2299.00",
+      "created_at": "2026-10-20T10:00:00Z",
+      "updated_at": "2026-10-20T10:00:00Z"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 2,
+    "fields": {
+      "order": 2,
+      "variant": 3,
+      "product_name": "Apple iPhone 15 Pro",
+      "variant_sku": "IPH15P-128-TI",
+      "variant_attributes_display": "Color: Natural Titanium, Storage: 128GB",
+      "attributes_snapshot": {
+        "Color": "Natural Titanium",
+        "Storage": "128GB"
+      },
+      "unit_price": "999.00",
+      "quantity": 1,
+      "total_price": "999.00",
+      "created_at": "2026-10-23T11:45:00Z",
+      "updated_at": "2026-10-23T11:45:00Z"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 3,
+    "fields": {
+      "order": 3,
+      "variant": 5,
+      "product_name": "Nike Air Max 270 Sneakers",
+      "variant_sku": "NIKE-AM270-BLK-42",
+      "variant_attributes_display": "Color: Black, Size: 42",
+      "attributes_snapshot": {
+        "Color": "Black",
+        "Size": "42"
+      },
+      "unit_price": "130.00",
+      "quantity": 1,
+      "total_price": "130.00",
+      "created_at": "2026-10-24T09:00:00Z",
+      "updated_at": "2026-10-24T09:00:00Z"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 4,
+    "fields": {
+      "order": 4,
+      "variant": 1,
+      "product_name": "Apple MacBook Pro 16\" M3 Max",
+      "variant_sku": "MBP16-M3-16-512-SG",
+      "variant_attributes_display": "Color: Space Gray, RAM: 16GB, Storage: 512GB",
+      "attributes_snapshot": {
+        "Color": "Space Gray",
+        "RAM": "16GB",
+        "Storage": "512GB"
+      },
+      "unit_price": "2499.00",
+      "quantity": 1,
+      "total_price": "2499.00",
+      "created_at": "2026-10-21T07:50:00Z",
+      "updated_at": "2026-10-21T07:50:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 1,
+    "fields": {
+      "order": 1,
+      "old_status": null,
+      "new_status": "PENDING",
+      "comment": "Buyurtma yaratildi.",
+      "created_by": 2,
+      "is_customer_visible": true,
+      "created_at": "2026-10-20T10:00:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 2,
+    "fields": {
+      "order": 1,
+      "old_status": "PENDING",
+      "new_status": "CONFIRMED",
+      "comment": "To'lov muvaffaqiyatli qabul qilindi.",
+      "created_by": null,
+      "is_customer_visible": true,
+      "created_at": "2026-10-20T10:15:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 3,
+    "fields": {
+      "order": 1,
+      "old_status": "CONFIRMED",
+      "new_status": "PROCESSING",
+      "comment": "Buyurtma omborda qadoqlanmoqda.",
+      "created_by": 1,
+      "is_customer_visible": true,
+      "created_at": "2026-10-21T09:00:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 4,
+    "fields": {
+      "order": 1,
+      "old_status": "PROCESSING",
+      "new_status": "SHIPPED",
+      "comment": "Kuryerga yetkazish uchun topshirildi.",
+      "created_by": 1,
+      "is_customer_visible": true,
+      "created_at": "2026-10-21T15:00:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 5,
+    "fields": {
+      "order": 1,
+      "old_status": "SHIPPED",
+      "new_status": "DELIVERED",
+      "comment": "Mijoz tomonidan qabul qilib olindi.",
+      "created_by": 1,
+      "is_customer_visible": true,
+      "created_at": "2026-10-22T14:30:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 6,
+    "fields": {
+      "order": 2,
+      "old_status": null,
+      "new_status": "PENDING",
+      "comment": "Buyurtma yaratildi.",
+      "created_by": 3,
+      "is_customer_visible": true,
+      "created_at": "2026-10-23T11:45:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 7,
+    "fields": {
+      "order": 2,
+      "old_status": "PENDING",
+      "new_status": "CONFIRMED",
+      "comment": "To'lov Click orqali o'tkazildi.",
+      "created_by": null,
+      "is_customer_visible": true,
+      "created_at": "2026-10-23T12:00:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 8,
+    "fields": {
+      "order": 2,
+      "old_status": "CONFIRMED",
+      "new_status": "PROCESSING",
+      "comment": "Buyurtma yig'ilmoqda.",
+      "created_by": 1,
+      "is_customer_visible": true,
+      "created_at": "2026-10-23T12:05:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 9,
+    "fields": {
+      "order": 4,
+      "old_status": null,
+      "new_status": "PENDING",
+      "comment": "Buyurtma yaratildi.",
+      "created_by": 3,
+      "is_customer_visible": true,
+      "created_at": "2026-10-21T07:50:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 10,
+    "fields": {
+      "order": 4,
+      "old_status": "PENDING",
+      "new_status": "CANCELLED",
+      "comment": "Mijoz buyurtmani bekor qildi.",
+      "created_by": 3,
+      "is_customer_visible": true,
+      "created_at": "2026-10-21T09:30:00Z"
+    }
+  },
+  {
+    "model": "orders.couponusage",
+    "pk": 1,
+    "fields": {
+      "coupon": 2,
+      "user": 2,
+      "order": 1,
+      "discount_amount": "50.00",
+      "used_at": "2026-10-20T10:00:00Z"
+    }
+  }
+]

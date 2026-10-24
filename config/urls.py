@@ -18,12 +18,29 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularRedocView,
+    SpectacularSwaggerView,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # OpenAPI 3.0 Documentation & Schemas
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/docs/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+
+    # REST API Modules
     path('api/v1/auth/', include('apps.users.urls')),
     path('api/v1/catalog/', include('apps.products.urls', namespace='catalog')),
     path('api/v1/cart/', include('apps.carts.urls', namespace='cart')),
+    path('api/v1/orders/', include('apps.orders.urls', namespace='orders')),
+    path('api/v1/payments/', include('apps.payments.urls', namespace='payments')),
+    path('api/v1/notifications/', include('apps.notifications.urls', namespace='notifications')),
+    path('api/v1/reviews/', include('apps.reviews.urls', namespace='reviews')),
+    path('api/v1/dashboard/', include('apps.dashboard.urls', namespace='dashboard')),
 ]
 
 if settings.DEBUG:

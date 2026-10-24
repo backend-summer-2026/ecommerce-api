@@ -1,0 +1,246 @@
+[
+  {
+    "model": "payments.savedcard",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "provider": "PAYME",
+      "card_token": "tok_payme_uzcard_1234",
+      "card_mask": "8600 **** **** 1234",
+      "card_holder": "JOHN DOE",
+      "card_type": "UZCARD",
+      "expire_month": "12",
+      "expire_year": "28",
+      "is_default": true,
+      "is_verified": true,
+      "created_at": "2026-10-01T10:00:00Z",
+      "updated_at": "2026-10-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "payments.savedcard",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "provider": "CLICK",
+      "card_token": "tok_click_humo_5678",
+      "card_mask": "9860 **** **** 5678",
+      "card_holder": "JANE DOE",
+      "card_type": "HUMO",
+      "expire_month": "08",
+      "expire_year": "27",
+      "is_default": true,
+      "is_verified": true,
+      "created_at": "2026-10-05T14:30:00Z",
+      "updated_at": "2026-10-05T14:30:00Z"
+    }
+  },
+  {
+    "model": "payments.payment",
+    "pk": 1,
+    "fields": {
+      "payment_number": "PAY-20261024-0001",
+      "order": 1,
+      "user": 2,
+      "amount": "2249.00",
+      "currency": "UZS",
+      "provider": "PAYME",
+      "status": "SUCCESS",
+      "provider_transaction_id": "payme_tx_10001",
+      "provider_state": "STATE_PAID",
+      "fee_amount": "0.00",
+      "refunded_amount": "0.00",
+      "checkout_url": null,
+      "metadata": {
+        "card_mask": "8600 **** **** 1234"
+      },
+      "failure_reason": null,
+      "paid_at": "2026-10-20T10:15:00Z",
+      "failed_at": null,
+      "cancelled_at": null,
+      "created_at": "2026-10-20T10:00:00Z",
+      "updated_at": "2026-10-20T10:15:00Z"
+    }
+  },
+  {
+    "model": "payments.payment",
+    "pk": 2,
+    "fields": {
+      "payment_number": "PAY-20261024-0002",
+      "order": 2,
+      "user": 3,
+      "amount": "1019.00",
+      "currency": "UZS",
+      "provider": "CLICK",
+      "status": "SUCCESS",
+      "provider_transaction_id": "click_tx_20002",
+      "provider_state": "CLICK_CONFIRMED",
+      "fee_amount": "0.00",
+      "refunded_amount": "0.00",
+      "checkout_url": null,
+      "metadata": {
+        "card_mask": "9860 **** **** 5678"
+      },
+      "failure_reason": null,
+      "paid_at": "2026-10-23T12:00:00Z",
+      "failed_at": null,
+      "cancelled_at": null,
+      "created_at": "2026-10-23T11:45:00Z",
+      "updated_at": "2026-10-23T12:00:00Z"
+    }
+  },
+  {
+    "model": "payments.payment",
+    "pk": 3,
+    "fields": {
+      "payment_number": "PAY-20261024-0003",
+      "order": 3,
+      "user": 2,
+      "amount": "130.00",
+      "currency": "UZS",
+      "provider": "UZUM",
+      "status": "PENDING",
+      "provider_transaction_id": "uzum_tx_30003",
+      "provider_state": "WAITING_FOR_PAYMENT",
+      "fee_amount": "0.00",
+      "refunded_amount": "0.00",
+      "checkout_url": "https://checkout.uzumpay.uz/pay/uzum_tx_30003",
+      "metadata": {},
+      "failure_reason": null,
+      "paid_at": null,
+      "failed_at": null,
+      "cancelled_at": null,
+      "created_at": "2026-10-24T09:00:00Z",
+      "updated_at": "2026-10-24T09:00:00Z"
+    }
+  },
+  {
+    "model": "payments.payment",
+    "pk": 4,
+    "fields": {
+      "payment_number": "PAY-20261024-0004",
+      "order": 4,
+      "user": 3,
+      "amount": "2499.00",
+      "currency": "UZS",
+      "provider": "PAYME",
+      "status": "REFUNDED",
+      "provider_transaction_id": "payme_tx_40004",
+      "provider_state": "STATE_REFUNDED",
+      "fee_amount": "0.00",
+      "refunded_amount": "2499.00",
+      "checkout_url": null,
+      "metadata": {
+        "refund_reason": "Order cancelled by customer"
+      },
+      "failure_reason": null,
+      "paid_at": "2026-10-21T08:00:00Z",
+      "failed_at": null,
+      "cancelled_at": null,
+      "created_at": "2026-10-21T07:50:00Z",
+      "updated_at": "2026-10-21T09:30:00Z"
+    }
+  },
+  {
+    "model": "payments.paymenttransaction",
+    "pk": 1,
+    "fields": {
+      "payment": 1,
+      "transaction_type": "PERFORM",
+      "amount": "2249.00",
+      "status": "SUCCESS",
+      "idempotency_key": "idem-pay-001",
+      "provider_transaction_id": "payme_tx_10001",
+      "request_payload": {
+        "method": "PerformTransaction",
+        "params": {
+          "id": "payme_tx_10001"
+        }
+      },
+      "response_payload": {
+        "result": {
+          "transaction": "payme_tx_10001",
+          "state": 2
+        }
+      },
+      "error_code": null,
+      "error_message": null,
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-20T10:15:00Z"
+    }
+  },
+  {
+    "model": "payments.paymenttransaction",
+    "pk": 2,
+    "fields": {
+      "payment": 2,
+      "transaction_type": "PERFORM",
+      "amount": "1019.00",
+      "status": "SUCCESS",
+      "idempotency_key": "idem-pay-002",
+      "provider_transaction_id": "click_tx_20002",
+      "request_payload": {
+        "action": 1,
+        "click_trans_id": 20002
+      },
+      "response_payload": {
+        "error": 0,
+        "error_note": "Success"
+      },
+      "error_code": null,
+      "error_message": null,
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-23T12:00:00Z"
+    }
+  },
+  {
+    "model": "payments.paymenttransaction",
+    "pk": 3,
+    "fields": {
+      "payment": 4,
+      "transaction_type": "REFUND",
+      "amount": "2499.00",
+      "status": "SUCCESS",
+      "idempotency_key": "idem-ref-004",
+      "provider_transaction_id": "payme_ref_40004",
+      "request_payload": {
+        "method": "CancelTransaction",
+        "params": {
+          "id": "payme_tx_40004",
+          "reason": 5
+        }
+      },
+      "response_payload": {
+        "result": {
+          "transaction": "payme_tx_40004",
+          "state": -2
+        }
+      },
+      "error_code": null,
+      "error_message": null,
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-21T09:30:00Z"
+    }
+  },
+  {
+    "model": "payments.refund",
+    "pk": 1,
+    "fields": {
+      "refund_number": "REF-20261024-0001",
+      "payment": 4,
+      "order": 4,
+      "amount": "2499.00",
+      "currency": "UZS",
+      "status": "COMPLETED",
+      "reason": "Mijoz buyurtmani bekor qildi va to'lov summasi to'liq qaytarildi.",
+      "provider_refund_id": "payme_ref_40004",
+      "created_by": 1,
+      "processed_at": "2026-10-21T09:30:00Z",
+      "metadata": {
+        "source": "admin_panel"
+      },
+      "created_at": "2026-10-21T09:30:00Z",
+      "updated_at": "2026-10-21T09:30:00Z"
+    }
+  }
+]

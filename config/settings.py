@@ -38,6 +38,9 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 # Application definition
 
 INSTALLED_APPS = [
+    # Third-party admin theme (must be before django.contrib.admin)
+    'jazzmin',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,11 +51,14 @@ INSTALLED_APPS = [
     # Third-party apps
     'rest_framework',
     'rest_framework_simplejwt',
+    'drf_spectacular',
 
     # Local apps
     'apps.carts',
     'apps.dashboard',
+    'apps.notifications',
     'apps.orders',
+    'apps.payments',
     'apps.products',
     'apps.reviews',
     'apps.users',
@@ -137,10 +143,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 
 # Media files (User uploaded files)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Fixtures directories
+FIXTURE_DIRS = [
+    BASE_DIR / 'fixtures',
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -158,6 +172,47 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+# Spectacular (OpenAPI 3.0 / Swagger UI) Settings
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Ecommerce Platform REST API',
+    'DESCRIPTION': (
+        'E-Commerce platformasi uchun keng qamrovli REST API hujjatlari. '
+        'Foydalanuvchilar (Auth/JWT), Mahsulotlar katalogi, Savatcha, '
+        'Buyurtmalar, To\'lovlar (Payme, Click, Uzum), Sharhlar, '
+        'Bildirishnomalar va Boshqaruv paneli (Dashboard) modullarini o\'z ichiga oladi.'
+    ),
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SCHEMA_PATH_PREFIX': r'/api/v[0-9]+',
+    'POSTPROCESSING_HOOKS': [
+        'drf_spectacular.hooks.postprocess_schema_enums',
+        'config.spectacular.custom_tag_postprocessing_hook',
+    ],
+    'SECURITY': [{'BearerAuth': []}],
+    'APPEND_COMPONENTS': {
+        'securitySchemes': {
+            'BearerAuth': {
+                'type': 'http',
+                'scheme': 'bearer',
+                'bearerFormat': 'JWT',
+                'description': 'JWT access tokenni kiriting (masalan: Bearer <access_token>)',
+            }
+        }
+    },
+    'TAGS': [
+        {'name': 'Auth', 'description': 'Autentifikatsiya, OTP, JWT tokenlar va foydalanuvchilar profili'},
+        {'name': 'Catalog', 'description': 'Mahsulotlar katalogi, toifalar, brendlar va variantlar'},
+        {'name': 'Cart', 'description': 'Xarid savatchasi va savat elementlari boshqaruvi'},
+        {'name': 'Orders', 'description': 'Buyurtmalar, kuponlar, manzil va statuslar tarixi'},
+        {'name': 'Payments', 'description': 'To\'lov tizimlari (Payme, Click, Uzum), tranzaksiyalar va refund'},
+        {'name': 'Notifications', 'description': 'Foydalanuvchi bildirishnomalari va email xabarlari'},
+        {'name': 'Reviews', 'description': 'Sharhlar, reytinglar, media fayllar va sotuvchi javoblari'},
+        {'name': 'Dashboard', 'description': 'Administratorlar uchun KPI metrikalar, audit jurnali va analitika'},
+    ],
 }
 
 # Simple JWT Settings
@@ -182,4 +237,166 @@ if not EMAIL_HOST_USER:
     EMAIL_BACKEND = env('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
 else:
     EMAIL_BACKEND = env('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+
+# Payment Gateways Configuration
+PAYME_SETTINGS = {
+    'MERCHANT_ID': env('PAYME_MERCHANT_ID', default='test_merchant_id'),
+    'SECRET_KEY': env('PAYME_SECRET_KEY', default='test_secret_key'),
+    'CHECKOUT_URL': env('PAYME_CHECKOUT_URL', default='https://checkout.paycom.uz'),
+}
+
+CLICK_SETTINGS = {
+    'SERVICE_ID': env('CLICK_SERVICE_ID', default='test_service_id'),
+    'MERCHANT_ID': env('CLICK_MERCHANT_ID', default='test_merchant_id'),
+    'SECRET_KEY': env('CLICK_SECRET_KEY', default='test_secret_key'),
+    'MERCHANT_USER_ID': env('CLICK_MERCHANT_USER_ID', default='test_merchant_user_id'),
+    'CHECKOUT_URL': env('CLICK_CHECKOUT_URL', default='https://my.click.uz/services/pay'),
+}
+
+UZUM_SETTINGS = {
+    'MERCHANT_ID': env('UZUM_MERCHANT_ID', default='test_uzum_merchant_id'),
+    'SECRET_KEY': env('UZUM_SECRET_KEY', default='test_uzum_secret_key'),
+    'CHECKOUT_URL': env('UZUM_CHECKOUT_URL', default='https://www.uzumbank.uz/open-service'),
+}
+
+# Jazzmin Admin Theme Configuration
+JAZZMIN_SETTINGS = {
+    # Title & Branding
+    "site_title": "E-Commerce Backoffice",
+    "site_header": "E-Commerce Admin",
+    "site_brand": "E-Commerce",
+    "site_logo": None,
+    "welcome_sign": "E-Commerce boshqaruv tizimiga xush kelibsiz!",
+    "copyright": "E-Commerce Platform",
+
+    # Search bar in top navbar
+    "search_model": ["orders.Order", "products.Product", "users.User"],
+
+    # Top Menu Links
+    "topmenu_links": [
+        {"name": "Bosh sahifa", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "API Docs", "url": "/api/v1/dashboard/analytics/overview/", "new_window": True},
+    ],
+
+    # User menu links
+    "usermenu_links": [
+        {"name": "Mening profilim", "url": "admin:users_user_changelist", "icon": "fas fa-user"},
+    ],
+
+    # Navigation layout & ordering
+    "show_sidebar": True,
+    "navigation_expanded": False,
+    "hide_apps": [],
+    "hide_models": [],
+
+    "order_with_respect_to": [
+        "dashboard",
+        "orders",
+        "payments",
+        "products",
+        "carts",
+        "reviews",
+        "notifications",
+        "users",
+        "auth",
+    ],
+
+    # Custom FontAwesome icons for each app and model
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.Group": "fas fa-user-friends",
+        "auth.Permission": "fas fa-key",
+
+        "users.User": "fas fa-user-circle",
+        "users.OTPCode": "fas fa-shield-alt",
+
+        "orders.Order": "fas fa-shopping-bag",
+        "orders.Coupon": "fas fa-tags",
+        "orders.CouponUsage": "fas fa-receipt",
+        "orders.OrderAddress": "fas fa-map-marker-alt",
+        "orders.OrderItem": "fas fa-list-alt",
+        "orders.OrderStatusHistory": "fas fa-history",
+
+        "payments.Payment": "fas fa-credit-card",
+        "payments.SavedCard": "fas fa-id-card",
+        "payments.PaymentTransaction": "fas fa-exchange-alt",
+        "payments.Refund": "fas fa-undo-alt",
+
+        "products.Product": "fas fa-box-open",
+        "products.Category": "fas fa-sitemap",
+        "products.Brand": "fas fa-copyright",
+        "products.Inventory": "fas fa-warehouse",
+        "products.Attribute": "fas fa-sliders-h",
+        "products.AttributeValue": "fas fa-tag",
+        "products.ProductVariant": "fas fa-boxes",
+        "products.ProductMedia": "fas fa-photo-video",
+        "products.ProductCategory": "fas fa-network-wired",
+        "products.ProductVariantAttributeValue": "fas fa-link",
+
+        "carts.Cart": "fas fa-shopping-cart",
+        "carts.CartItem": "fas fa-cart-arrow-down",
+
+        "reviews.Review": "fas fa-star",
+        "reviews.ReviewImage": "fas fa-image",
+        "reviews.ReviewReply": "fas fa-reply",
+        "reviews.ReviewVote": "fas fa-thumbs-up",
+        "reviews.ProductRatingSummary": "fas fa-award",
+
+        "notifications.Notification": "fas fa-bell",
+        "notifications.EmailNotification": "fas fa-envelope",
+        "notifications.NotificationTemplate": "fas fa-file-alt",
+        "notifications.NotificationPreference": "fas fa-cog",
+
+        "dashboard.DailyMetricSnapshot": "fas fa-chart-line",
+        "dashboard.StaffActivityLog": "fas fa-user-shield",
+        "dashboard.StockMovementLog": "fas fa-dolly",
+        "dashboard.OrderInternalNote": "fas fa-sticky-note",
+        "dashboard.SystemAlert": "fas fa-exclamation-triangle",
+    },
+
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+
+    # UI Options
+    "related_modal_active": True,
+    "custom_css": None,
+    "custom_js": "admin/js/custom_sidebar.js",
+    "use_google_fonts_cdn": True,
+    "show_ui_builder": False,
+    "show_theme_chooser": True,
+    "changeform_format": "horizontal_tabs",
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": "navbar-dark",
+    "accent": "accent-primary",
+    "navbar": "navbar-dark navbar-navy",
+    "no_navbar_border": False,
+    "navbar_fixed": True,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": True,
+    "sidebar": "sidebar-dark-navy",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": True,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": True,
+    "theme": "flatly",
+    "default_theme_mode": "light",
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success",
+    },
+}
+
 

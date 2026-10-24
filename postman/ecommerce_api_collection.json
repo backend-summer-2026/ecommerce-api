@@ -1,1063 +1,3649 @@
 {
-    "info": {
-        "_postman_id": "a9d7023c-7c5e-4c42-9f37-e5fa091991a0",
-        "name": "Ecommerce API - Master Collection",
-        "description": "Master Postman collection for end-to-end business logic testing of the Ecommerce API. Maintained automatically by the development team and agy agent whenever endpoints are created or modified.",
-        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  "info": {
+    "_postman_id": "a9d7023c-7c5e-4c42-9f37-e5fa091991a0",
+    "name": "Ecommerce API - Master Collection",
+    "description": "Master Postman collection for end-to-end business logic testing of the Ecommerce API. Maintained automatically by the development team and agy agent whenever endpoints are created or modified.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000",
+      "type": "string"
     },
-    "variable": [
+    {
+      "key": "access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "refresh_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "cart_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "order_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "notif_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "email_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "template_code",
+      "value": "order_confirmed",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Authentication & Users",
+      "description": "User registration, email/SMS OTP verification, JWT login, token refresh, and user profile management.",
+      "item": [
         {
-            "key": "base_url",
-            "value": "http://127.0.0.1:8000",
-            "type": "string"
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"user@example.com\",\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"password\": \"SecurePass123!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/register/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register",
+                ""
+              ]
+            },
+            "description": "Registers a new user account and triggers OTP dispatch for verification."
+          },
+          "response": []
         },
         {
-            "key": "access_token",
-            "value": "",
-            "type": "string"
+          "name": "Send / Resend OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"user@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/send-otp/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "send-otp",
+                ""
+              ]
+            },
+            "description": "Sends a 6-digit one-time verification code to the user's email address via SMTP."
+          },
+          "response": []
         },
         {
-            "key": "refresh_token",
-            "value": "",
-            "type": "string"
+          "name": "Verify OTP & Obtain Tokens",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var data = pm.response.json();",
+                  "    if (data.access) {",
+                  "        pm.collectionVariables.set(\"access_token\", data.access);",
+                  "    }",
+                  "    if (data.refresh) {",
+                  "        pm.collectionVariables.set(\"refresh_token\", data.refresh);",
+                  "    }",
+                  "    if (data.user && data.user.id) {",
+                  "        pm.collectionVariables.set(\"user_id\", data.user.id);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"user@example.com\",\n    \"code\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/verify-otp/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "verify-otp",
+                ""
+              ]
+            },
+            "description": "Verifies the received OTP code and returns JWT access and refresh tokens."
+          },
+          "response": []
         },
         {
-            "key": "user_id",
-            "value": "",
-            "type": "string"
+          "name": "Login (JWT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var data = pm.response.json();",
+                  "    if (data.access) {",
+                  "        pm.collectionVariables.set(\"access_token\", data.access);",
+                  "    }",
+                  "    if (data.refresh) {",
+                  "        pm.collectionVariables.set(\"refresh_token\", data.refresh);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"SecurePass123!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/login/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login",
+                ""
+              ]
+            },
+            "description": "Authenticates user credentials and issues JWT token pair."
+          },
+          "response": []
         },
         {
-            "key": "cart_id",
-            "value": "",
-            "type": "string"
+          "name": "Refresh Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var data = pm.response.json();",
+                  "    if (data.access) {",
+                  "        pm.collectionVariables.set(\"access_token\", data.access);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"refresh\": \"{{refresh_token}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/token/refresh/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "token",
+                "refresh",
+                ""
+              ]
+            },
+            "description": "Refreshes an expired JWT access token using the valid refresh token."
+          },
+          "response": []
         },
         {
-            "key": "order_id",
-            "value": "",
-            "type": "string"
+          "name": "Get Current User Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/me/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "me",
+                ""
+              ]
+            },
+            "description": "Retrieves the authenticated user's profile details."
+          },
+          "response": []
         }
-    ],
-    "item": [
+      ]
+    },
+    {
+      "name": "2. Products & Categories",
+      "description": "Catalog endpoints for browsing categories tree, brand directory, filtering products with dynamic attributes, stock verification, search suggestions, and featured collections.",
+      "item": [
         {
-            "name": "1. Authentication & Users",
-            "description": "User registration, email/SMS OTP verification, JWT login, token refresh, and user profile management.",
-            "item": [
-                {
-                    "name": "Register User",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"email\": \"user@example.com\",\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"password\": \"SecurePass123!\"\n}"
-                        },
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/auth/register/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "auth",
-                                "register",
-                                ""
-                            ]
-                        },
-                        "description": "Registers a new user account and triggers OTP dispatch for verification."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Send / Resend OTP",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"email\": \"user@example.com\"\n}"
-                        },
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/auth/send-otp/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "auth",
-                                "send-otp",
-                                ""
-                            ]
-                        },
-                        "description": "Sends a 6-digit one-time verification code to the user's email address via SMTP."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Verify OTP & Obtain Tokens",
-                    "event": [
-                        {
-                            "listen": "test",
-                            "script": {
-                                "exec": [
-                                    "if (pm.response.code === 200) {",
-                                    "    var data = pm.response.json();",
-                                    "    if (data.access) {",
-                                    "        pm.collectionVariables.set(\"access_token\", data.access);",
-                                    "    }",
-                                    "    if (data.refresh) {",
-                                    "        pm.collectionVariables.set(\"refresh_token\", data.refresh);",
-                                    "    }",
-                                    "    if (data.user && data.user.id) {",
-                                    "        pm.collectionVariables.set(\"user_id\", data.user.id);",
-                                    "    }",
-                                    "}"
-                                ],
-                                "type": "text/javascript"
-                            }
-                        }
-                    ],
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"email\": \"user@example.com\",\n    \"code\": \"123456\"\n}"
-                        },
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/auth/verify-otp/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "auth",
-                                "verify-otp",
-                                ""
-                            ]
-                        },
-                        "description": "Verifies the received OTP code and returns JWT access and refresh tokens."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Login (JWT)",
-                    "event": [
-                        {
-                            "listen": "test",
-                            "script": {
-                                "exec": [
-                                    "if (pm.response.code === 200) {",
-                                    "    var data = pm.response.json();",
-                                    "    if (data.access) {",
-                                    "        pm.collectionVariables.set(\"access_token\", data.access);",
-                                    "    }",
-                                    "    if (data.refresh) {",
-                                    "        pm.collectionVariables.set(\"refresh_token\", data.refresh);",
-                                    "    }",
-                                    "}"
-                                ],
-                                "type": "text/javascript"
-                            }
-                        }
-                    ],
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"SecurePass123!\"\n}"
-                        },
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/auth/login/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "auth",
-                                "login",
-                                ""
-                            ]
-                        },
-                        "description": "Authenticates user credentials and issues JWT token pair."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Refresh Access Token",
-                    "event": [
-                        {
-                            "listen": "test",
-                            "script": {
-                                "exec": [
-                                    "if (pm.response.code === 200) {",
-                                    "    var data = pm.response.json();",
-                                    "    if (data.access) {",
-                                    "        pm.collectionVariables.set(\"access_token\", data.access);",
-                                    "    }",
-                                    "}"
-                                ],
-                                "type": "text/javascript"
-                            }
-                        }
-                    ],
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"refresh\": \"{{refresh_token}}\"\n}"
-                        },
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/auth/token/refresh/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "auth",
-                                "token",
-                                "refresh",
-                                ""
-                            ]
-                        },
-                        "description": "Refreshes an expired JWT access token using the valid refresh token."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Get Current User Profile",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{access_token}}"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/auth/me/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "auth",
-                                "me",
-                                ""
-                            ]
-                        },
-                        "description": "Retrieves the authenticated user's profile details."
-                    },
-                    "response": []
-                }
-            ]
+          "name": "List Categories Tree",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/catalog/categories/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "catalog",
+                "categories",
+                ""
+              ]
+            },
+            "description": "Retrieves full hierarchical category tree starting from top-level root categories with nested children."
+          },
+          "response": []
         },
         {
-            "name": "2. Products & Categories",
-            "description": "Catalog endpoints for browsing categories tree, brand directory, filtering products with dynamic attributes, stock verification, search suggestions, and featured collections.",
-            "item": [
-                {
-                    "name": "List Categories Tree",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/catalog/categories/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "catalog",
-                                "categories",
-                                ""
-                            ]
-                        },
-                        "description": "Retrieves full hierarchical category tree starting from top-level root categories with nested children."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Get Category Details",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/catalog/categories/laptops/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "catalog",
-                                "categories",
-                                "laptops",
-                                ""
-                            ]
-                        },
-                        "description": "Retrieves single category detail with breadcrumb path, immediate active children, and products count."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "List Brands",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/catalog/brands/?q=",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "catalog",
-                                "brands",
-                                ""
-                            ],
-                            "query": [
-                                {
-                                    "key": "q",
-                                    "value": "",
-                                    "description": "Optional search term to filter brands by name"
-                                }
-                            ]
-                        },
-                        "description": "Lists all active brands with logo, website, and products count."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Get Brand Details",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/catalog/brands/apple/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "catalog",
-                                "brands",
-                                "apple",
-                                ""
-                            ]
-                        },
-                        "description": "Retrieves detailed information for a specific brand by slug."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "List Products (Faceted Filters & Pagination)",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/catalog/products/?category=electronics&brand=apple&min_price=1000&max_price=3000&in_stock=true&q=macbook&attr_color=space-gray&ordering=-created_at&page=1&page_size=20",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "catalog",
-                                "products",
-                                ""
-                            ],
-                            "query": [
-                                {
-                                    "key": "category",
-                                    "value": "electronics",
-                                    "description": "Filter by category slug (matches category and all recursive descendants)"
-                                },
-                                {
-                                    "key": "brand",
-                                    "value": "apple",
-                                    "description": "Filter by brand slug (or comma-separated slugs e.g. apple,dell)"
-                                },
-                                {
-                                    "key": "min_price",
-                                    "value": "1000",
-                                    "description": "Filter products with effective price >= min_price"
-                                },
-                                {
-                                    "key": "max_price",
-                                    "value": "3000",
-                                    "description": "Filter products with effective price <= max_price"
-                                },
-                                {
-                                    "key": "in_stock",
-                                    "value": "true",
-                                    "description": "Filter products with active inventory available (true/false)"
-                                },
-                                {
-                                    "key": "q",
-                                    "value": "macbook",
-                                    "description": "Full-text search across product name, description, brand, variant SKU"
-                                },
-                                {
-                                    "key": "attr_color",
-                                    "value": "space-gray",
-                                    "description": "Dynamic attribute filter: attr_<attribute_slug>=<value_slug>"
-                                },
-                                {
-                                    "key": "ordering",
-                                    "value": "-created_at",
-                                    "description": "Sort order: -created_at, created_at, price, -price, name, -name"
-                                },
-                                {
-                                    "key": "page",
-                                    "value": "1",
-                                    "description": "Page number for pagination"
-                                },
-                                {
-                                    "key": "page_size",
-                                    "value": "20",
-                                    "description": "Number of items per page (up to max 100)"
-                                }
-                            ]
-                        },
-                        "description": "Lists catalog products with comprehensive filtering, price range, stock verification, and pagination."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Get Product Details",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/catalog/products/macbook-pro-16/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "catalog",
-                                "products",
-                                "macbook-pro-16",
-                                ""
-                            ]
-                        },
-                        "description": "Retrieves complete product page data: variants, media gallery, dynamic attributes matrix, breadcrumbs, and default variant."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Get Product Variant Details",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/catalog/products/macbook-pro-16/variants/MBP-16-SG-16/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "catalog",
-                                "products",
-                                "macbook-pro-16",
-                                "variants",
-                                "MBP-16-SG-16",
-                                ""
-                            ]
-                        },
-                        "description": "Retrieves specific variant information, real-time stock availability, attributes, and discount pricing."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Get Catalog Dynamic Filters",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/catalog/filters/?category=electronics",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "catalog",
-                                "filters",
-                                ""
-                            ],
-                            "query": [
-                                {
-                                    "key": "category",
-                                    "value": "electronics",
-                                    "description": "Optional category slug to get scoped facet options"
-                                }
-                            ]
-                        },
-                        "description": "Returns dynamic filter facets: available brands, subcategories, price range, and dynamic attribute options with counts."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Search Suggestions (Autocomplete)",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/catalog/search/suggest/?q=mac",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "catalog",
-                                "search",
-                                "suggest",
-                                ""
-                            ],
-                            "query": [
-                                {
-                                    "key": "q",
-                                    "value": "mac",
-                                    "description": "Search query prefix (minimum 2 characters)"
-                                }
-                            ]
-                        },
-                        "description": "Instant autocomplete suggestions returning top matching products, categories, and brands."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Get Featured Products",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/catalog/featured/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "catalog",
-                                "featured",
-                                ""
-                            ]
-                        },
-                        "description": "Retrieves collections of featured products including new arrivals and on-sale items."
-                    },
-                    "response": []
-                }
-            ]
+          "name": "Get Category Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/catalog/categories/laptops/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "catalog",
+                "categories",
+                "laptops",
+                ""
+              ]
+            },
+            "description": "Retrieves single category detail with breadcrumb path, immediate active children, and products count."
+          },
+          "response": []
         },
         {
-            "name": "3. Cart & Items",
-            "description": "Shopping Cart APIs: Lifecycle management, guest and authenticated sessions, inventory validation, price change detection, and cart merging.",
-            "item": [
+          "name": "List Brands",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/catalog/brands/?q=",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "catalog",
+                "brands",
+                ""
+              ],
+              "query": [
                 {
-                    "name": "Get Active Cart",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{access_token}}",
-                                "type": "text",
-                                "disabled": true
-                            },
-                            {
-                                "key": "X-Session-Key",
-                                "value": "{{guest_session_key}}",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/cart/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "cart",
-                                ""
-                            ]
-                        },
-                        "description": "Retrieves the customer's active shopping cart with all variant items, monetary totals, applied discounts, and real-time alerts."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Get Cart Summary / Count Badge",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{access_token}}",
-                                "type": "text",
-                                "disabled": true
-                            },
-                            {
-                                "key": "X-Session-Key",
-                                "value": "{{guest_session_key}}",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/cart/count/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "cart",
-                                "count",
-                                ""
-                            ]
-                        },
-                        "description": "Returns lightweight summary (total item count, distinct SKU count, total price) designed for navbar badges and mobile header counters."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Add Variant to Cart",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{access_token}}",
-                                "type": "text",
-                                "disabled": true
-                            },
-                            {
-                                "key": "X-Session-Key",
-                                "value": "{{guest_session_key}}",
-                                "type": "text"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"variant_id\": 1,\n    \"quantity\": 2\n}"
-                        },
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/cart/items/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "cart",
-                                "items",
-                                ""
-                            ]
-                        },
-                        "description": "Adds a specific product variant (SKU) to the cart or increments existing quantity with real-time stock validation."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Update Cart Item Quantity",
-                    "request": {
-                        "method": "PATCH",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{access_token}}",
-                                "type": "text",
-                                "disabled": true
-                            },
-                            {
-                                "key": "X-Session-Key",
-                                "value": "{{guest_session_key}}",
-                                "type": "text"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"quantity\": 3\n}"
-                        },
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/cart/items/1/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "cart",
-                                "items",
-                                "1",
-                                ""
-                            ]
-                        },
-                        "description": "Updates the exact quantity of a specific cart item and recalculates subtotal and total prices."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Remove Item from Cart",
-                    "request": {
-                        "method": "DELETE",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{access_token}}",
-                                "type": "text",
-                                "disabled": true
-                            },
-                            {
-                                "key": "X-Session-Key",
-                                "value": "{{guest_session_key}}",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/cart/items/1/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "cart",
-                                "items",
-                                "1",
-                                ""
-                            ]
-                        },
-                        "description": "Completely removes a variant line item from the shopping cart and returns updated cart state."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Clear Entire Cart",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{access_token}}",
-                                "type": "text",
-                                "disabled": true
-                            },
-                            {
-                                "key": "X-Session-Key",
-                                "value": "{{guest_session_key}}",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/cart/clear/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "cart",
-                                "clear",
-                                ""
-                            ]
-                        },
-                        "description": "Removes all items from the customer's active shopping cart."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Merge Guest Cart to User Cart",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{access_token}}"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"guest_session_key\": \"{{guest_session_key}}\",\n    \"guest_cart_id\": null\n}"
-                        },
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/cart/merge/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "cart",
-                                "merge",
-                                ""
-                            ]
-                        },
-                        "description": "Merges an anonymous guest session cart into the authenticated customer's primary cart after sign in or sign up."
-                    },
-                    "response": []
+                  "key": "q",
+                  "value": "",
+                  "description": "Optional search term to filter brands by name"
                 }
-            ]
+              ]
+            },
+            "description": "Lists all active brands with logo, website, and products count."
+          },
+          "response": []
         },
         {
-            "name": "4. Orders & Checkout",
-            "description": "Order placement, order history, order details, and payment status checks.",
-            "item": [
-                {
-                    "name": "Checkout / Create Order",
-                    "event": [
-                        {
-                            "listen": "test",
-                            "script": {
-                                "exec": [
-                                    "if (pm.response.code === 201) {",
-                                    "    var data = pm.response.json();",
-                                    "    if (data.id) {",
-                                    "        pm.collectionVariables.set(\"order_id\", data.id);",
-                                    "    }",
-                                    "}"
-                                ],
-                                "type": "text/javascript"
-                            }
-                        }
-                    ],
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{access_token}}"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"shipping_address\": \"123 Amir Temur Street, Tashkent, Uzbekistan\",\n    \"payment_method\": \"payme\",\n    \"phone_number\": \"+998901234567\"\n}"
-                        },
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/orders/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "orders",
-                                ""
-                            ]
-                        },
-                        "description": "Creates an order from current cart items."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "List User Orders",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{access_token}}"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/orders/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "orders",
-                                ""
-                            ]
-                        },
-                        "description": "Lists past orders placed by authenticated user."
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Get Order Details",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{access_token}}"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/orders/{{order_id}}/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "orders",
-                                "{{order_id}}",
-                                ""
-                            ]
-                        },
-                        "description": "Retrieves itemized breakdown and status of an order."
-                    },
-                    "response": []
-                }
-            ]
+          "name": "Get Brand Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/catalog/brands/apple/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "catalog",
+                "brands",
+                "apple",
+                ""
+              ]
+            },
+            "description": "Retrieves detailed information for a specific brand by slug."
+          },
+          "response": []
         },
         {
-            "name": "5. Reviews & Ratings",
-            "description": "Customer reviews and star ratings for products.",
-            "item": [
+          "name": "List Products (Faceted Filters & Pagination)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/catalog/products/?category=electronics&brand=apple&min_price=1000&max_price=3000&in_stock=true&q=macbook&attr_color=space-gray&ordering=-created_at&page=1&page_size=20",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "catalog",
+                "products",
+                ""
+              ],
+              "query": [
                 {
-                    "name": "List Product Reviews",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/products/1/reviews/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "products",
-                                "1",
-                                "reviews",
-                                ""
-                            ]
-                        },
-                        "description": "Lists reviews for a specific product."
-                    },
-                    "response": []
+                  "key": "category",
+                  "value": "electronics",
+                  "description": "Filter by category slug (matches category and all recursive descendants)"
                 },
                 {
-                    "name": "Add Product Review",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{access_token}}"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"rating\": 5,\n    \"comment\": \"Ajoyib mahsulot, sifati juda yuqori!\"\n}"
-                        },
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/products/1/reviews/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "products",
-                                "1",
-                                "reviews",
-                                ""
-                            ]
-                        },
-                        "description": "Submits a review and rating for a product."
-                    },
-                    "response": []
+                  "key": "brand",
+                  "value": "apple",
+                  "description": "Filter by brand slug (or comma-separated slugs e.g. apple,dell)"
+                },
+                {
+                  "key": "min_price",
+                  "value": "1000",
+                  "description": "Filter products with effective price >= min_price"
+                },
+                {
+                  "key": "max_price",
+                  "value": "3000",
+                  "description": "Filter products with effective price <= max_price"
+                },
+                {
+                  "key": "in_stock",
+                  "value": "true",
+                  "description": "Filter products with active inventory available (true/false)"
+                },
+                {
+                  "key": "q",
+                  "value": "macbook",
+                  "description": "Full-text search across product name, description, brand, variant SKU"
+                },
+                {
+                  "key": "attr_color",
+                  "value": "space-gray",
+                  "description": "Dynamic attribute filter: attr_<attribute_slug>=<value_slug>"
+                },
+                {
+                  "key": "ordering",
+                  "value": "-created_at",
+                  "description": "Sort order: -created_at, created_at, price, -price, name, -name"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                },
+                {
+                  "key": "page_size",
+                  "value": "20",
+                  "description": "Number of items per page (up to max 100)"
                 }
-            ]
+              ]
+            },
+            "description": "Lists catalog products with comprehensive filtering, price range, stock verification, and pagination."
+          },
+          "response": []
         },
         {
-            "name": "6. Dashboard & Admin APIs",
-            "description": "Administrative metrics, inventory reports, and operational analytics.",
-            "item": [
+          "name": "Get Product Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/catalog/products/macbook-pro-16/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "catalog",
+                "products",
+                "macbook-pro-16",
+                ""
+              ]
+            },
+            "description": "Retrieves complete product page data: variants, media gallery, dynamic attributes matrix, breadcrumbs, and default variant."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product Variant Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/catalog/products/macbook-pro-16/variants/MBP-16-SG-16/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "catalog",
+                "products",
+                "macbook-pro-16",
+                "variants",
+                "MBP-16-SG-16",
+                ""
+              ]
+            },
+            "description": "Retrieves specific variant information, real-time stock availability, attributes, and discount pricing."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Catalog Dynamic Filters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/catalog/filters/?category=electronics",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "catalog",
+                "filters",
+                ""
+              ],
+              "query": [
                 {
-                    "name": "Get Dashboard Summary Stats",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{access_token}}"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/dashboard/summary/",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "v1",
-                                "dashboard",
-                                "summary",
-                                ""
-                            ]
-                        },
-                        "description": "Retrieves revenue, order count, and user growth statistics for admin dashboard."
-                    },
-                    "response": []
+                  "key": "category",
+                  "value": "electronics",
+                  "description": "Optional category slug to get scoped facet options"
                 }
-            ]
+              ]
+            },
+            "description": "Returns dynamic filter facets: available brands, subcategories, price range, and dynamic attribute options with counts."
+          },
+          "response": []
+        },
+        {
+          "name": "Search Suggestions (Autocomplete)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/catalog/search/suggest/?q=mac",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "catalog",
+                "search",
+                "suggest",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "mac",
+                  "description": "Search query prefix (minimum 2 characters)"
+                }
+              ]
+            },
+            "description": "Instant autocomplete suggestions returning top matching products, categories, and brands."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Featured Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/catalog/featured/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "catalog",
+                "featured",
+                ""
+              ]
+            },
+            "description": "Retrieves collections of featured products including new arrivals and on-sale items."
+          },
+          "response": []
         }
-    ]
+      ]
+    },
+    {
+      "name": "3. Cart & Items",
+      "description": "Shopping Cart APIs: Lifecycle management, guest and authenticated sessions, inventory validation, price change detection, and cart merging.",
+      "item": [
+        {
+          "name": "Get Active Cart",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "X-Session-Key",
+                "value": "{{guest_session_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/cart/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                ""
+              ]
+            },
+            "description": "Retrieves the customer's active shopping cart with all variant items, monetary totals, applied discounts, and real-time alerts."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Cart Summary / Count Badge",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "X-Session-Key",
+                "value": "{{guest_session_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/cart/count/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                "count",
+                ""
+              ]
+            },
+            "description": "Returns lightweight summary (total item count, distinct SKU count, total price) designed for navbar badges and mobile header counters."
+          },
+          "response": []
+        },
+        {
+          "name": "Add Variant to Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "X-Session-Key",
+                "value": "{{guest_session_key}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"variant_id\": 1,\n    \"quantity\": 2\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/cart/items/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                "items",
+                ""
+              ]
+            },
+            "description": "Adds a specific product variant (SKU) to the cart or increments existing quantity with real-time stock validation."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Cart Item Quantity",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "X-Session-Key",
+                "value": "{{guest_session_key}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"quantity\": 3\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/cart/items/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                "items",
+                "1",
+                ""
+              ]
+            },
+            "description": "Updates the exact quantity of a specific cart item and recalculates subtotal and total prices."
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Item from Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "X-Session-Key",
+                "value": "{{guest_session_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/cart/items/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                "items",
+                "1",
+                ""
+              ]
+            },
+            "description": "Completely removes a variant line item from the shopping cart and returns updated cart state."
+          },
+          "response": []
+        },
+        {
+          "name": "Clear Entire Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "X-Session-Key",
+                "value": "{{guest_session_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/cart/clear/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                "clear",
+                ""
+              ]
+            },
+            "description": "Removes all items from the customer's active shopping cart."
+          },
+          "response": []
+        },
+        {
+          "name": "Merge Guest Cart to User Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"guest_session_key\": \"{{guest_session_key}}\",\n    \"guest_cart_id\": null\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/cart/merge/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                "merge",
+                ""
+              ]
+            },
+            "description": "Merges an anonymous guest session cart into the authenticated customer's primary cart after sign in or sign up."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. Orders & Checkout",
+      "description": "Order placement, checkout preview, coupon validation, order history, order details, cancellation, tracking timeline, invoice, and admin management.",
+      "item": [
+        {
+          "name": "Checkout Preview",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"shipping_method\": \"STANDARD\",\n    \"coupon_code\": \"SAVE20\",\n    \"region\": \"Tashkent\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/orders/checkout/preview/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "checkout",
+                "preview",
+                ""
+              ]
+            },
+            "description": "Precomputes subtotal, delivery fee, coupon discounts, stock availability, and line items before final order placement."
+          },
+          "response": []
+        },
+        {
+          "name": "Validate Coupon Code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"code\": \"SAVE20\",\n    \"subtotal\": \"1500000.00\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/orders/coupons/validate/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "coupons",
+                "validate",
+                ""
+              ]
+            },
+            "description": "Validates promo coupon voucher against user limits, expiration, and order subtotal."
+          },
+          "response": []
+        },
+        {
+          "name": "Checkout / Create Order",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var data = pm.response.json();",
+                  "    if (data.order_number) {",
+                  "        pm.collectionVariables.set(\"order_number\", data.order_number);",
+                  "    }",
+                  "    if (data.id) {",
+                  "        pm.collectionVariables.set(\"order_id\", data.id);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"shipping_address\": {\n        \"recipient_name\": \"Alisher Navoiy\",\n        \"phone_number\": \"+998901234567\",\n        \"alternative_phone_number\": \"+998909876543\",\n        \"region\": \"Tashkent\",\n        \"district\": \"Mirabad\",\n        \"street_address\": \"Amir Temur shoh ko'chasi 15\",\n        \"apartment_office\": \"Apt 24\",\n        \"postal_code\": \"100000\",\n        \"landmark\": \"Near Oybek metro station\",\n        \"delivery_instructions\": \"Leave with concierge if not available\"\n    },\n    \"shipping_method\": \"STANDARD\",\n    \"payment_method\": \"CASH_ON_DELIVERY\",\n    \"coupon_code\": \"SAVE20\",\n    \"customer_notes\": \"Please deliver after 2 PM\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/orders/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                ""
+              ]
+            },
+            "description": "Converts customer's active cart into an immutable order with stock reservation."
+          },
+          "response": []
+        },
+        {
+          "name": "List User Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/orders/?status=PENDING&page=1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "PENDING"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Lists past orders placed by authenticated user with status filters and pagination."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Order Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/orders/{{order_number}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "{{order_number}}",
+                ""
+              ]
+            },
+            "description": "Retrieves itemized breakdown, address, items, and status history of an order."
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"reason\": \"Changed mind before shipment processing.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/orders/{{order_number}}/cancel/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "{{order_number}}",
+                "cancel",
+                ""
+              ]
+            },
+            "description": "Cancels an order and automatically releases reserved inventory stock."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Order Tracking Timeline",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/orders/{{order_number}}/tracking/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "{{order_number}}",
+                "tracking",
+                ""
+              ]
+            },
+            "description": "Chronological milestones, courier tracking number, and delivery status."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Order Invoice / Receipt",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/orders/{{order_number}}/invoice/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "{{order_number}}",
+                "invoice",
+                ""
+              ]
+            },
+            "description": "Itemized billing summary, address details, and financial totals for invoicing."
+          },
+          "response": []
+        },
+        {
+          "name": "Admin - List All Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/orders/admin/?status=PENDING&page=1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "admin",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "PENDING"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Staff administrator view to search, filter, and inspect all customer orders."
+          },
+          "response": []
+        },
+        {
+          "name": "Admin - Update Order Status & Tracking",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"new_status\": \"SHIPPED\",\n    \"comment\": \"Dispatched via Express Courier.\",\n    \"tracking_number\": \"UZEX-20261022-9988\",\n    \"is_customer_visible\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/orders/admin/{{order_number}}/status/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "admin",
+                "{{order_number}}",
+                "status",
+                ""
+              ]
+            },
+            "description": "Staff administrator endpoint to progress lifecycle state, assign tracking, and log notes."
+          },
+          "response": []
+        },
+        {
+          "name": "Admin - Append Internal Order Notes",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"admin_notes\": \"Customer confirmed phone number via WhatsApp. Priority delivery scheduled.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/orders/admin/{{order_number}}/notes/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "admin",
+                "{{order_number}}",
+                "notes",
+                ""
+              ]
+            },
+            "description": "Staff administrator endpoint to record internal notes visible only to employees."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5. Reviews & Ratings",
+      "description": "Customer reviews, ratings, image uploads, helpful voting, seller replies, and moderation.",
+      "item": [
+        {
+          "name": "Get Product Rating Summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/reviews/products/1/summary/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reviews",
+                "products",
+                "1",
+                "summary",
+                ""
+              ]
+            },
+            "description": "Retrieves aggregated rating summary and star breakdown for a product."
+          },
+          "response": []
+        },
+        {
+          "name": "List Product Reviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/reviews/products/1/?rating=5&verified_only=false&ordering=-created_at",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reviews",
+                "products",
+                "1",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "rating",
+                  "value": "5",
+                  "disabled": true
+                },
+                {
+                  "key": "verified_only",
+                  "value": "true",
+                  "disabled": true
+                },
+                {
+                  "key": "has_images",
+                  "value": "true",
+                  "disabled": true
+                },
+                {
+                  "key": "ordering",
+                  "value": "-created_at"
+                }
+              ]
+            },
+            "description": "Lists approved reviews for a given product with filters, sorting, and pagination."
+          },
+          "response": []
+        },
+        {
+          "name": "Submit Product Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"rating\": 5,\n    \"title\": \"Ajoyib smartfon!\",\n    \"comment\": \"Kamerasi va ekrani juda yuqori darajada ishlangan. Tavsiya qilaman!\",\n    \"pros\": \"Kamera sifati, batareya quvvati, ekran ravshanligi\",\n    \"cons\": \"Narxi biroz baland\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/reviews/products/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reviews",
+                "products",
+                "1",
+                ""
+              ]
+            },
+            "description": "Submits a new customer review for a product."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Review Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/reviews/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reviews",
+                "1",
+                ""
+              ]
+            },
+            "description": "Retrieves full details of a specific review."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Review (Edit)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"rating\": 4,\n    \"title\": \"1 oylik foydalanishdan so'ng yangilangan fikr\",\n    \"comment\": \"Hamma jihati yaxshi, ammo quvvatlash biroz sekinroq tuyuldi.\",\n    \"pros\": \"Kamera, Ekran\",\n    \"cons\": \"Quvvatlash tezligi\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/reviews/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reviews",
+                "1",
+                ""
+              ]
+            },
+            "description": "Updates an authored review. Sets status back to PENDING for re-moderation."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Review",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/reviews/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reviews",
+                "1",
+                ""
+              ]
+            },
+            "description": "Deletes the customer review."
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Review Image",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": ""
+                },
+                {
+                  "key": "caption",
+                  "value": "Qutidan chiqarish jarayoni",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/reviews/1/images/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reviews",
+                "1",
+                "images",
+                ""
+              ]
+            },
+            "description": "Uploads a photograph attachment to an authored review."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Review Image",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/reviews/images/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reviews",
+                "images",
+                "1",
+                ""
+              ]
+            },
+            "description": "Deletes an uploaded photo attachment."
+          },
+          "response": []
+        },
+        {
+          "name": "Vote on Review (Helpful / Unhelpful)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"vote_type\": \"HELPFUL\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/reviews/1/vote/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reviews",
+                "1",
+                "vote",
+                ""
+              ]
+            },
+            "description": "Casts a HELPFUL or UNHELPFUL vote on a review. Clicking the same vote toggles it off."
+          },
+          "response": []
+        },
+        {
+          "name": "Official Store Reply",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"comment\": \"Xaridingiz va ijobiy fikringiz uchun tashakkur! Sizga xizmat ko'rsatishdan mamnunmiz.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/reviews/1/reply/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reviews",
+                "1",
+                "reply",
+                ""
+              ]
+            },
+            "description": "Official response from store / vendor team."
+          },
+          "response": []
+        },
+        {
+          "name": "Admin Moderation Queue",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/reviews/admin/moderation/?status=PENDING",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reviews",
+                "admin",
+                "moderation",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "PENDING"
+                }
+              ]
+            },
+            "description": "Lists reviews pending moderation or filtered by status for staff review."
+          },
+          "response": []
+        },
+        {
+          "name": "Admin Moderate Review (Approve/Reject)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"status\": \"APPROVED\",\n    \"rejection_reason\": \"\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/reviews/admin/1/moderate/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reviews",
+                "admin",
+                "1",
+                "moderate",
+                ""
+              ]
+            },
+            "description": "Staff action to APPROVE or REJECT a review."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "6. Notifications",
+      "description": "In-app account notifications, user notification preferences, outbound email logs and dynamic templates.",
+      "item": [
+        {
+          "name": "Customer - List Notifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/?is_read=false&type=ORDER",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "is_read",
+                  "value": "false"
+                },
+                {
+                  "key": "type",
+                  "value": "ORDER"
+                }
+              ]
+            },
+            "description": "Lists in-app notifications for authenticated user with optional filtering by is_read, type, priority, and text search."
+          },
+          "response": []
+        },
+        {
+          "name": "Customer - Get Unread & Urgent Count",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/unread-count/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "unread-count",
+                ""
+              ]
+            },
+            "description": "Quick lightweight endpoint returning unread_count and urgent_count for navbar bell icon."
+          },
+          "response": []
+        },
+        {
+          "name": "Customer - Get Notification Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/{{notif_id}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "{{notif_id}}",
+                ""
+              ]
+            },
+            "description": "Fetches complete notification details including message body, action URL, and metadata payload."
+          },
+          "response": []
+        },
+        {
+          "name": "Customer - Mark Single Notification Read",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/{{notif_id}}/read/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "{{notif_id}}",
+                "read",
+                ""
+              ]
+            },
+            "description": "Sets is_read=true and populates read_at timestamp for a single notification."
+          },
+          "response": []
+        },
+        {
+          "name": "Customer - Mark Single Notification Unread",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/{{notif_id}}/unread/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "{{notif_id}}",
+                "unread",
+                ""
+              ]
+            },
+            "description": "Reverts notification is_read to false and resets read_at."
+          },
+          "response": []
+        },
+        {
+          "name": "Customer - Mark All Notifications Read",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/read-all/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "read-all",
+                ""
+              ]
+            },
+            "description": "Batch marks all unread notifications of current user as read in a single atomic SQL query."
+          },
+          "response": []
+        },
+        {
+          "name": "Customer - Delete Single Notification",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/{{notif_id}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "{{notif_id}}",
+                ""
+              ]
+            },
+            "description": "Deletes notification from user's personal alert feed."
+          },
+          "response": []
+        },
+        {
+          "name": "Customer - Clear All Read Notifications",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/clear-read/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "clear-read",
+                ""
+              ]
+            },
+            "description": "Bulk deletes all read notifications for the current user."
+          },
+          "response": []
+        },
+        {
+          "name": "Customer - Get Notification Preferences",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/preferences/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "preferences",
+                ""
+              ]
+            },
+            "description": "Retrieves user channel opt-in/opt-out preferences."
+          },
+          "response": []
+        },
+        {
+          "name": "Customer - Update Notification Preferences",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email_promotions\": true,\n    \"in_app_promotions\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/preferences/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "preferences",
+                ""
+              ]
+            },
+            "description": "Partially updates user notification preference flags."
+          },
+          "response": []
+        },
+        {
+          "name": "Admin - List All In-App Notifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/admin/in-app/?type=SYSTEM&priority=HIGH",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "admin",
+                "in-app",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "SYSTEM"
+                },
+                {
+                  "key": "priority",
+                  "value": "HIGH"
+                }
+              ]
+            },
+            "description": "Administrative overview of all notifications with advanced filters and customer search."
+          },
+          "response": []
+        },
+        {
+          "name": "Admin - Broadcast In-App Notification",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Platform Scheduled Maintenance\",\n    \"message\": \"The system will be undergoing performance maintenance on Sunday at 02:00 AM.\",\n    \"notification_type\": \"SYSTEM\",\n    \"priority\": \"HIGH\",\n    \"broadcast\": true,\n    \"action_url\": \"/announcements/maintenance\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/admin/in-app/broadcast/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "admin",
+                "in-app",
+                "broadcast",
+                ""
+              ]
+            },
+            "description": "Broadcasts notifications to all active users or targeted user IDs using high-speed bulk_create."
+          },
+          "response": []
+        },
+        {
+          "name": "Admin - List Outbound Emails Queue",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/admin/emails/?status=FAILED",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "admin",
+                "emails",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "FAILED"
+                }
+              ]
+            },
+            "description": "Lists outbound email dispatch queue with status, retry counters, and error summaries."
+          },
+          "response": []
+        },
+        {
+          "name": "Admin - Get Outbound Email Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/admin/emails/{{email_id}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "admin",
+                "emails",
+                "{{email_id}}",
+                ""
+              ]
+            },
+            "description": "Inspects full email log, rendered HTML body, recipient, and provider message ID."
+          },
+          "response": []
+        },
+        {
+          "name": "Admin - Retry Failed Email",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/admin/emails/{{email_id}}/retry/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "admin",
+                "emails",
+                "{{email_id}}",
+                "retry",
+                ""
+              ]
+            },
+            "description": "Manually triggers a dispatch attempt for a failed email notification."
+          },
+          "response": []
+        },
+        {
+          "name": "Admin - Cancel Pending Email",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/admin/emails/{{email_id}}/cancel/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "admin",
+                "emails",
+                "{{email_id}}",
+                "cancel",
+                ""
+              ]
+            },
+            "description": "Cancels a pending email in the dispatch queue."
+          },
+          "response": []
+        },
+        {
+          "name": "Admin - List Notification Templates",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/admin/templates/?is_active=true",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "admin",
+                "templates",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "is_active",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": "Lists all dynamic notification templates."
+          },
+          "response": []
+        },
+        {
+          "name": "Admin - Create Notification Template",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"code\": \"order_confirmed\",\n    \"name\": \"Order Confirmation Notice\",\n    \"description\": \"Dispatched upon successful order creation\",\n    \"notification_type\": \"ORDER\",\n    \"email_subject_template\": \"Order #{{ order_number }} Confirmed\",\n    \"email_body_html_template\": \"<h2>Thank you {{ customer_name }}!</h2><p>Your order #{{ order_number }} is received.</p>\",\n    \"email_body_text_template\": \"Thank you {{ customer_name }}! Your order #{{ order_number }} is received.\",\n    \"in_app_title_template\": \"Order #{{ order_number }} Confirmed\",\n    \"in_app_message_template\": \"Your order #{{ order_number }} has been confirmed.\",\n    \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/admin/templates/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "admin",
+                "templates",
+                ""
+              ]
+            },
+            "description": "Creates a new dynamic template."
+          },
+          "response": []
+        },
+        {
+          "name": "Admin - Get & Update Notification Template",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Updated Order Confirmation Notice\",\n    \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/admin/templates/{{template_code}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "admin",
+                "templates",
+                "{{template_code}}",
+                ""
+              ]
+            },
+            "description": "Retrieves or partially updates a notification template by unique code."
+          },
+          "response": []
+        },
+        {
+          "name": "Admin - Test-Send Notification Template",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"test_email\": \"admin@ecommerce.local\",\n    \"context_data\": {\n        \"order_number\": \"ORD-20261022-9999\",\n        \"customer_name\": \"Test Administrator\"\n    },\n    \"send_email\": true,\n    \"send_in_app\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/admin/templates/{{template_code}}/test-send/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "admin",
+                "templates",
+                "{{template_code}}",
+                "test-send",
+                ""
+              ]
+            },
+            "description": "Renders a template with provided sample context and test-dispatches it to verified test addresses."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "7. Dashboard & Admin APIs",
+      "description": "Administrative metrics, inventory reports, staff audit trail, order management, and operational analytics.",
+      "item": [
+        {
+          "name": "1. Analytics & KPIs",
+          "item": [
+            {
+              "name": "Get Executive KPIs Overview",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/analytics/overview/?date_from=2026-10-01&date_to=2026-10-31",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "analytics",
+                    "overview",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "date_from",
+                      "value": "2026-10-01"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "2026-10-31"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Sales Dynamics Chart",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/analytics/sales-chart/?days=30",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "analytics",
+                    "sales-chart",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "days",
+                      "value": "30"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Top Selling Products",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/analytics/top-products/?limit=10",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "analytics",
+                    "top-products",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Top Customer Spenders",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/analytics/top-customers/?limit=10",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "analytics",
+                    "top-customers",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "2. Inventory & Stock Management",
+          "item": [
+            {
+              "name": "List All Inventory Stocks",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/inventory/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "inventory",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "List Low Stock Items",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/inventory/low-stock/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "inventory",
+                    "low-stock",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Inventory Overview Statistics",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/inventory/stats/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "inventory",
+                    "stats",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Adjust Variant Stock Balance",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quantity_delta\": 20,\n  \"reason\": \"Yangi partiya kirimi qabul qilindi\",\n  \"movement_type\": \"INCOMING\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/inventory/1/adjust/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "inventory",
+                    "1",
+                    "adjust",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "List Stock Movement Audit Logs",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/inventory/logs/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "inventory",
+                    "logs",
+                    ""
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "3. Order Management & Notes",
+          "item": [
+            {
+              "name": "List Orders with Filters",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/orders/?status=CONFIRMED",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "orders",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "CONFIRMED"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Order Backoffice Details",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/orders/ORD-DASH-1001/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "orders",
+                    "ORD-DASH-1001",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Update Order Status & Tracking",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"SHIPPED\",\n  \"tracking_number\": \"TRK-9876543210\",\n  \"admin_notes\": \"Buyurtma yetkazib beruvchi kuryerga topshirildi.\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/orders/ORD-DASH-1001/status/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "orders",
+                    "ORD-DASH-1001",
+                    "status",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "List Order Internal Notes",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/orders/ORD-DASH-1001/notes/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "orders",
+                    "ORD-DASH-1001",
+                    "notes",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Add Internal Note to Order",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"note\": \"Mijoz bilan boglanildi, 18:00 dan keyin qabul qiladi.\",\n  \"is_pinned\": true\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/orders/ORD-DASH-1001/notes/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "orders",
+                    "ORD-DASH-1001",
+                    "notes",
+                    ""
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "4. Customer CRM & Status",
+          "item": [
+            {
+              "name": "List Customers with Lifetime Spend",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/customers/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "customers",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Customer Dossier & Order History",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/customers/1/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "customers",
+                    "1",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Toggle Customer Active / Blocked Status",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"is_active\": false,\n  \"reason\": \"Spam yoki shubhali firibgarlik harakati aniqlandi\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/customers/1/toggle-status/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "customers",
+                    "1",
+                    "toggle-status",
+                    ""
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "5. Audit Trail & Alerts",
+          "item": [
+            {
+              "name": "List Staff Activity Audit Trail",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/audit-logs/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "audit-logs",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "List System Operational Alerts",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/alerts/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "alerts",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Mark System Alert as Resolved",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/dashboard/alerts/1/resolve/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "dashboard",
+                    "alerts",
+                    "1",
+                    "resolve",
+                    ""
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "8. Payments & Billing",
+      "item": [
+        {
+          "name": "1. Customer Payments",
+          "item": [
+            {
+              "name": "Initialize Payment (Payme)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"order_number\": \"{{order_number}}\",\n    \"provider\": \"PAYME\",\n    \"return_url\": \"https://shop.uz/checkout/success\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/initialize/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "initialize",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Initialize Payment (Click)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"order_number\": \"{{order_number}}\",\n    \"provider\": \"CLICK\",\n    \"return_url\": \"https://shop.uz/checkout/success\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/initialize/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "initialize",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "List Customer Payments",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/?page=1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Payment Detail",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/{{payment_number}}/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "{{payment_number}}",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Cancel Pending Payment",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"reason\": \"Customer requested cancellation\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/{{payment_number}}/cancel/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "{{payment_number}}",
+                    "cancel",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Pay With Saved Card (1-Click)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"order_number\": \"{{order_number}}\",\n    \"card_id\": 1\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/pay-with-card/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "pay-with-card",
+                    ""
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "2. Saved Bank Cards",
+          "item": [
+            {
+              "name": "List Saved Cards",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/cards/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "cards",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Add Saved Card (Request OTP)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"card_number\": \"8600123456789012\",\n    \"expire_month\": \"12\",\n    \"expire_year\": \"28\",\n    \"card_holder\": \"CARDHOLDER NAME\",\n    \"provider\": \"PAYME\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/cards/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "cards",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Verify Saved Card OTP",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"otp_code\": \"123456\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/cards/1/verify/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "cards",
+                    "1",
+                    "verify",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Set Default Card",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/cards/1/default/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "cards",
+                    "1",
+                    "default",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Delete Saved Card",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/cards/1/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "cards",
+                    "1",
+                    ""
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "3. Payment Gateways Webhooks",
+          "item": [
+            {
+              "name": "Payme Webhook (CheckPerformTransaction)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{payme_base64_auth}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"method\": \"CheckPerformTransaction\",\n    \"params\": {\n        \"amount\": 22500000,\n        \"account\": {\n            \"order_number\": \"{{order_number}}\"\n        }\n    },\n    \"id\": 1001\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/webhooks/payme/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "webhooks",
+                    "payme",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Payme Webhook (PerformTransaction)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{payme_base64_auth}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"method\": \"PerformTransaction\",\n    \"params\": {\n        \"id\": \"payme_trans_1001\"\n    },\n    \"id\": 1002\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/webhooks/payme/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "webhooks",
+                    "payme",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Click Webhook (Prepare)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"click_trans_id\": 99881122,\n    \"service_id\": 12345,\n    \"click_paydoc_id\": 5544,\n    \"merchant_trans_id\": \"{{order_number}}\",\n    \"amount\": \"225000.00\",\n    \"action\": 0,\n    \"error\": 0,\n    \"error_note\": \"Success\",\n    \"sign_time\": \"2026-10-22 12:00:00\",\n    \"sign_string\": \"{{click_md5_hash}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/webhooks/click/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "webhooks",
+                    "click",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Uzum Webhook",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"order_id\": \"{{order_number}}\",\n    \"payment_id\": \"UZUM_TX_123\",\n    \"amount\": \"225000.00\",\n    \"status\": \"SUCCESS\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/webhooks/uzum/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "webhooks",
+                    "uzum",
+                    ""
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "4. Admin Management & Audit",
+          "item": [
+            {
+              "name": "Admin List All Payments",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/admin/?page=1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "admin",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Admin Payment Detail (Audit Logs)",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/admin/{{payment_number}}/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "admin",
+                    "{{payment_number}}",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Admin Issue Refund",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"amount\": \"50000.00\",\n    \"reason\": \"Customer returned item\",\n    \"provider_refund_id\": \"REF_GATEWAY_1001\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/admin/{{payment_number}}/refund/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "admin",
+                    "{{payment_number}}",
+                    "refund",
+                    ""
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Admin List Refunds",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/admin/refunds/?page=1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "admin",
+                    "refunds",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Admin Audit Transaction Logs",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{admin_access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/payments/admin/transactions/?page=1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "payments",
+                    "admin",
+                    "transactions",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "9. API Documentation & OpenAPI Schemas",
+      "description": "Endpoints for downloading OpenAPI 3.0 schemas and viewing interactive Swagger UI / Redoc documentation.",
+      "item": [
+        {
+          "name": "Get OpenAPI 3.0 Schema (JSON)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/schema/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "schema",
+                ""
+              ]
+            },
+            "description": "Returns the complete OpenAPI 3.0 machine-readable schema for all ecommerce REST API endpoints in JSON format."
+          },
+          "response": []
+        },
+        {
+          "name": "Open Swagger UI Interactive Documentation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/docs/swagger/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "docs",
+                "swagger",
+                ""
+              ]
+            },
+            "description": "Interactive Swagger UI page for trying out API endpoints with Bearer JWT token support directly in the browser."
+          },
+          "response": []
+        },
+        {
+          "name": "Open Redoc Documentation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/docs/redoc/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "docs",
+                "redoc",
+                ""
+              ]
+            },
+            "description": "Alternative clean, responsive, and readable Redoc documentation page."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
 }

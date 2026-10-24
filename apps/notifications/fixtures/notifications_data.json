@@ -1,0 +1,241 @@
+[
+  {
+    "model": "notifications.notificationtemplate",
+    "pk": 1,
+    "fields": {
+      "code": "ORDER_CONFIRMED",
+      "name": "Order Confirmation",
+      "description": "Triggered when an order payment is confirmed.",
+      "notification_type": "ORDER",
+      "email_subject_template": "Buyurtmangiz tasdiqlandi: #{{ order_number }}",
+      "email_body_html_template": "<p>Hurmatli mijoz! Sizning #{{ order_number }} raqamli buyurtmangiz muvaffaqiyatli qabul qilindi.</p>",
+      "email_body_text_template": "Hurmatli mijoz! Sizning #{{ order_number }} raqamli buyurtmangiz muvaffaqiyatli qabul qilindi.",
+      "in_app_title_template": "Buyurtma tasdiqlandi (#{{ order_number }})",
+      "in_app_message_template": "Sizning #{{ order_number }} raqamli buyurtmangiz qabul qilindi va tayyorlanmoqda.",
+      "is_active": true,
+      "created_at": "2026-10-01T00:00:00Z",
+      "updated_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notificationtemplate",
+    "pk": 2,
+    "fields": {
+      "code": "ORDER_DELIVERED",
+      "name": "Order Delivered",
+      "description": "Triggered when order package is delivered to customer.",
+      "notification_type": "ORDER",
+      "email_subject_template": "Buyurtmangiz yetkazildi: #{{ order_number }}",
+      "email_body_html_template": "<p>Buyurtmangiz yetkazildi! Xaridingiz uchun tashakkur.</p>",
+      "email_body_text_template": "Buyurtmangiz yetkazildi! Xaridingiz uchun tashakkur.",
+      "in_app_title_template": "Buyurtma yetkazildi (#{{ order_number }})",
+      "in_app_message_template": "Mahsulotlaringiz yetkazib berildi. Iltimos, xaridingizga baho bering!",
+      "is_active": true,
+      "created_at": "2026-10-01T00:00:00Z",
+      "updated_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notificationtemplate",
+    "pk": 3,
+    "fields": {
+      "code": "PAYMENT_SUCCESS",
+      "name": "Payment Successful",
+      "description": "Triggered on successful electronic payment transaction.",
+      "notification_type": "PAYMENT",
+      "email_subject_template": "To'lov muvaffaqiyatli qabul qilindi: {{ amount }} UZS",
+      "email_body_html_template": "<p>{{ amount }} UZS miqdoridagi to'lovingiz tasdiqlandi.</p>",
+      "email_body_text_template": "{{ amount }} UZS miqdoridagi to'lovingiz tasdiqlandi.",
+      "in_app_title_template": "To'lov tasdiqlandi",
+      "in_app_message_template": "{{ amount }} UZS miqdoridagi to'lovingiz muvaffaqiyatli qabul qilindi.",
+      "is_active": true,
+      "created_at": "2026-10-01T00:00:00Z",
+      "updated_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notificationpreference",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "email_order_updates": true,
+      "email_payment_receipts": true,
+      "email_promotions": true,
+      "email_security_alerts": true,
+      "in_app_order_updates": true,
+      "in_app_payment_updates": true,
+      "in_app_promotions": true,
+      "created_at": "2026-10-01T00:00:00Z",
+      "updated_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notificationpreference",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "email_order_updates": true,
+      "email_payment_receipts": true,
+      "email_promotions": false,
+      "email_security_alerts": true,
+      "in_app_order_updates": true,
+      "in_app_payment_updates": true,
+      "in_app_promotions": true,
+      "created_at": "2026-10-01T00:00:00Z",
+      "updated_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notificationpreference",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "email_order_updates": true,
+      "email_payment_receipts": true,
+      "email_promotions": true,
+      "email_security_alerts": true,
+      "in_app_order_updates": true,
+      "in_app_payment_updates": true,
+      "in_app_promotions": true,
+      "created_at": "2026-10-01T00:00:00Z",
+      "updated_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notification",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "notification_type": "ORDER",
+      "priority": "HIGH",
+      "title": "Buyurtmangiz yetkazildi! (#ORD-20261024-0001)",
+      "message": "Sizning Apple MacBook Pro 16\" buyurtmangiz muvaffaqiyatli topshirildi. Mahsulotga baho bering!",
+      "is_read": true,
+      "read_at": "2026-10-22T15:00:00Z",
+      "action_url": "/orders/ORD-20261024-0001/",
+      "data": {
+        "order_number": "ORD-20261024-0001",
+        "product_id": 1
+      },
+      "created_at": "2026-10-22T14:30:00Z",
+      "updated_at": "2026-10-22T15:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notification",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "notification_type": "PAYMENT",
+      "priority": "NORMAL",
+      "title": "To'lov qabul qilindi",
+      "message": "#ORD-20261024-0002 raqamli buyurtmangiz uchun 1,019.00 UZS to'lov Click orqali muvaffaqiyatli qabul qilindi.",
+      "is_read": false,
+      "read_at": null,
+      "action_url": "/orders/ORD-20261024-0002/",
+      "data": {
+        "order_number": "ORD-20261024-0002",
+        "payment_provider": "CLICK"
+      },
+      "created_at": "2026-10-23T12:00:00Z",
+      "updated_at": "2026-10-23T12:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notification",
+    "pk": 3,
+    "fields": {
+      "user": 2,
+      "notification_type": "PROMOTION",
+      "priority": "LOW",
+      "title": "Yozgi chegirmalar mavsumi boshlandi!",
+      "message": "Barcha elektronika mahsulotlariga 15% gacha maxsus chegirmalar taqdim etilmoqda.",
+      "is_read": false,
+      "read_at": null,
+      "action_url": "/promotions/summer-sale/",
+      "data": {
+        "campaign": "summer_2026"
+      },
+      "created_at": "2026-10-24T08:00:00Z",
+      "updated_at": "2026-10-24T08:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.emailnotification",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "recipient_email": "john.doe@example.com",
+      "subject": "Buyurtmangiz tasdiqlandi: #ORD-20261024-0001",
+      "body_text": "Hurmatli John Doe! Sizning #ORD-20261024-0001 raqamli buyurtmangiz qabul qilindi.",
+      "body_html": "<p>Hurmatli John Doe! Sizning <b>#ORD-20261024-0001</b> raqamli buyurtmangiz qabul qilindi.</p>",
+      "template_code": "ORDER_CONFIRMED",
+      "context_data": {
+        "order_number": "ORD-20261024-0001",
+        "amount": "2249.00"
+      },
+      "status": "SENT",
+      "priority": "HIGH",
+      "attempts": 1,
+      "max_retries": 3,
+      "last_attempt_at": "2026-10-20T10:01:00Z",
+      "sent_at": "2026-10-20T10:01:00Z",
+      "scheduled_at": "2026-10-20T10:00:00Z",
+      "error_message": null,
+      "provider_message_id": "smtp-msg-001-john",
+      "created_at": "2026-10-20T10:00:00Z",
+      "updated_at": "2026-10-20T10:01:00Z"
+    }
+  },
+  {
+    "model": "notifications.emailnotification",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "recipient_email": "jane.doe@example.com",
+      "subject": "Buyurtmangiz tasdiqlandi: #ORD-20261024-0002",
+      "body_text": "Hurmatli Jane Doe! Sizning #ORD-20261024-0002 raqamli buyurtmangiz qabul qilindi.",
+      "body_html": "<p>Hurmatli Jane Doe! Sizning <b>#ORD-20261024-0002</b> raqamli buyurtmangiz qabul qilindi.</p>",
+      "template_code": "ORDER_CONFIRMED",
+      "context_data": {
+        "order_number": "ORD-20261024-0002",
+        "amount": "1019.00"
+      },
+      "status": "SENT",
+      "priority": "HIGH",
+      "attempts": 1,
+      "max_retries": 3,
+      "last_attempt_at": "2026-10-23T11:46:00Z",
+      "sent_at": "2026-10-23T11:46:00Z",
+      "scheduled_at": "2026-10-23T11:45:00Z",
+      "error_message": null,
+      "provider_message_id": "smtp-msg-002-jane",
+      "created_at": "2026-10-23T11:45:00Z",
+      "updated_at": "2026-10-23T11:46:00Z"
+    }
+  },
+  {
+    "model": "notifications.emailnotification",
+    "pk": 3,
+    "fields": {
+      "user": 2,
+      "recipient_email": "john.doe@example.com",
+      "subject": "Haftalik maxsus chegirmalar xabarnomasi",
+      "body_text": "Yangi chegirmalar katalogi bilan tanishing.",
+      "body_html": "<p>Yangi chegirmalar katalogi bilan tanishing.</p>",
+      "template_code": null,
+      "context_data": {},
+      "status": "PENDING",
+      "priority": "LOW",
+      "attempts": 0,
+      "max_retries": 3,
+      "last_attempt_at": null,
+      "sent_at": null,
+      "scheduled_at": "2026-10-25T10:00:00Z",
+      "error_message": null,
+      "provider_message_id": null,
+      "created_at": "2026-10-24T12:00:00Z",
+      "updated_at": "2026-10-24T12:00:00Z"
+    }
+  }
+]
