@@ -184,6 +184,11 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     'COMPONENT_SPLIT_REQUEST': True,
+    'SCHEMA_PATH_PREFIX': r'/api/v[0-9]+',
+    'POSTPROCESSING_HOOKS': [
+        'drf_spectacular.hooks.postprocess_schema_enums',
+        'config.spectacular.custom_tag_postprocessing_hook',
+    ],
     'SECURITY': [{'BearerAuth': []}],
     'APPEND_COMPONENTS': {
         'securitySchemes': {
