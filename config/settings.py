@@ -360,6 +360,7 @@ JAZZMIN_SETTINGS = {
     "custom_js": None,
     "use_google_fonts_cdn": True,
     "show_ui_builder": False,
+    "show_theme_chooser": True,
     "changeform_format": "horizontal_tabs",
 }
 
@@ -384,7 +385,7 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_legacy_style": False,
     "sidebar_nav_flat_style": True,
     "theme": "flatly",
-    "default_theme_mode": "auto",
+    "default_theme_mode": "light",
     "button_classes": {
         "primary": "btn-primary",
         "secondary": "btn-secondary",
