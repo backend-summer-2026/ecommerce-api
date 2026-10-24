@@ -3570,6 +3570,80 @@
           ]
         }
       ]
+    },
+    {
+      "name": "9. API Documentation & OpenAPI Schemas",
+      "description": "Endpoints for downloading OpenAPI 3.0 schemas and viewing interactive Swagger UI / Redoc documentation.",
+      "item": [
+        {
+          "name": "Get OpenAPI 3.0 Schema (JSON)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/schema/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "schema",
+                ""
+              ]
+            },
+            "description": "Returns the complete OpenAPI 3.0 machine-readable schema for all ecommerce REST API endpoints in JSON format."
+          },
+          "response": []
+        },
+        {
+          "name": "Open Swagger UI Interactive Documentation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/docs/swagger/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "docs",
+                "swagger",
+                ""
+              ]
+            },
+            "description": "Interactive Swagger UI page for trying out API endpoints with Bearer JWT token support directly in the browser."
+          },
+          "response": []
+        },
+        {
+          "name": "Open Redoc Documentation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/docs/redoc/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "docs",
+                "redoc",
+                ""
+              ]
+            },
+            "description": "Alternative clean, responsive, and readable Redoc documentation page."
+          },
+          "response": []
+        }
+      ]
     }
   ]
 }
