@@ -1266,33 +1266,78 @@
         },
         {
             "name": "5. Reviews & Ratings",
-            "description": "Customer reviews and star ratings for products.",
+            "description": "Customer reviews, ratings, image uploads, helpful voting, seller replies, and moderation.",
             "item": [
                 {
-                    "name": "List Product Reviews",
+                    "name": "Get Product Rating Summary",
                     "request": {
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{base_url}}/api/v1/products/1/reviews/",
+                            "raw": "{{base_url}}/api/v1/reviews/products/1/summary/",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
                                 "api",
                                 "v1",
+                                "reviews",
                                 "products",
                                 "1",
-                                "reviews",
+                                "summary",
                                 ""
                             ]
                         },
-                        "description": "Lists reviews for a specific product."
+                        "description": "Retrieves aggregated rating summary and star breakdown for a product."
                     },
                     "response": []
                 },
                 {
-                    "name": "Add Product Review",
+                    "name": "List Product Reviews",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/reviews/products/1/?rating=5&verified_only=false&ordering=-created_at",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "reviews",
+                                "products",
+                                "1",
+                                ""
+                            ],
+                            "query": [
+                                {
+                                    "key": "rating",
+                                    "value": "5",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "verified_only",
+                                    "value": "true",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "has_images",
+                                    "value": "true",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "ordering",
+                                    "value": "-created_at"
+                                }
+                            ]
+                        },
+                        "description": "Lists approved reviews for a given product with filters, sorting, and pagination."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Submit Product Review",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -1307,23 +1352,321 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"rating\": 5,\n    \"comment\": \"Ajoyib mahsulot, sifati juda yuqori!\"\n}"
+                            "raw": "{\n    \"rating\": 5,\n    \"title\": \"Ajoyib smartfon!\",\n    \"comment\": \"Kamerasi va ekrani juda yuqori darajada ishlangan. Tavsiya qilaman!\",\n    \"pros\": \"Kamera sifati, batareya quvvati, ekran ravshanligi\",\n    \"cons\": \"Narxi biroz baland\"\n}"
                         },
                         "url": {
-                            "raw": "{{base_url}}/api/v1/products/1/reviews/",
+                            "raw": "{{base_url}}/api/v1/reviews/products/1/",
                             "host": [
                                 "{{base_url}}"
                             ],
                             "path": [
                                 "api",
                                 "v1",
+                                "reviews",
                                 "products",
                                 "1",
-                                "reviews",
                                 ""
                             ]
                         },
-                        "description": "Submits a review and rating for a product."
+                        "description": "Submits a new customer review for a product."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Review Details",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/reviews/1/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "reviews",
+                                "1",
+                                ""
+                            ]
+                        },
+                        "description": "Retrieves full details of a specific review."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Review (Edit)",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"rating\": 4,\n    \"title\": \"1 oylik foydalanishdan so'ng yangilangan fikr\",\n    \"comment\": \"Hamma jihati yaxshi, ammo quvvatlash biroz sekinroq tuyuldi.\",\n    \"pros\": \"Kamera, Ekran\",\n    \"cons\": \"Quvvatlash tezligi\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/reviews/1/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "reviews",
+                                "1",
+                                ""
+                            ]
+                        },
+                        "description": "Updates an authored review. Sets status back to PENDING for re-moderation."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Review",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/reviews/1/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "reviews",
+                                "1",
+                                ""
+                            ]
+                        },
+                        "description": "Deletes the customer review."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Upload Review Image",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "image",
+                                    "type": "file",
+                                    "src": ""
+                                },
+                                {
+                                    "key": "caption",
+                                    "value": "Qutidan chiqarish jarayoni",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/reviews/1/images/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "reviews",
+                                "1",
+                                "images",
+                                ""
+                            ]
+                        },
+                        "description": "Uploads a photograph attachment to an authored review."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Review Image",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/reviews/images/1/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "reviews",
+                                "images",
+                                "1",
+                                ""
+                            ]
+                        },
+                        "description": "Deletes an uploaded photo attachment."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Vote on Review (Helpful / Unhelpful)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{access_token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"vote_type\": \"HELPFUL\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/reviews/1/vote/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "reviews",
+                                "1",
+                                "vote",
+                                ""
+                            ]
+                        },
+                        "description": "Casts a HELPFUL or UNHELPFUL vote on a review. Clicking the same vote toggles it off."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Official Store Reply",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{admin_access_token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"comment\": \"Xaridingiz va ijobiy fikringiz uchun tashakkur! Sizga xizmat ko'rsatishdan mamnunmiz.\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/reviews/1/reply/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "reviews",
+                                "1",
+                                "reply",
+                                ""
+                            ]
+                        },
+                        "description": "Official response from store / vendor team."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Admin Moderation Queue",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{admin_access_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/reviews/admin/moderation/?status=PENDING",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "reviews",
+                                "admin",
+                                "moderation",
+                                ""
+                            ],
+                            "query": [
+                                {
+                                    "key": "status",
+                                    "value": "PENDING"
+                                }
+                            ]
+                        },
+                        "description": "Lists reviews pending moderation or filtered by status for staff review."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Admin Moderate Review (Approve/Reject)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{admin_access_token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"status\": \"APPROVED\",\n    \"rejection_reason\": \"\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/reviews/admin/1/moderate/",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "reviews",
+                                "admin",
+                                "1",
+                                "moderate",
+                                ""
+                            ]
+                        },
+                        "description": "Staff action to APPROVE or REJECT a review."
                     },
                     "response": []
                 }
@@ -1997,6 +2340,649 @@
                         "description": "Retrieves revenue, order count, and user growth statistics for admin dashboard."
                     },
                     "response": []
+                }
+            ]
+        },
+        {
+            "name": "8. Payments & Billing",
+            "item": [
+                {
+                    "name": "1. Customer Payments",
+                    "item": [
+                        {
+                            "name": "Initialize Payment (Payme)",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{access_token}}"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"order_number\": \"{{order_number}}\",\n    \"provider\": \"PAYME\",\n    \"return_url\": \"https://shop.uz/checkout/success\"\n}"
+                                },
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/initialize/",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "initialize",
+                                        ""
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Initialize Payment (Click)",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{access_token}}"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"order_number\": \"{{order_number}}\",\n    \"provider\": \"CLICK\",\n    \"return_url\": \"https://shop.uz/checkout/success\"\n}"
+                                },
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/initialize/",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "initialize",
+                                        ""
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "List Customer Payments",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{access_token}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/?page=1",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        ""
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "page",
+                                            "value": "1"
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Get Payment Detail",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{access_token}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/{{payment_number}}/",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "{{payment_number}}",
+                                        ""
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Cancel Pending Payment",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{access_token}}"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"reason\": \"Customer requested cancellation\"\n}"
+                                },
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/{{payment_number}}/cancel/",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "{{payment_number}}",
+                                        "cancel",
+                                        ""
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Pay With Saved Card (1-Click)",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{access_token}}"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"order_number\": \"{{order_number}}\",\n    \"card_id\": 1\n}"
+                                },
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/pay-with-card/",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "pay-with-card",
+                                        ""
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "2. Saved Bank Cards",
+                    "item": [
+                        {
+                            "name": "List Saved Cards",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{access_token}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/cards/",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "cards",
+                                        ""
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Add Saved Card (Request OTP)",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{access_token}}"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"card_number\": \"8600123456789012\",\n    \"expire_month\": \"12\",\n    \"expire_year\": \"28\",\n    \"card_holder\": \"CARDHOLDER NAME\",\n    \"provider\": \"PAYME\"\n}"
+                                },
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/cards/",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "cards",
+                                        ""
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Verify Saved Card OTP",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{access_token}}"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"otp_code\": \"123456\"\n}"
+                                },
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/cards/1/verify/",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "cards",
+                                        "1",
+                                        "verify",
+                                        ""
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Set Default Card",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{access_token}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/cards/1/default/",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "cards",
+                                        "1",
+                                        "default",
+                                        ""
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Delete Saved Card",
+                            "request": {
+                                "method": "DELETE",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{access_token}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/cards/1/",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "cards",
+                                        "1",
+                                        ""
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "3. Payment Gateways Webhooks",
+                    "item": [
+                        {
+                            "name": "Payme Webhook (CheckPerformTransaction)",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Basic {{payme_base64_auth}}"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"method\": \"CheckPerformTransaction\",\n    \"params\": {\n        \"amount\": 22500000,\n        \"account\": {\n            \"order_number\": \"{{order_number}}\"\n        }\n    },\n    \"id\": 1001\n}"
+                                },
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/webhooks/payme/",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "webhooks",
+                                        "payme",
+                                        ""
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Payme Webhook (PerformTransaction)",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Basic {{payme_base64_auth}}"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"method\": \"PerformTransaction\",\n    \"params\": {\n        \"id\": \"payme_trans_1001\"\n    },\n    \"id\": 1002\n}"
+                                },
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/webhooks/payme/",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "webhooks",
+                                        "payme",
+                                        ""
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Click Webhook (Prepare)",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"click_trans_id\": 99881122,\n    \"service_id\": 12345,\n    \"click_paydoc_id\": 5544,\n    \"merchant_trans_id\": \"{{order_number}}\",\n    \"amount\": \"225000.00\",\n    \"action\": 0,\n    \"error\": 0,\n    \"error_note\": \"Success\",\n    \"sign_time\": \"2026-10-22 12:00:00\",\n    \"sign_string\": \"{{click_md5_hash}}\"\n}"
+                                },
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/webhooks/click/",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "webhooks",
+                                        "click",
+                                        ""
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Uzum Webhook",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"order_id\": \"{{order_number}}\",\n    \"payment_id\": \"UZUM_TX_123\",\n    \"amount\": \"225000.00\",\n    \"status\": \"SUCCESS\"\n}"
+                                },
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/webhooks/uzum/",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "webhooks",
+                                        "uzum",
+                                        ""
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "4. Admin Management & Audit",
+                    "item": [
+                        {
+                            "name": "Admin List All Payments",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{admin_access_token}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/admin/?page=1",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "admin",
+                                        ""
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "page",
+                                            "value": "1"
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Admin Payment Detail (Audit Logs)",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{admin_access_token}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/admin/{{payment_number}}/",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "admin",
+                                        "{{payment_number}}",
+                                        ""
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Admin Issue Refund",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{admin_access_token}}"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"amount\": \"50000.00\",\n    \"reason\": \"Customer returned item\",\n    \"provider_refund_id\": \"REF_GATEWAY_1001\"\n}"
+                                },
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/admin/{{payment_number}}/refund/",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "admin",
+                                        "{{payment_number}}",
+                                        "refund",
+                                        ""
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Admin List Refunds",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{admin_access_token}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/admin/refunds/?page=1",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "admin",
+                                        "refunds",
+                                        ""
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "page",
+                                            "value": "1"
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Admin Audit Transaction Logs",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{admin_access_token}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/payments/admin/transactions/?page=1",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "payments",
+                                        "admin",
+                                        "transactions",
+                                        ""
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "page",
+                                            "value": "1"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ]
                 }
             ]
         }
