@@ -114,7 +114,9 @@ class DashboardAdminTestCase(TestCase):
         self.assertEqual(model_admin.short_note(note), note.note)
 
     def test_system_alert_admin_action(self):
+        from unittest.mock import MagicMock
         model_admin = SystemAlertAdmin(SystemAlert, site)
+        model_admin.message_user = MagicMock()
         alert = SystemAlert.objects.create(
             alert_type=SystemAlert.AlertType.LOW_STOCK,
             severity=SystemAlert.AlertSeverity.CRITICAL,
@@ -123,8 +125,6 @@ class DashboardAdminTestCase(TestCase):
         )
         request = self.factory.post('/admin/')
         request.user = self.admin_user
-        from django.contrib.messages.storage.fallback import FallbackStorage
-        setattr(request, '_messages', FallbackStorage(request))
 
         queryset = SystemAlert.objects.filter(pk=alert.pk)
         model_admin.mark_as_resolved(request, queryset)
@@ -132,3 +132,4 @@ class DashboardAdminTestCase(TestCase):
         alert.refresh_from_db()
         self.assertTrue(alert.is_resolved)
         self.assertEqual(alert.resolved_by, self.admin_user)
+        model_admin.message_user.assert_called_once()

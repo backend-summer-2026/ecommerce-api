@@ -382,9 +382,11 @@ class DashboardOrderStatusUpdateAPIView(APIView):
         # Record OrderStatusHistory
         OrderStatusHistory.objects.create(
             order=order,
-            status=new_status,
-            changed_by=request.user,
-            notes=admin_notes or f"Status changed from {old_status} to {new_status} via Dashboard",
+            old_status=old_status,
+            new_status=new_status,
+            comment=admin_notes or f"Status changed from {old_status} to {new_status} via Dashboard",
+            created_by=request.user,
+            is_customer_visible=False,
         )
 
         # Audit staff activity
