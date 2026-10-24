@@ -193,8 +193,8 @@ class OrderAdmin(admin.ModelAdmin):
     @admin.display(description='Total')
     def total_price_display(self, obj):
         return format_html(
-            '<strong>{:,.2f} {}</strong>',
-            obj.total_price,
+            '<strong>{} {}</strong>',
+            f"{obj.total_price:,.2f}",
             obj.currency,
         )
 
