@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     # Third-party apps
     'rest_framework',
     'rest_framework_simplejwt',
+    'drf_spectacular',
 
     # Local apps
     'apps.carts',
@@ -168,6 +169,42 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+# Spectacular (OpenAPI 3.0 / Swagger UI) Settings
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Ecommerce Platform REST API',
+    'DESCRIPTION': (
+        'E-Commerce platformasi uchun keng qamrovli REST API hujjatlari. '
+        'Foydalanuvchilar (Auth/JWT), Mahsulotlar katalogi, Savatcha, '
+        'Buyurtmalar, To\'lovlar (Payme, Click, Uzum), Sharhlar, '
+        'Bildirishnomalar va Boshqaruv paneli (Dashboard) modullarini o\'z ichiga oladi.'
+    ),
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SECURITY': [{'BearerAuth': []}],
+    'APPEND_COMPONENTS': {
+        'securitySchemes': {
+            'BearerAuth': {
+                'type': 'http',
+                'scheme': 'bearer',
+                'bearerFormat': 'JWT',
+                'description': 'JWT access tokenni kiriting (masalan: Bearer <access_token>)',
+            }
+        }
+    },
+    'TAGS': [
+        {'name': 'Auth', 'description': 'Autentifikatsiya, OTP, JWT tokenlar va foydalanuvchilar profili'},
+        {'name': 'Catalog', 'description': 'Mahsulotlar katalogi, toifalar, brendlar va variantlar'},
+        {'name': 'Cart', 'description': 'Xarid savatchasi va savat elementlari boshqaruvi'},
+        {'name': 'Orders', 'description': 'Buyurtmalar, kuponlar, manzil va statuslar tarixi'},
+        {'name': 'Payments', 'description': 'To\'lov tizimlari (Payme, Click, Uzum), tranzaksiyalar va refund'},
+        {'name': 'Notifications', 'description': 'Foydalanuvchi bildirishnomalari va email xabarlari'},
+        {'name': 'Reviews', 'description': 'Sharhlar, reytinglar, media fayllar va sotuvchi javoblari'},
+        {'name': 'Dashboard', 'description': 'Administratorlar uchun KPI metrikalar, audit jurnali va analitika'},
+    ],
 }
 
 # Simple JWT Settings
