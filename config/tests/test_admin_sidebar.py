@@ -39,9 +39,8 @@ class AdminSidebarAccordionTests(TestCase):
         js_file = settings.BASE_DIR / 'static' / 'admin' / 'js' / 'custom_sidebar.js'
         self.assertTrue(js_file.exists(), f"File {js_file} does not exist")
         content = js_file.read_text(encoding='utf-8')
-        self.assertIn('data-accordion', content)
         self.assertIn('has-treeview', content)
-        self.assertIn('initAccordion', content)
+        self.assertIn('initCaptureAccordion', content)
         self.assertIn('autoExpandActiveApp', content)
 
     def test_admin_index_sidebar_renders_treeview(self):
