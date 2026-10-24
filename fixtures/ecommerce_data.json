@@ -902,5 +902,1137 @@
       "created_at": "2026-01-03T08:05:00Z",
       "updated_at": "2026-01-03T08:05:00Z"
     }
+  },
+  {
+    "model": "orders.coupon",
+    "pk": 1,
+    "fields": {
+      "code": "WELCOME10",
+      "discount_type": "PERCENTAGE",
+      "discount_value": "10.00",
+      "min_order_amount": "200.00",
+      "max_discount_amount": "50.00",
+      "usage_limit": 100,
+      "usage_limit_per_user": 1,
+      "used_count": 0,
+      "valid_from": "2026-01-01T00:00:00Z",
+      "valid_until": "2026-12-31T23:59:59Z",
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "orders.coupon",
+    "pk": 2,
+    "fields": {
+      "code": "SUMMER50",
+      "discount_type": "FIXED_AMOUNT",
+      "discount_value": "50.00",
+      "min_order_amount": "300.00",
+      "max_discount_amount": null,
+      "usage_limit": 50,
+      "usage_limit_per_user": 2,
+      "used_count": 1,
+      "valid_from": "2026-06-01T00:00:00Z",
+      "valid_until": "2026-12-31T23:59:59Z",
+      "is_active": true,
+      "created_at": "2026-06-01T00:00:00Z",
+      "updated_at": "2026-10-20T10:00:00Z"
+    }
+  },
+  {
+    "model": "orders.coupon",
+    "pk": 3,
+    "fields": {
+      "code": "EXPIRED20",
+      "discount_type": "PERCENTAGE",
+      "discount_value": "20.00",
+      "min_order_amount": "100.00",
+      "max_discount_amount": "40.00",
+      "usage_limit": 10,
+      "usage_limit_per_user": 1,
+      "used_count": 10,
+      "valid_from": "2025-01-01T00:00:00Z",
+      "valid_until": "2025-12-31T23:59:59Z",
+      "is_active": false,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-12-31T23:59:59Z"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 1,
+    "fields": {
+      "order_number": "ORD-20261024-0001",
+      "user": 2,
+      "cart": "c1000000-0000-0000-0000-000000000001",
+      "coupon": 2,
+      "status": "DELIVERED",
+      "payment_status": "PAID",
+      "payment_method": "PAYME",
+      "shipping_method": "STANDARD",
+      "subtotal": "2299.00",
+      "shipping_fee": "0.00",
+      "discount_amount": "50.00",
+      "total_price": "2249.00",
+      "currency": "UZS",
+      "tracking_number": "TRK-UZ-987654",
+      "customer_notes": "Iltimos, soat 18:00 dan keyin yetkazing.",
+      "cancellation_reason": "",
+      "admin_notes": "Muvaffaqiyatli yetkazildi.",
+      "paid_at": "2026-10-20T10:15:00Z",
+      "delivered_at": "2026-10-22T14:30:00Z",
+      "cancelled_at": null,
+      "created_at": "2026-10-20T10:00:00Z",
+      "updated_at": "2026-10-22T14:30:00Z"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 2,
+    "fields": {
+      "order_number": "ORD-20261024-0002",
+      "user": 3,
+      "cart": null,
+      "coupon": null,
+      "status": "PROCESSING",
+      "payment_status": "PAID",
+      "payment_method": "CLICK",
+      "shipping_method": "EXPRESS",
+      "subtotal": "999.00",
+      "shipping_fee": "20.00",
+      "discount_amount": "0.00",
+      "total_price": "1019.00",
+      "currency": "UZS",
+      "tracking_number": "TRK-UZ-112233",
+      "customer_notes": "Eshik qo'ng'irog'i ishlamaydi, telefon qiling.",
+      "cancellation_reason": "",
+      "admin_notes": "Kuryerga topshirildi.",
+      "paid_at": "2026-10-23T12:00:00Z",
+      "delivered_at": null,
+      "cancelled_at": null,
+      "created_at": "2026-10-23T11:45:00Z",
+      "updated_at": "2026-10-23T12:05:00Z"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 3,
+    "fields": {
+      "order_number": "ORD-20261024-0003",
+      "user": 2,
+      "cart": null,
+      "coupon": null,
+      "status": "PENDING",
+      "payment_status": "PENDING",
+      "payment_method": "UZUM",
+      "shipping_method": "STANDARD",
+      "subtotal": "130.00",
+      "shipping_fee": "0.00",
+      "discount_amount": "0.00",
+      "total_price": "130.00",
+      "currency": "UZS",
+      "tracking_number": "",
+      "customer_notes": "",
+      "cancellation_reason": "",
+      "admin_notes": "",
+      "paid_at": null,
+      "delivered_at": null,
+      "cancelled_at": null,
+      "created_at": "2026-10-24T09:00:00Z",
+      "updated_at": "2026-10-24T09:00:00Z"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 4,
+    "fields": {
+      "order_number": "ORD-20261024-0004",
+      "user": 3,
+      "cart": null,
+      "coupon": null,
+      "status": "CANCELLED",
+      "payment_status": "REFUNDED",
+      "payment_method": "PAYME",
+      "shipping_method": "STANDARD",
+      "subtotal": "2499.00",
+      "shipping_fee": "0.00",
+      "discount_amount": "0.00",
+      "total_price": "2499.00",
+      "currency": "UZS",
+      "tracking_number": "",
+      "customer_notes": "Xato model tanlangan.",
+      "cancellation_reason": "Mijoz so'roviga binoan bekor qilindi.",
+      "admin_notes": "Refund to'liq amalga oshirildi.",
+      "paid_at": "2026-10-21T08:00:00Z",
+      "delivered_at": null,
+      "cancelled_at": "2026-10-21T09:30:00Z",
+      "created_at": "2026-10-21T07:50:00Z",
+      "updated_at": "2026-10-21T09:30:00Z"
+    }
+  },
+  {
+    "model": "orders.orderaddress",
+    "pk": 1,
+    "fields": {
+      "order": 1,
+      "recipient_name": "John Doe",
+      "phone_number": "+998901234567",
+      "alternative_phone_number": "+998907654321",
+      "region": "Toshkent shahri",
+      "district": "Mirobod tumani",
+      "street_address": "Amir Temur shox ko'chasi 45-uy",
+      "apartment_office": "Kvartira 12",
+      "postal_code": "100000",
+      "landmark": "Grand Mir Hotel yonida",
+      "latitude": "41.311081",
+      "longitude": "69.240562",
+      "delivery_instructions": "Podyezd kodi: 123",
+      "created_at": "2026-10-20T10:00:00Z"
+    }
+  },
+  {
+    "model": "orders.orderaddress",
+    "pk": 2,
+    "fields": {
+      "order": 2,
+      "recipient_name": "Jane Doe",
+      "phone_number": "+998912345678",
+      "alternative_phone_number": null,
+      "region": "Samarqand viloyati",
+      "district": "Samarqand shahri",
+      "street_address": "Registon ko'chasi 18-uy",
+      "apartment_office": "5-xonadon",
+      "postal_code": "140100",
+      "landmark": "Registon maydoni yaqinida",
+      "latitude": "39.654321",
+      "longitude": "66.975432",
+      "delivery_instructions": "",
+      "created_at": "2026-10-23T11:45:00Z"
+    }
+  },
+  {
+    "model": "orders.orderaddress",
+    "pk": 3,
+    "fields": {
+      "order": 3,
+      "recipient_name": "John Doe",
+      "phone_number": "+998901234567",
+      "alternative_phone_number": null,
+      "region": "Toshkent shahri",
+      "district": "Yunusobod tumani",
+      "street_address": "Ahmad Donish ko'chasi 10-uy",
+      "apartment_office": "Kvartira 4",
+      "postal_code": "100180",
+      "landmark": "Mega Planet savdo majmuasi",
+      "latitude": "41.365432",
+      "longitude": "69.289123",
+      "delivery_instructions": "",
+      "created_at": "2026-10-24T09:00:00Z"
+    }
+  },
+  {
+    "model": "orders.orderaddress",
+    "pk": 4,
+    "fields": {
+      "order": 4,
+      "recipient_name": "Jane Doe",
+      "phone_number": "+998912345678",
+      "alternative_phone_number": null,
+      "region": "Toshkent shahri",
+      "district": "Chilonzor tumani",
+      "street_address": "Bunyodkor shox ko'chasi 2-uy",
+      "apartment_office": "",
+      "postal_code": "100115",
+      "landmark": "Novza metrosi",
+      "latitude": "41.285432",
+      "longitude": "69.215432",
+      "delivery_instructions": "",
+      "created_at": "2026-10-21T07:50:00Z"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 1,
+    "fields": {
+      "order": 1,
+      "variant": 1,
+      "product_name": "Apple MacBook Pro 16\" M3 Max",
+      "variant_sku": "MBP16-M3-16-512-SG",
+      "variant_attributes_display": "Color: Space Gray, RAM: 16GB, Storage: 512GB",
+      "attributes_snapshot": {
+        "Color": "Space Gray",
+        "RAM": "16GB",
+        "Storage": "512GB"
+      },
+      "unit_price": "2299.00",
+      "quantity": 1,
+      "total_price": "2299.00",
+      "created_at": "2026-10-20T10:00:00Z",
+      "updated_at": "2026-10-20T10:00:00Z"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 2,
+    "fields": {
+      "order": 2,
+      "variant": 3,
+      "product_name": "Apple iPhone 15 Pro",
+      "variant_sku": "IPH15P-128-TI",
+      "variant_attributes_display": "Color: Natural Titanium, Storage: 128GB",
+      "attributes_snapshot": {
+        "Color": "Natural Titanium",
+        "Storage": "128GB"
+      },
+      "unit_price": "999.00",
+      "quantity": 1,
+      "total_price": "999.00",
+      "created_at": "2026-10-23T11:45:00Z",
+      "updated_at": "2026-10-23T11:45:00Z"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 3,
+    "fields": {
+      "order": 3,
+      "variant": 5,
+      "product_name": "Nike Air Max 270 Sneakers",
+      "variant_sku": "NIKE-AM270-BLK-42",
+      "variant_attributes_display": "Color: Black, Size: 42",
+      "attributes_snapshot": {
+        "Color": "Black",
+        "Size": "42"
+      },
+      "unit_price": "130.00",
+      "quantity": 1,
+      "total_price": "130.00",
+      "created_at": "2026-10-24T09:00:00Z",
+      "updated_at": "2026-10-24T09:00:00Z"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 4,
+    "fields": {
+      "order": 4,
+      "variant": 1,
+      "product_name": "Apple MacBook Pro 16\" M3 Max",
+      "variant_sku": "MBP16-M3-16-512-SG",
+      "variant_attributes_display": "Color: Space Gray, RAM: 16GB, Storage: 512GB",
+      "attributes_snapshot": {
+        "Color": "Space Gray",
+        "RAM": "16GB",
+        "Storage": "512GB"
+      },
+      "unit_price": "2499.00",
+      "quantity": 1,
+      "total_price": "2499.00",
+      "created_at": "2026-10-21T07:50:00Z",
+      "updated_at": "2026-10-21T07:50:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 1,
+    "fields": {
+      "order": 1,
+      "old_status": null,
+      "new_status": "PENDING",
+      "comment": "Buyurtma yaratildi.",
+      "created_by": 2,
+      "is_customer_visible": true,
+      "created_at": "2026-10-20T10:00:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 2,
+    "fields": {
+      "order": 1,
+      "old_status": "PENDING",
+      "new_status": "CONFIRMED",
+      "comment": "To'lov muvaffaqiyatli qabul qilindi.",
+      "created_by": null,
+      "is_customer_visible": true,
+      "created_at": "2026-10-20T10:15:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 3,
+    "fields": {
+      "order": 1,
+      "old_status": "CONFIRMED",
+      "new_status": "PROCESSING",
+      "comment": "Buyurtma omborda qadoqlanmoqda.",
+      "created_by": 1,
+      "is_customer_visible": true,
+      "created_at": "2026-10-21T09:00:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 4,
+    "fields": {
+      "order": 1,
+      "old_status": "PROCESSING",
+      "new_status": "SHIPPED",
+      "comment": "Kuryerga yetkazish uchun topshirildi.",
+      "created_by": 1,
+      "is_customer_visible": true,
+      "created_at": "2026-10-21T15:00:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 5,
+    "fields": {
+      "order": 1,
+      "old_status": "SHIPPED",
+      "new_status": "DELIVERED",
+      "comment": "Mijoz tomonidan qabul qilib olindi.",
+      "created_by": 1,
+      "is_customer_visible": true,
+      "created_at": "2026-10-22T14:30:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 6,
+    "fields": {
+      "order": 2,
+      "old_status": null,
+      "new_status": "PENDING",
+      "comment": "Buyurtma yaratildi.",
+      "created_by": 3,
+      "is_customer_visible": true,
+      "created_at": "2026-10-23T11:45:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 7,
+    "fields": {
+      "order": 2,
+      "old_status": "PENDING",
+      "new_status": "CONFIRMED",
+      "comment": "To'lov Click orqali o'tkazildi.",
+      "created_by": null,
+      "is_customer_visible": true,
+      "created_at": "2026-10-23T12:00:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 8,
+    "fields": {
+      "order": 2,
+      "old_status": "CONFIRMED",
+      "new_status": "PROCESSING",
+      "comment": "Buyurtma yig'ilmoqda.",
+      "created_by": 1,
+      "is_customer_visible": true,
+      "created_at": "2026-10-23T12:05:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 9,
+    "fields": {
+      "order": 4,
+      "old_status": null,
+      "new_status": "PENDING",
+      "comment": "Buyurtma yaratildi.",
+      "created_by": 3,
+      "is_customer_visible": true,
+      "created_at": "2026-10-21T07:50:00Z"
+    }
+  },
+  {
+    "model": "orders.orderstatushistory",
+    "pk": 10,
+    "fields": {
+      "order": 4,
+      "old_status": "PENDING",
+      "new_status": "CANCELLED",
+      "comment": "Mijoz buyurtmani bekor qildi.",
+      "created_by": 3,
+      "is_customer_visible": true,
+      "created_at": "2026-10-21T09:30:00Z"
+    }
+  },
+  {
+    "model": "orders.couponusage",
+    "pk": 1,
+    "fields": {
+      "coupon": 2,
+      "user": 2,
+      "order": 1,
+      "discount_amount": "50.00",
+      "used_at": "2026-10-20T10:00:00Z"
+    }
+  },
+  {
+    "model": "payments.savedcard",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "provider": "PAYME",
+      "card_token": "tok_payme_uzcard_1234",
+      "card_mask": "8600 **** **** 1234",
+      "card_holder": "JOHN DOE",
+      "card_type": "UZCARD",
+      "expire_month": "12",
+      "expire_year": "28",
+      "is_default": true,
+      "is_verified": true,
+      "created_at": "2026-10-01T10:00:00Z",
+      "updated_at": "2026-10-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "payments.savedcard",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "provider": "CLICK",
+      "card_token": "tok_click_humo_5678",
+      "card_mask": "9860 **** **** 5678",
+      "card_holder": "JANE DOE",
+      "card_type": "HUMO",
+      "expire_month": "08",
+      "expire_year": "27",
+      "is_default": true,
+      "is_verified": true,
+      "created_at": "2026-10-05T14:30:00Z",
+      "updated_at": "2026-10-05T14:30:00Z"
+    }
+  },
+  {
+    "model": "payments.payment",
+    "pk": 1,
+    "fields": {
+      "payment_number": "PAY-20261024-0001",
+      "order": 1,
+      "user": 2,
+      "amount": "2249.00",
+      "currency": "UZS",
+      "provider": "PAYME",
+      "status": "SUCCESS",
+      "provider_transaction_id": "payme_tx_10001",
+      "provider_state": "STATE_PAID",
+      "fee_amount": "0.00",
+      "refunded_amount": "0.00",
+      "checkout_url": null,
+      "metadata": {
+        "card_mask": "8600 **** **** 1234"
+      },
+      "failure_reason": null,
+      "paid_at": "2026-10-20T10:15:00Z",
+      "failed_at": null,
+      "cancelled_at": null,
+      "created_at": "2026-10-20T10:00:00Z",
+      "updated_at": "2026-10-20T10:15:00Z"
+    }
+  },
+  {
+    "model": "payments.payment",
+    "pk": 2,
+    "fields": {
+      "payment_number": "PAY-20261024-0002",
+      "order": 2,
+      "user": 3,
+      "amount": "1019.00",
+      "currency": "UZS",
+      "provider": "CLICK",
+      "status": "SUCCESS",
+      "provider_transaction_id": "click_tx_20002",
+      "provider_state": "CLICK_CONFIRMED",
+      "fee_amount": "0.00",
+      "refunded_amount": "0.00",
+      "checkout_url": null,
+      "metadata": {
+        "card_mask": "9860 **** **** 5678"
+      },
+      "failure_reason": null,
+      "paid_at": "2026-10-23T12:00:00Z",
+      "failed_at": null,
+      "cancelled_at": null,
+      "created_at": "2026-10-23T11:45:00Z",
+      "updated_at": "2026-10-23T12:00:00Z"
+    }
+  },
+  {
+    "model": "payments.payment",
+    "pk": 3,
+    "fields": {
+      "payment_number": "PAY-20261024-0003",
+      "order": 3,
+      "user": 2,
+      "amount": "130.00",
+      "currency": "UZS",
+      "provider": "UZUM",
+      "status": "PENDING",
+      "provider_transaction_id": "uzum_tx_30003",
+      "provider_state": "WAITING_FOR_PAYMENT",
+      "fee_amount": "0.00",
+      "refunded_amount": "0.00",
+      "checkout_url": "https://checkout.uzumpay.uz/pay/uzum_tx_30003",
+      "metadata": {},
+      "failure_reason": null,
+      "paid_at": null,
+      "failed_at": null,
+      "cancelled_at": null,
+      "created_at": "2026-10-24T09:00:00Z",
+      "updated_at": "2026-10-24T09:00:00Z"
+    }
+  },
+  {
+    "model": "payments.payment",
+    "pk": 4,
+    "fields": {
+      "payment_number": "PAY-20261024-0004",
+      "order": 4,
+      "user": 3,
+      "amount": "2499.00",
+      "currency": "UZS",
+      "provider": "PAYME",
+      "status": "REFUNDED",
+      "provider_transaction_id": "payme_tx_40004",
+      "provider_state": "STATE_REFUNDED",
+      "fee_amount": "0.00",
+      "refunded_amount": "2499.00",
+      "checkout_url": null,
+      "metadata": {
+        "refund_reason": "Order cancelled by customer"
+      },
+      "failure_reason": null,
+      "paid_at": "2026-10-21T08:00:00Z",
+      "failed_at": null,
+      "cancelled_at": null,
+      "created_at": "2026-10-21T07:50:00Z",
+      "updated_at": "2026-10-21T09:30:00Z"
+    }
+  },
+  {
+    "model": "payments.paymenttransaction",
+    "pk": 1,
+    "fields": {
+      "payment": 1,
+      "transaction_type": "PERFORM",
+      "amount": "2249.00",
+      "status": "SUCCESS",
+      "idempotency_key": "idem-pay-001",
+      "provider_transaction_id": "payme_tx_10001",
+      "request_payload": {
+        "method": "PerformTransaction",
+        "params": {
+          "id": "payme_tx_10001"
+        }
+      },
+      "response_payload": {
+        "result": {
+          "transaction": "payme_tx_10001",
+          "state": 2
+        }
+      },
+      "error_code": null,
+      "error_message": null,
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-20T10:15:00Z"
+    }
+  },
+  {
+    "model": "payments.paymenttransaction",
+    "pk": 2,
+    "fields": {
+      "payment": 2,
+      "transaction_type": "PERFORM",
+      "amount": "1019.00",
+      "status": "SUCCESS",
+      "idempotency_key": "idem-pay-002",
+      "provider_transaction_id": "click_tx_20002",
+      "request_payload": {
+        "action": 1,
+        "click_trans_id": 20002
+      },
+      "response_payload": {
+        "error": 0,
+        "error_note": "Success"
+      },
+      "error_code": null,
+      "error_message": null,
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-23T12:00:00Z"
+    }
+  },
+  {
+    "model": "payments.paymenttransaction",
+    "pk": 3,
+    "fields": {
+      "payment": 4,
+      "transaction_type": "REFUND",
+      "amount": "2499.00",
+      "status": "SUCCESS",
+      "idempotency_key": "idem-ref-004",
+      "provider_transaction_id": "payme_ref_40004",
+      "request_payload": {
+        "method": "CancelTransaction",
+        "params": {
+          "id": "payme_tx_40004",
+          "reason": 5
+        }
+      },
+      "response_payload": {
+        "result": {
+          "transaction": "payme_tx_40004",
+          "state": -2
+        }
+      },
+      "error_code": null,
+      "error_message": null,
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-21T09:30:00Z"
+    }
+  },
+  {
+    "model": "payments.refund",
+    "pk": 1,
+    "fields": {
+      "refund_number": "REF-20261024-0001",
+      "payment": 4,
+      "order": 4,
+      "amount": "2499.00",
+      "currency": "UZS",
+      "status": "COMPLETED",
+      "reason": "Mijoz buyurtmani bekor qildi va to'lov summasi to'liq qaytarildi.",
+      "provider_refund_id": "payme_ref_40004",
+      "created_by": 1,
+      "processed_at": "2026-10-21T09:30:00Z",
+      "metadata": {
+        "source": "admin_panel"
+      },
+      "created_at": "2026-10-21T09:30:00Z",
+      "updated_at": "2026-10-21T09:30:00Z"
+    }
+  },
+  {
+    "model": "reviews.review",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "product": 1,
+      "order_item": 1,
+      "rating": 5,
+      "title": "Ajoyib noutbuk, dasturlash uchun ideal!",
+      "comment": "M3 Max protsessori va 16GB operativ xotirasi barcha og'ir vazifalarni juda tez bajaradi. Batareyasi ham 18 soatgacha yetadi. Tavsiya qilaman.",
+      "pros": "Tezkorlik, ekran sifati, akkumulyator",
+      "cons": "Narxi bir oz baland",
+      "status": "APPROVED",
+      "rejection_reason": "",
+      "is_verified_purchase": true,
+      "likes_count": 2,
+      "dislikes_count": 0,
+      "created_at": "2026-10-22T16:00:00Z",
+      "updated_at": "2026-10-22T16:00:00Z"
+    }
+  },
+  {
+    "model": "reviews.review",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "product": 2,
+      "order_item": 2,
+      "rating": 4,
+      "title": "Kamera va korpus a'lo darajada",
+      "comment": "Titan korpusi juda yengil va qulay. Kamerasi tungi vaqtda ham tiniq suratga oladi.",
+      "pros": "Yengil titan korpus, 120Hz ekran, kamera",
+      "cons": "Batareya quvvati bir kunga yetadi xolos",
+      "status": "APPROVED",
+      "rejection_reason": "",
+      "is_verified_purchase": true,
+      "likes_count": 1,
+      "dislikes_count": 0,
+      "created_at": "2026-10-23T14:00:00Z",
+      "updated_at": "2026-10-23T14:00:00Z"
+    }
+  },
+  {
+    "model": "reviews.review",
+    "pk": 3,
+    "fields": {
+      "user": 2,
+      "product": 4,
+      "order_item": null,
+      "rating": 5,
+      "title": "Juda qulay krossovka",
+      "comment": "Yugurish va kundalik kiyish uchun juda mos. Oyoqda juda yumshoq turadi.",
+      "pros": "Yumshoq taglik, zamonaviy dizayn",
+      "cons": "",
+      "status": "APPROVED",
+      "rejection_reason": "",
+      "is_verified_purchase": false,
+      "likes_count": 0,
+      "dislikes_count": 0,
+      "created_at": "2026-10-24T10:00:00Z",
+      "updated_at": "2026-10-24T10:00:00Z"
+    }
+  },
+  {
+    "model": "reviews.review",
+    "pk": 4,
+    "fields": {
+      "user": 3,
+      "product": 1,
+      "order_item": null,
+      "rating": 3,
+      "title": "Katta va og'ir",
+      "comment": "Noutbuk kuchi zo'r, lekin ryukzakda olib yurishga biroz og'irlik qildi.",
+      "pros": "Katta ekran",
+      "cons": "Og'irligi",
+      "status": "PENDING",
+      "rejection_reason": "",
+      "is_verified_purchase": false,
+      "likes_count": 0,
+      "dislikes_count": 0,
+      "created_at": "2026-10-24T11:00:00Z",
+      "updated_at": "2026-10-24T11:00:00Z"
+    }
+  },
+  {
+    "model": "reviews.reviewimage",
+    "pk": 1,
+    "fields": {
+      "review": 1,
+      "image": "reviews/macbook_real_photo.jpg",
+      "caption": "Noutbuk qutisi va ko'rinishi",
+      "created_at": "2026-10-22T16:05:00Z"
+    }
+  },
+  {
+    "model": "reviews.reviewimage",
+    "pk": 2,
+    "fields": {
+      "review": 2,
+      "image": "reviews/iphone15_titanium.jpg",
+      "caption": "Natural Titanium rangi",
+      "created_at": "2026-10-23T14:05:00Z"
+    }
+  },
+  {
+    "model": "reviews.reviewreply",
+    "pk": 1,
+    "fields": {
+      "review": 1,
+      "user": 1,
+      "comment": "Xaridingiz va batafsil fikr-mulohazangiz uchun minnatdorchilik bildiramiz!",
+      "created_at": "2026-10-22T17:00:00Z",
+      "updated_at": "2026-10-22T17:00:00Z"
+    }
+  },
+  {
+    "model": "reviews.reviewvote",
+    "pk": 1,
+    "fields": {
+      "review": 1,
+      "user": 3,
+      "vote_type": "HELPFUL",
+      "created_at": "2026-10-23T09:00:00Z"
+    }
+  },
+  {
+    "model": "reviews.reviewvote",
+    "pk": 2,
+    "fields": {
+      "review": 2,
+      "user": 2,
+      "vote_type": "HELPFUL",
+      "created_at": "2026-10-23T15:00:00Z"
+    }
+  },
+  {
+    "model": "reviews.productratingsummary",
+    "pk": 1,
+    "fields": {
+      "average_rating": "5.00",
+      "total_reviews": 1,
+      "rating_1_count": 0,
+      "rating_2_count": 0,
+      "rating_3_count": 0,
+      "rating_4_count": 0,
+      "rating_5_count": 1,
+      "updated_at": "2026-10-24T12:00:00Z"
+    }
+  },
+  {
+    "model": "reviews.productratingsummary",
+    "pk": 2,
+    "fields": {
+      "average_rating": "4.00",
+      "total_reviews": 1,
+      "rating_1_count": 0,
+      "rating_2_count": 0,
+      "rating_3_count": 0,
+      "rating_4_count": 1,
+      "rating_5_count": 0,
+      "updated_at": "2026-10-24T12:00:00Z"
+    }
+  },
+  {
+    "model": "reviews.productratingsummary",
+    "pk": 4,
+    "fields": {
+      "average_rating": "5.00",
+      "total_reviews": 1,
+      "rating_1_count": 0,
+      "rating_2_count": 0,
+      "rating_3_count": 0,
+      "rating_4_count": 0,
+      "rating_5_count": 1,
+      "updated_at": "2026-10-24T12:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notificationtemplate",
+    "pk": 1,
+    "fields": {
+      "code": "ORDER_CONFIRMED",
+      "name": "Order Confirmation",
+      "description": "Triggered when an order payment is confirmed.",
+      "notification_type": "ORDER",
+      "email_subject_template": "Buyurtmangiz tasdiqlandi: #{{ order_number }}",
+      "email_body_html_template": "<p>Hurmatli mijoz! Sizning #{{ order_number }} raqamli buyurtmangiz muvaffaqiyatli qabul qilindi.</p>",
+      "email_body_text_template": "Hurmatli mijoz! Sizning #{{ order_number }} raqamli buyurtmangiz muvaffaqiyatli qabul qilindi.",
+      "in_app_title_template": "Buyurtma tasdiqlandi (#{{ order_number }})",
+      "in_app_message_template": "Sizning #{{ order_number }} raqamli buyurtmangiz qabul qilindi va tayyorlanmoqda.",
+      "is_active": true,
+      "created_at": "2026-10-01T00:00:00Z",
+      "updated_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notificationtemplate",
+    "pk": 2,
+    "fields": {
+      "code": "ORDER_DELIVERED",
+      "name": "Order Delivered",
+      "description": "Triggered when order package is delivered to customer.",
+      "notification_type": "ORDER",
+      "email_subject_template": "Buyurtmangiz yetkazildi: #{{ order_number }}",
+      "email_body_html_template": "<p>Buyurtmangiz yetkazildi! Xaridingiz uchun tashakkur.</p>",
+      "email_body_text_template": "Buyurtmangiz yetkazildi! Xaridingiz uchun tashakkur.",
+      "in_app_title_template": "Buyurtma yetkazildi (#{{ order_number }})",
+      "in_app_message_template": "Mahsulotlaringiz yetkazib berildi. Iltimos, xaridingizga baho bering!",
+      "is_active": true,
+      "created_at": "2026-10-01T00:00:00Z",
+      "updated_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notificationtemplate",
+    "pk": 3,
+    "fields": {
+      "code": "PAYMENT_SUCCESS",
+      "name": "Payment Successful",
+      "description": "Triggered on successful electronic payment transaction.",
+      "notification_type": "PAYMENT",
+      "email_subject_template": "To'lov muvaffaqiyatli qabul qilindi: {{ amount }} UZS",
+      "email_body_html_template": "<p>{{ amount }} UZS miqdoridagi to'lovingiz tasdiqlandi.</p>",
+      "email_body_text_template": "{{ amount }} UZS miqdoridagi to'lovingiz tasdiqlandi.",
+      "in_app_title_template": "To'lov tasdiqlandi",
+      "in_app_message_template": "{{ amount }} UZS miqdoridagi to'lovingiz muvaffaqiyatli qabul qilindi.",
+      "is_active": true,
+      "created_at": "2026-10-01T00:00:00Z",
+      "updated_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notificationpreference",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "email_order_updates": true,
+      "email_payment_receipts": true,
+      "email_promotions": true,
+      "email_security_alerts": true,
+      "in_app_order_updates": true,
+      "in_app_payment_updates": true,
+      "in_app_promotions": true,
+      "created_at": "2026-10-01T00:00:00Z",
+      "updated_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notificationpreference",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "email_order_updates": true,
+      "email_payment_receipts": true,
+      "email_promotions": false,
+      "email_security_alerts": true,
+      "in_app_order_updates": true,
+      "in_app_payment_updates": true,
+      "in_app_promotions": true,
+      "created_at": "2026-10-01T00:00:00Z",
+      "updated_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notificationpreference",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "email_order_updates": true,
+      "email_payment_receipts": true,
+      "email_promotions": true,
+      "email_security_alerts": true,
+      "in_app_order_updates": true,
+      "in_app_payment_updates": true,
+      "in_app_promotions": true,
+      "created_at": "2026-10-01T00:00:00Z",
+      "updated_at": "2026-10-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notification",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "notification_type": "ORDER",
+      "priority": "HIGH",
+      "title": "Buyurtmangiz yetkazildi! (#ORD-20261024-0001)",
+      "message": "Sizning Apple MacBook Pro 16\" buyurtmangiz muvaffaqiyatli topshirildi. Mahsulotga baho bering!",
+      "is_read": true,
+      "read_at": "2026-10-22T15:00:00Z",
+      "action_url": "/orders/ORD-20261024-0001/",
+      "data": {
+        "order_number": "ORD-20261024-0001",
+        "product_id": 1
+      },
+      "created_at": "2026-10-22T14:30:00Z",
+      "updated_at": "2026-10-22T15:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notification",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "notification_type": "PAYMENT",
+      "priority": "NORMAL",
+      "title": "To'lov qabul qilindi",
+      "message": "#ORD-20261024-0002 raqamli buyurtmangiz uchun 1,019.00 UZS to'lov Click orqali muvaffaqiyatli qabul qilindi.",
+      "is_read": false,
+      "read_at": null,
+      "action_url": "/orders/ORD-20261024-0002/",
+      "data": {
+        "order_number": "ORD-20261024-0002",
+        "payment_provider": "CLICK"
+      },
+      "created_at": "2026-10-23T12:00:00Z",
+      "updated_at": "2026-10-23T12:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notification",
+    "pk": 3,
+    "fields": {
+      "user": 2,
+      "notification_type": "PROMOTION",
+      "priority": "LOW",
+      "title": "Yozgi chegirmalar mavsumi boshlandi!",
+      "message": "Barcha elektronika mahsulotlariga 15% gacha maxsus chegirmalar taqdim etilmoqda.",
+      "is_read": false,
+      "read_at": null,
+      "action_url": "/promotions/summer-sale/",
+      "data": {
+        "campaign": "summer_2026"
+      },
+      "created_at": "2026-10-24T08:00:00Z",
+      "updated_at": "2026-10-24T08:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.emailnotification",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "recipient_email": "john.doe@example.com",
+      "subject": "Buyurtmangiz tasdiqlandi: #ORD-20261024-0001",
+      "body_text": "Hurmatli John Doe! Sizning #ORD-20261024-0001 raqamli buyurtmangiz qabul qilindi.",
+      "body_html": "<p>Hurmatli John Doe! Sizning <b>#ORD-20261024-0001</b> raqamli buyurtmangiz qabul qilindi.</p>",
+      "template_code": "ORDER_CONFIRMED",
+      "context_data": {
+        "order_number": "ORD-20261024-0001",
+        "amount": "2249.00"
+      },
+      "status": "SENT",
+      "priority": "HIGH",
+      "attempts": 1,
+      "max_retries": 3,
+      "last_attempt_at": "2026-10-20T10:01:00Z",
+      "sent_at": "2026-10-20T10:01:00Z",
+      "scheduled_at": "2026-10-20T10:00:00Z",
+      "error_message": null,
+      "provider_message_id": "smtp-msg-001-john",
+      "created_at": "2026-10-20T10:00:00Z",
+      "updated_at": "2026-10-20T10:01:00Z"
+    }
+  },
+  {
+    "model": "notifications.emailnotification",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "recipient_email": "jane.doe@example.com",
+      "subject": "Buyurtmangiz tasdiqlandi: #ORD-20261024-0002",
+      "body_text": "Hurmatli Jane Doe! Sizning #ORD-20261024-0002 raqamli buyurtmangiz qabul qilindi.",
+      "body_html": "<p>Hurmatli Jane Doe! Sizning <b>#ORD-20261024-0002</b> raqamli buyurtmangiz qabul qilindi.</p>",
+      "template_code": "ORDER_CONFIRMED",
+      "context_data": {
+        "order_number": "ORD-20261024-0002",
+        "amount": "1019.00"
+      },
+      "status": "SENT",
+      "priority": "HIGH",
+      "attempts": 1,
+      "max_retries": 3,
+      "last_attempt_at": "2026-10-23T11:46:00Z",
+      "sent_at": "2026-10-23T11:46:00Z",
+      "scheduled_at": "2026-10-23T11:45:00Z",
+      "error_message": null,
+      "provider_message_id": "smtp-msg-002-jane",
+      "created_at": "2026-10-23T11:45:00Z",
+      "updated_at": "2026-10-23T11:46:00Z"
+    }
+  },
+  {
+    "model": "notifications.emailnotification",
+    "pk": 3,
+    "fields": {
+      "user": 2,
+      "recipient_email": "john.doe@example.com",
+      "subject": "Haftalik maxsus chegirmalar xabarnomasi",
+      "body_text": "Yangi chegirmalar katalogi bilan tanishing.",
+      "body_html": "<p>Yangi chegirmalar katalogi bilan tanishing.</p>",
+      "template_code": null,
+      "context_data": {},
+      "status": "PENDING",
+      "priority": "LOW",
+      "attempts": 0,
+      "max_retries": 3,
+      "last_attempt_at": null,
+      "sent_at": null,
+      "scheduled_at": "2026-10-25T10:00:00Z",
+      "error_message": null,
+      "provider_message_id": null,
+      "created_at": "2026-10-24T12:00:00Z",
+      "updated_at": "2026-10-24T12:00:00Z"
+    }
   }
 ]

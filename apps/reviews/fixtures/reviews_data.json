@@ -1,0 +1,179 @@
+[
+  {
+    "model": "reviews.review",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "product": 1,
+      "order_item": 1,
+      "rating": 5,
+      "title": "Ajoyib noutbuk, dasturlash uchun ideal!",
+      "comment": "M3 Max protsessori va 16GB operativ xotirasi barcha og'ir vazifalarni juda tez bajaradi. Batareyasi ham 18 soatgacha yetadi. Tavsiya qilaman.",
+      "pros": "Tezkorlik, ekran sifati, akkumulyator",
+      "cons": "Narxi bir oz baland",
+      "status": "APPROVED",
+      "rejection_reason": "",
+      "is_verified_purchase": true,
+      "likes_count": 2,
+      "dislikes_count": 0,
+      "created_at": "2026-10-22T16:00:00Z",
+      "updated_at": "2026-10-22T16:00:00Z"
+    }
+  },
+  {
+    "model": "reviews.review",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "product": 2,
+      "order_item": 2,
+      "rating": 4,
+      "title": "Kamera va korpus a'lo darajada",
+      "comment": "Titan korpusi juda yengil va qulay. Kamerasi tungi vaqtda ham tiniq suratga oladi.",
+      "pros": "Yengil titan korpus, 120Hz ekran, kamera",
+      "cons": "Batareya quvvati bir kunga yetadi xolos",
+      "status": "APPROVED",
+      "rejection_reason": "",
+      "is_verified_purchase": true,
+      "likes_count": 1,
+      "dislikes_count": 0,
+      "created_at": "2026-10-23T14:00:00Z",
+      "updated_at": "2026-10-23T14:00:00Z"
+    }
+  },
+  {
+    "model": "reviews.review",
+    "pk": 3,
+    "fields": {
+      "user": 2,
+      "product": 4,
+      "order_item": null,
+      "rating": 5,
+      "title": "Juda qulay krossovka",
+      "comment": "Yugurish va kundalik kiyish uchun juda mos. Oyoqda juda yumshoq turadi.",
+      "pros": "Yumshoq taglik, zamonaviy dizayn",
+      "cons": "",
+      "status": "APPROVED",
+      "rejection_reason": "",
+      "is_verified_purchase": false,
+      "likes_count": 0,
+      "dislikes_count": 0,
+      "created_at": "2026-10-24T10:00:00Z",
+      "updated_at": "2026-10-24T10:00:00Z"
+    }
+  },
+  {
+    "model": "reviews.review",
+    "pk": 4,
+    "fields": {
+      "user": 3,
+      "product": 1,
+      "order_item": null,
+      "rating": 3,
+      "title": "Katta va og'ir",
+      "comment": "Noutbuk kuchi zo'r, lekin ryukzakda olib yurishga biroz og'irlik qildi.",
+      "pros": "Katta ekran",
+      "cons": "Og'irligi",
+      "status": "PENDING",
+      "rejection_reason": "",
+      "is_verified_purchase": false,
+      "likes_count": 0,
+      "dislikes_count": 0,
+      "created_at": "2026-10-24T11:00:00Z",
+      "updated_at": "2026-10-24T11:00:00Z"
+    }
+  },
+  {
+    "model": "reviews.reviewimage",
+    "pk": 1,
+    "fields": {
+      "review": 1,
+      "image": "reviews/macbook_real_photo.jpg",
+      "caption": "Noutbuk qutisi va ko'rinishi",
+      "created_at": "2026-10-22T16:05:00Z"
+    }
+  },
+  {
+    "model": "reviews.reviewimage",
+    "pk": 2,
+    "fields": {
+      "review": 2,
+      "image": "reviews/iphone15_titanium.jpg",
+      "caption": "Natural Titanium rangi",
+      "created_at": "2026-10-23T14:05:00Z"
+    }
+  },
+  {
+    "model": "reviews.reviewreply",
+    "pk": 1,
+    "fields": {
+      "review": 1,
+      "user": 1,
+      "comment": "Xaridingiz va batafsil fikr-mulohazangiz uchun minnatdorchilik bildiramiz!",
+      "created_at": "2026-10-22T17:00:00Z",
+      "updated_at": "2026-10-22T17:00:00Z"
+    }
+  },
+  {
+    "model": "reviews.reviewvote",
+    "pk": 1,
+    "fields": {
+      "review": 1,
+      "user": 3,
+      "vote_type": "HELPFUL",
+      "created_at": "2026-10-23T09:00:00Z"
+    }
+  },
+  {
+    "model": "reviews.reviewvote",
+    "pk": 2,
+    "fields": {
+      "review": 2,
+      "user": 2,
+      "vote_type": "HELPFUL",
+      "created_at": "2026-10-23T15:00:00Z"
+    }
+  },
+  {
+    "model": "reviews.productratingsummary",
+    "pk": 1,
+    "fields": {
+      "average_rating": "5.00",
+      "total_reviews": 1,
+      "rating_1_count": 0,
+      "rating_2_count": 0,
+      "rating_3_count": 0,
+      "rating_4_count": 0,
+      "rating_5_count": 1,
+      "updated_at": "2026-10-24T12:00:00Z"
+    }
+  },
+  {
+    "model": "reviews.productratingsummary",
+    "pk": 2,
+    "fields": {
+      "average_rating": "4.00",
+      "total_reviews": 1,
+      "rating_1_count": 0,
+      "rating_2_count": 0,
+      "rating_3_count": 0,
+      "rating_4_count": 1,
+      "rating_5_count": 0,
+      "updated_at": "2026-10-24T12:00:00Z"
+    }
+  },
+  {
+    "model": "reviews.productratingsummary",
+    "pk": 4,
+    "fields": {
+      "average_rating": "5.00",
+      "total_reviews": 1,
+      "rating_1_count": 0,
+      "rating_2_count": 0,
+      "rating_3_count": 0,
+      "rating_4_count": 0,
+      "rating_5_count": 1,
+      "updated_at": "2026-10-24T12:00:00Z"
+    }
+  }
+]
