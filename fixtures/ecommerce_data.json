@@ -1,5 +1,60 @@
 [
 {
+  "model": "carts.cart",
+  "pk": "c1000000-0000-0000-0000-000000000001",
+  "fields": {
+    "user": 2,
+    "session_key": null,
+    "status": "OPEN",
+    "created_at": "2026-01-05T10:00:00Z",
+    "updated_at": "2026-01-05T10:00:00Z"
+  }
+},
+{
+  "model": "carts.cart",
+  "pk": "c2000000-0000-0000-0000-000000000002",
+  "fields": {
+    "user": null,
+    "session_key": "guest_session_alpha_123",
+    "status": "OPEN",
+    "created_at": "2026-01-06T11:00:00Z",
+    "updated_at": "2026-01-06T11:00:00Z"
+  }
+},
+{
+  "model": "carts.cart",
+  "pk": "c3000000-0000-0000-0000-000000000003",
+  "fields": {
+    "user": 2,
+    "session_key": "old_guest_session_456",
+    "status": "MERGED",
+    "created_at": "2026-01-04T09:00:00Z",
+    "updated_at": "2026-01-05T10:00:00Z"
+  }
+},
+{
+  "model": "carts.cart",
+  "pk": "c4000000-0000-0000-0000-000000000004",
+  "fields": {
+    "user": 3,
+    "session_key": null,
+    "status": "CONVERTED",
+    "created_at": "2026-01-03T08:00:00Z",
+    "updated_at": "2026-01-03T12:00:00Z"
+  }
+},
+{
+  "model": "carts.cart",
+  "pk": "cd8dfe34-af2a-4ad4-b4a6-25aa9e1de5b0",
+  "fields": {
+    "user": null,
+    "session_key": "test-session-123",
+    "status": "OPEN",
+    "created_at": "2026-11-04T12:30:47.312Z",
+    "updated_at": "2026-11-04T12:30:47.312Z"
+  }
+},
+{
   "model": "carts.cartitem",
   "pk": 1,
   "fields": {
@@ -57,6 +112,191 @@
     "unit_price_at_addition": "2999.00",
     "created_at": "2026-01-03T08:05:00Z",
     "updated_at": "2026-01-03T08:05:00Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "notification_type": "ORDER",
+    "priority": "HIGH",
+    "title": "Buyurtmangiz yetkazildi! (#ORD-20261024-0001)",
+    "message": "Sizning Apple MacBook Pro 16\" buyurtmangiz muvaffaqiyatli topshirildi. Mahsulotga baho bering!",
+    "is_read": true,
+    "read_at": "2026-10-22T15:00:00Z",
+    "action_url": "/orders/ORD-20261024-0001/",
+    "data": {
+      "product_id": 1,
+      "order_number": "ORD-20261024-0001"
+    },
+    "created_at": "2026-10-22T14:30:00Z",
+    "updated_at": "2026-10-22T15:00:00Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 2,
+  "fields": {
+    "user": 3,
+    "notification_type": "PAYMENT",
+    "priority": "NORMAL",
+    "title": "To'lov qabul qilindi",
+    "message": "#ORD-20261024-0002 raqamli buyurtmangiz uchun 1,019.00 UZS to'lov Click orqali muvaffaqiyatli qabul qilindi.",
+    "is_read": false,
+    "read_at": null,
+    "action_url": "/orders/ORD-20261024-0002/",
+    "data": {
+      "order_number": "ORD-20261024-0002",
+      "payment_provider": "CLICK"
+    },
+    "created_at": "2026-10-23T12:00:00Z",
+    "updated_at": "2026-10-23T12:00:00Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 3,
+  "fields": {
+    "user": 2,
+    "notification_type": "PROMOTION",
+    "priority": "LOW",
+    "title": "Yozgi chegirmalar mavsumi boshlandi!",
+    "message": "Barcha elektronika mahsulotlariga 15% gacha maxsus chegirmalar taqdim etilmoqda.",
+    "is_read": false,
+    "read_at": null,
+    "action_url": "/promotions/summer-sale/",
+    "data": {
+      "campaign": "summer_2026"
+    },
+    "created_at": "2026-10-24T08:00:00Z",
+    "updated_at": "2026-10-24T08:00:00Z"
+  }
+},
+{
+  "model": "notifications.emailnotification",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "recipient_email": "john.doe@example.com",
+    "subject": "Buyurtmangiz tasdiqlandi: #ORD-20261024-0001",
+    "body_text": "Hurmatli John Doe! Sizning #ORD-20261024-0001 raqamli buyurtmangiz qabul qilindi.",
+    "body_html": "<p>Hurmatli John Doe! Sizning <b>#ORD-20261024-0001</b> raqamli buyurtmangiz qabul qilindi.</p>",
+    "template_code": "ORDER_CONFIRMED",
+    "context_data": {
+      "amount": "2249.00",
+      "order_number": "ORD-20261024-0001"
+    },
+    "status": "SENT",
+    "priority": "HIGH",
+    "attempts": 1,
+    "max_retries": 3,
+    "last_attempt_at": "2026-10-20T10:01:00Z",
+    "sent_at": "2026-10-20T10:01:00Z",
+    "scheduled_at": "2026-10-20T10:00:00Z",
+    "error_message": null,
+    "provider_message_id": "smtp-msg-001-john",
+    "created_at": "2026-10-20T10:00:00Z",
+    "updated_at": "2026-10-20T10:01:00Z"
+  }
+},
+{
+  "model": "notifications.emailnotification",
+  "pk": 2,
+  "fields": {
+    "user": 3,
+    "recipient_email": "jane.doe@example.com",
+    "subject": "Buyurtmangiz tasdiqlandi: #ORD-20261024-0002",
+    "body_text": "Hurmatli Jane Doe! Sizning #ORD-20261024-0002 raqamli buyurtmangiz qabul qilindi.",
+    "body_html": "<p>Hurmatli Jane Doe! Sizning <b>#ORD-20261024-0002</b> raqamli buyurtmangiz qabul qilindi.</p>",
+    "template_code": "ORDER_CONFIRMED",
+    "context_data": {
+      "amount": "1019.00",
+      "order_number": "ORD-20261024-0002"
+    },
+    "status": "SENT",
+    "priority": "HIGH",
+    "attempts": 1,
+    "max_retries": 3,
+    "last_attempt_at": "2026-10-23T11:46:00Z",
+    "sent_at": "2026-10-23T11:46:00Z",
+    "scheduled_at": "2026-10-23T11:45:00Z",
+    "error_message": null,
+    "provider_message_id": "smtp-msg-002-jane",
+    "created_at": "2026-10-23T11:45:00Z",
+    "updated_at": "2026-10-23T11:46:00Z"
+  }
+},
+{
+  "model": "notifications.emailnotification",
+  "pk": 3,
+  "fields": {
+    "user": 2,
+    "recipient_email": "john.doe@example.com",
+    "subject": "Haftalik maxsus chegirmalar xabarnomasi",
+    "body_text": "Yangi chegirmalar katalogi bilan tanishing.",
+    "body_html": "<p>Yangi chegirmalar katalogi bilan tanishing.</p>",
+    "template_code": null,
+    "context_data": {},
+    "status": "PENDING",
+    "priority": "LOW",
+    "attempts": 0,
+    "max_retries": 3,
+    "last_attempt_at": null,
+    "sent_at": null,
+    "scheduled_at": "2026-10-25T10:00:00Z",
+    "error_message": null,
+    "provider_message_id": null,
+    "created_at": "2026-10-24T12:00:00Z",
+    "updated_at": "2026-10-24T12:00:00Z"
+  }
+},
+{
+  "model": "notifications.notificationpreference",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "email_order_updates": true,
+    "email_payment_receipts": true,
+    "email_promotions": true,
+    "email_security_alerts": true,
+    "in_app_order_updates": true,
+    "in_app_payment_updates": true,
+    "in_app_promotions": true,
+    "created_at": "2026-10-01T00:00:00Z",
+    "updated_at": "2026-10-01T00:00:00Z"
+  }
+},
+{
+  "model": "notifications.notificationpreference",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "email_order_updates": true,
+    "email_payment_receipts": true,
+    "email_promotions": false,
+    "email_security_alerts": true,
+    "in_app_order_updates": true,
+    "in_app_payment_updates": true,
+    "in_app_promotions": true,
+    "created_at": "2026-10-01T00:00:00Z",
+    "updated_at": "2026-10-01T00:00:00Z"
+  }
+},
+{
+  "model": "notifications.notificationpreference",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "email_order_updates": true,
+    "email_payment_receipts": true,
+    "email_promotions": true,
+    "email_security_alerts": true,
+    "in_app_order_updates": true,
+    "in_app_payment_updates": true,
+    "in_app_promotions": true,
+    "created_at": "2026-10-01T00:00:00Z",
+    "updated_at": "2026-10-01T00:00:00Z"
   }
 },
 {
@@ -168,6 +408,118 @@
     "is_active": false,
     "created_at": "2025-01-01T00:00:00Z",
     "updated_at": "2025-12-31T23:59:59Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 1,
+  "fields": {
+    "order_number": "ORD-20261024-0001",
+    "user": 2,
+    "cart": "c1000000-0000-0000-0000-000000000001",
+    "coupon": 2,
+    "status": "DELIVERED",
+    "payment_status": "PAID",
+    "payment_method": "PAYME",
+    "shipping_method": "STANDARD",
+    "subtotal": "2299.00",
+    "shipping_fee": "0.00",
+    "discount_amount": "50.00",
+    "total_price": "2249.00",
+    "currency": "UZS",
+    "tracking_number": "TRK-UZ-987654",
+    "customer_notes": "Iltimos, soat 18:00 dan keyin yetkazing.",
+    "cancellation_reason": "",
+    "admin_notes": "Muvaffaqiyatli yetkazildi.",
+    "paid_at": "2026-10-20T10:15:00Z",
+    "delivered_at": "2026-10-22T14:30:00Z",
+    "cancelled_at": null,
+    "created_at": "2026-10-20T10:00:00Z",
+    "updated_at": "2026-10-22T14:30:00Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 2,
+  "fields": {
+    "order_number": "ORD-20261024-0002",
+    "user": 3,
+    "cart": null,
+    "coupon": null,
+    "status": "PROCESSING",
+    "payment_status": "PAID",
+    "payment_method": "CLICK",
+    "shipping_method": "EXPRESS",
+    "subtotal": "999.00",
+    "shipping_fee": "20.00",
+    "discount_amount": "0.00",
+    "total_price": "1019.00",
+    "currency": "UZS",
+    "tracking_number": "TRK-UZ-112233",
+    "customer_notes": "Eshik qo'ng'irog'i ishlamaydi, telefon qiling.",
+    "cancellation_reason": "",
+    "admin_notes": "Kuryerga topshirildi.",
+    "paid_at": "2026-10-23T12:00:00Z",
+    "delivered_at": null,
+    "cancelled_at": null,
+    "created_at": "2026-10-23T11:45:00Z",
+    "updated_at": "2026-10-23T12:05:00Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 3,
+  "fields": {
+    "order_number": "ORD-20261024-0003",
+    "user": 2,
+    "cart": null,
+    "coupon": null,
+    "status": "PENDING",
+    "payment_status": "PENDING",
+    "payment_method": "UZUM",
+    "shipping_method": "STANDARD",
+    "subtotal": "130.00",
+    "shipping_fee": "0.00",
+    "discount_amount": "0.00",
+    "total_price": "130.00",
+    "currency": "UZS",
+    "tracking_number": "",
+    "customer_notes": "",
+    "cancellation_reason": "",
+    "admin_notes": "",
+    "paid_at": null,
+    "delivered_at": null,
+    "cancelled_at": null,
+    "created_at": "2026-10-24T09:00:00Z",
+    "updated_at": "2026-10-24T09:00:00Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 4,
+  "fields": {
+    "order_number": "ORD-20261024-0004",
+    "user": 3,
+    "cart": null,
+    "coupon": null,
+    "status": "CANCELLED",
+    "payment_status": "REFUNDED",
+    "payment_method": "PAYME",
+    "shipping_method": "STANDARD",
+    "subtotal": "2499.00",
+    "shipping_fee": "0.00",
+    "discount_amount": "0.00",
+    "total_price": "2499.00",
+    "currency": "UZS",
+    "tracking_number": "",
+    "customer_notes": "Xato model tanlangan.",
+    "cancellation_reason": "Mijoz so'roviga binoan bekor qilindi.",
+    "admin_notes": "Refund to'liq amalga oshirildi.",
+    "paid_at": "2026-10-21T08:00:00Z",
+    "delivered_at": null,
+    "cancelled_at": "2026-10-21T09:30:00Z",
+    "created_at": "2026-10-21T07:50:00Z",
+    "updated_at": "2026-10-21T09:30:00Z"
   }
 },
 {
@@ -333,6 +685,253 @@
   }
 },
 {
+  "model": "orders.orderstatushistory",
+  "pk": 1,
+  "fields": {
+    "order": 1,
+    "old_status": null,
+    "new_status": "PENDING",
+    "comment": "Buyurtma yaratildi.",
+    "created_by": 2,
+    "is_customer_visible": true,
+    "created_at": "2026-10-20T10:00:00Z"
+  }
+},
+{
+  "model": "orders.orderstatushistory",
+  "pk": 2,
+  "fields": {
+    "order": 1,
+    "old_status": "PENDING",
+    "new_status": "CONFIRMED",
+    "comment": "To'lov muvaffaqiyatli qabul qilindi.",
+    "created_by": null,
+    "is_customer_visible": true,
+    "created_at": "2026-10-20T10:15:00Z"
+  }
+},
+{
+  "model": "orders.orderstatushistory",
+  "pk": 3,
+  "fields": {
+    "order": 1,
+    "old_status": "CONFIRMED",
+    "new_status": "PROCESSING",
+    "comment": "Buyurtma omborda qadoqlanmoqda.",
+    "created_by": 1,
+    "is_customer_visible": true,
+    "created_at": "2026-10-21T09:00:00Z"
+  }
+},
+{
+  "model": "orders.orderstatushistory",
+  "pk": 4,
+  "fields": {
+    "order": 1,
+    "old_status": "PROCESSING",
+    "new_status": "SHIPPED",
+    "comment": "Kuryerga yetkazish uchun topshirildi.",
+    "created_by": 1,
+    "is_customer_visible": true,
+    "created_at": "2026-10-21T15:00:00Z"
+  }
+},
+{
+  "model": "orders.orderstatushistory",
+  "pk": 5,
+  "fields": {
+    "order": 1,
+    "old_status": "SHIPPED",
+    "new_status": "DELIVERED",
+    "comment": "Mijoz tomonidan qabul qilib olindi.",
+    "created_by": 1,
+    "is_customer_visible": true,
+    "created_at": "2026-10-22T14:30:00Z"
+  }
+},
+{
+  "model": "orders.orderstatushistory",
+  "pk": 6,
+  "fields": {
+    "order": 2,
+    "old_status": null,
+    "new_status": "PENDING",
+    "comment": "Buyurtma yaratildi.",
+    "created_by": 3,
+    "is_customer_visible": true,
+    "created_at": "2026-10-23T11:45:00Z"
+  }
+},
+{
+  "model": "orders.orderstatushistory",
+  "pk": 7,
+  "fields": {
+    "order": 2,
+    "old_status": "PENDING",
+    "new_status": "CONFIRMED",
+    "comment": "To'lov Click orqali o'tkazildi.",
+    "created_by": null,
+    "is_customer_visible": true,
+    "created_at": "2026-10-23T12:00:00Z"
+  }
+},
+{
+  "model": "orders.orderstatushistory",
+  "pk": 8,
+  "fields": {
+    "order": 2,
+    "old_status": "CONFIRMED",
+    "new_status": "PROCESSING",
+    "comment": "Buyurtma yig'ilmoqda.",
+    "created_by": 1,
+    "is_customer_visible": true,
+    "created_at": "2026-10-23T12:05:00Z"
+  }
+},
+{
+  "model": "orders.orderstatushistory",
+  "pk": 9,
+  "fields": {
+    "order": 4,
+    "old_status": null,
+    "new_status": "PENDING",
+    "comment": "Buyurtma yaratildi.",
+    "created_by": 3,
+    "is_customer_visible": true,
+    "created_at": "2026-10-21T07:50:00Z"
+  }
+},
+{
+  "model": "orders.orderstatushistory",
+  "pk": 10,
+  "fields": {
+    "order": 4,
+    "old_status": "PENDING",
+    "new_status": "CANCELLED",
+    "comment": "Mijoz buyurtmani bekor qildi.",
+    "created_by": 3,
+    "is_customer_visible": true,
+    "created_at": "2026-10-21T09:30:00Z"
+  }
+},
+{
+  "model": "orders.couponusage",
+  "pk": 1,
+  "fields": {
+    "coupon": 2,
+    "user": 2,
+    "order": 1,
+    "discount_amount": "50.00",
+    "used_at": "2026-10-20T10:00:00Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 1,
+  "fields": {
+    "payment_number": "PAY-20261024-0001",
+    "order": 1,
+    "user": 2,
+    "amount": "2249.00",
+    "currency": "UZS",
+    "provider": "PAYME",
+    "status": "SUCCESS",
+    "provider_transaction_id": "payme_tx_10001",
+    "provider_state": "STATE_PAID",
+    "fee_amount": "0.00",
+    "refunded_amount": "0.00",
+    "checkout_url": null,
+    "metadata": {
+      "card_mask": "8600 **** **** 1234"
+    },
+    "failure_reason": null,
+    "paid_at": "2026-10-20T10:15:00Z",
+    "failed_at": null,
+    "cancelled_at": null,
+    "created_at": "2026-10-20T10:00:00Z",
+    "updated_at": "2026-10-20T10:15:00Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 2,
+  "fields": {
+    "payment_number": "PAY-20261024-0002",
+    "order": 2,
+    "user": 3,
+    "amount": "1019.00",
+    "currency": "UZS",
+    "provider": "CLICK",
+    "status": "SUCCESS",
+    "provider_transaction_id": "click_tx_20002",
+    "provider_state": "CLICK_CONFIRMED",
+    "fee_amount": "0.00",
+    "refunded_amount": "0.00",
+    "checkout_url": null,
+    "metadata": {
+      "card_mask": "9860 **** **** 5678"
+    },
+    "failure_reason": null,
+    "paid_at": "2026-10-23T12:00:00Z",
+    "failed_at": null,
+    "cancelled_at": null,
+    "created_at": "2026-10-23T11:45:00Z",
+    "updated_at": "2026-10-23T12:00:00Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 3,
+  "fields": {
+    "payment_number": "PAY-20261024-0003",
+    "order": 3,
+    "user": 2,
+    "amount": "130.00",
+    "currency": "UZS",
+    "provider": "UZUM",
+    "status": "PENDING",
+    "provider_transaction_id": "uzum_tx_30003",
+    "provider_state": "WAITING_FOR_PAYMENT",
+    "fee_amount": "0.00",
+    "refunded_amount": "0.00",
+    "checkout_url": "https://checkout.uzumpay.uz/pay/uzum_tx_30003",
+    "metadata": {},
+    "failure_reason": null,
+    "paid_at": null,
+    "failed_at": null,
+    "cancelled_at": null,
+    "created_at": "2026-10-24T09:00:00Z",
+    "updated_at": "2026-10-24T09:00:00Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 4,
+  "fields": {
+    "payment_number": "PAY-20261024-0004",
+    "order": 4,
+    "user": 3,
+    "amount": "2499.00",
+    "currency": "UZS",
+    "provider": "PAYME",
+    "status": "REFUNDED",
+    "provider_transaction_id": "payme_tx_40004",
+    "provider_state": "STATE_REFUNDED",
+    "fee_amount": "0.00",
+    "refunded_amount": "2499.00",
+    "checkout_url": null,
+    "metadata": {
+      "refund_reason": "Order cancelled by customer"
+    },
+    "failure_reason": null,
+    "paid_at": "2026-10-21T08:00:00Z",
+    "failed_at": null,
+    "cancelled_at": null,
+    "created_at": "2026-10-21T07:50:00Z",
+    "updated_at": "2026-10-21T09:30:00Z"
+  }
+},
+{
   "model": "payments.paymenttransaction",
   "pk": 1,
   "fields": {
@@ -411,6 +1010,63 @@
     "error_message": null,
     "ip_address": "127.0.0.1",
     "created_at": "2026-10-21T09:30:00Z"
+  }
+},
+{
+  "model": "payments.refund",
+  "pk": 1,
+  "fields": {
+    "refund_number": "REF-20261024-0001",
+    "payment": 4,
+    "order": 4,
+    "amount": "2499.00",
+    "currency": "UZS",
+    "status": "COMPLETED",
+    "reason": "Mijoz buyurtmani bekor qildi va to'lov summasi to'liq qaytarildi.",
+    "provider_refund_id": "payme_ref_40004",
+    "created_by": 1,
+    "processed_at": "2026-10-21T09:30:00Z",
+    "metadata": {
+      "source": "admin_panel"
+    },
+    "created_at": "2026-10-21T09:30:00Z",
+    "updated_at": "2026-10-21T09:30:00Z"
+  }
+},
+{
+  "model": "payments.savedcard",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "provider": "PAYME",
+    "card_token": "tok_payme_uzcard_1234",
+    "card_mask": "8600 **** **** 1234",
+    "card_holder": "JOHN DOE",
+    "card_type": "UZCARD",
+    "expire_month": "12",
+    "expire_year": "28",
+    "is_default": true,
+    "is_verified": true,
+    "created_at": "2026-10-01T10:00:00Z",
+    "updated_at": "2026-10-01T10:00:00Z"
+  }
+},
+{
+  "model": "payments.savedcard",
+  "pk": 2,
+  "fields": {
+    "user": 3,
+    "provider": "CLICK",
+    "card_token": "tok_click_humo_5678",
+    "card_mask": "9860 **** **** 5678",
+    "card_holder": "JANE DOE",
+    "card_type": "HUMO",
+    "expire_month": "08",
+    "expire_year": "27",
+    "is_default": true,
+    "is_verified": true,
+    "created_at": "2026-10-05T14:30:00Z",
+    "updated_at": "2026-10-05T14:30:00Z"
   }
 },
 {
@@ -3074,6 +3730,972 @@
   }
 },
 {
+  "model": "products.productmedia",
+  "pk": 36,
+  "fields": {
+    "product": 5,
+    "variant": 6,
+    "file": "products/2026/01/iphone-15-pro-max-gallery-2.jpg",
+    "alt_text": "Apple iPhone 15 Pro Max - Orqa panel va kamera moduli",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:19.247Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 37,
+  "fields": {
+    "product": 5,
+    "variant": 7,
+    "file": "products/2026/01/iphone-15-pro-max-gallery-3.jpg",
+    "alt_text": "Apple iPhone 15 Pro Max - Titan qirra va Action tugmasi",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:20.164Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 38,
+  "fields": {
+    "product": 5,
+    "variant": 8,
+    "file": "products/2026/01/iphone-15-pro-max-gallery-4.jpg",
+    "alt_text": "Apple iPhone 15 Pro Max - Ekran va Dynamic Island",
+    "media_type": "image",
+    "is_main": false,
+    "order": 4,
+    "created_at": "2026-11-05T11:34:20.561Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 39,
+  "fields": {
+    "product": 2,
+    "variant": 3,
+    "file": "products/2026/01/iphone-15-pro-gallery-2.jpg",
+    "alt_text": "Apple iPhone 15 Pro - Orqa korpus ko'rinishi",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:20.880Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 40,
+  "fields": {
+    "product": 2,
+    "variant": null,
+    "file": "products/2026/01/iphone-15-pro-gallery-3.jpg",
+    "alt_text": "Apple iPhone 15 Pro - Yon tomoni va titan ramka",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:21.176Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 41,
+  "fields": {
+    "product": 6,
+    "variant": 9,
+    "file": "products/2026/01/iphone-15-gallery-2.jpg",
+    "alt_text": "Apple iPhone 15 - Orqa mat oyna",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:21.509Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 42,
+  "fields": {
+    "product": 6,
+    "variant": 10,
+    "file": "products/2026/01/iphone-15-gallery-3.jpg",
+    "alt_text": "Apple iPhone 15 - Super Retina displey",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:21.937Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 43,
+  "fields": {
+    "product": 7,
+    "variant": 11,
+    "file": "products/2026/01/samsung-galaxy-z-fold5-gallery-2.jpg",
+    "alt_text": "Samsung Galaxy Z Fold 5 - Ochiq holatdagi 7.6 dyuym ekran",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:22.389Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 44,
+  "fields": {
+    "product": 7,
+    "variant": 12,
+    "file": "products/2026/01/samsung-galaxy-z-fold5-gallery-3.jpg",
+    "alt_text": "Samsung Galaxy Z Fold 5 - Yopiq qulay shakli",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:22.735Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 45,
+  "fields": {
+    "product": 8,
+    "variant": 13,
+    "file": "products/2026/01/xiaomi-14-ultra-gallery-2.jpg",
+    "alt_text": "Xiaomi 14 Ultra - Leica kamera doirasi",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:23.234Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 46,
+  "fields": {
+    "product": 8,
+    "variant": null,
+    "file": "products/2026/01/xiaomi-14-ultra-gallery-3.jpg",
+    "alt_text": "Xiaomi 14 Ultra - Charm teksturali orqa korpus",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:23.716Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 47,
+  "fields": {
+    "product": 9,
+    "variant": 14,
+    "file": "products/2026/01/google-pixel-8-pro-gallery-2.jpg",
+    "alt_text": "Google Pixel 8 Pro - Kamera visor chizig'i",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:24.164Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 48,
+  "fields": {
+    "product": 9,
+    "variant": 15,
+    "file": "products/2026/01/google-pixel-8-pro-gallery-3.jpg",
+    "alt_text": "Google Pixel 8 Pro - Yassi OLED displey",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:24.701Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 49,
+  "fields": {
+    "product": 10,
+    "variant": 16,
+    "file": "products/2026/01/macbook-air-15-m3-gallery-2.jpg",
+    "alt_text": "Apple MacBook Air 15\" M3 - Yupqa profili",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:25.035Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 50,
+  "fields": {
+    "product": 10,
+    "variant": 17,
+    "file": "products/2026/01/macbook-air-15-m3-gallery-3.jpg",
+    "alt_text": "Apple MacBook Air 15\" M3 - Ish stolidagi ko'rinishi",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:25.428Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 51,
+  "fields": {
+    "product": 11,
+    "variant": 18,
+    "file": "products/2026/01/asus-rog-zephyrus-g16-gallery-2.jpg",
+    "alt_text": "ASUS ROG Zephyrus G16 (2024) - OLED ekran va RGB klaviatura",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:25.830Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 52,
+  "fields": {
+    "product": 11,
+    "variant": null,
+    "file": "products/2026/01/asus-rog-zephyrus-g16-gallery-3.jpg",
+    "alt_text": "ASUS ROG Zephyrus G16 (2024) - Orqa Slash Lighting yorug'ligi",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:26.221Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 53,
+  "fields": {
+    "product": 12,
+    "variant": 19,
+    "file": "products/2026/01/lenovo-thinkpad-x1-carbon-gen-12-gallery-2.jpg",
+    "alt_text": "Lenovo ThinkPad X1 Carbon Gen 12 - TrackPoint va premium klaviatura",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:26.651Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 54,
+  "fields": {
+    "product": 12,
+    "variant": null,
+    "file": "products/2026/01/lenovo-thinkpad-x1-carbon-gen-12-gallery-3.jpg",
+    "alt_text": "Lenovo ThinkPad X1 Carbon Gen 12 - Uglerod tolali engil qopqoq",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:27.091Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 55,
+  "fields": {
+    "product": 13,
+    "variant": 20,
+    "file": "products/2026/01/dell-xps-15-gallery-2.jpg",
+    "alt_text": "Dell XPS 15 (9530) - InfinityEdge 4-tomonlama romsiz ekran",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:27.539Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 56,
+  "fields": {
+    "product": 13,
+    "variant": null,
+    "file": "products/2026/01/dell-xps-15-gallery-3.jpg",
+    "alt_text": "Dell XPS 15 (9530) - Shishali keng trekpad",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:27.978Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 57,
+  "fields": {
+    "product": 14,
+    "variant": 21,
+    "file": "products/2026/01/sony-wh-1000xm5-gallery-2.jpg",
+    "alt_text": "Sony WH-1000XM5 Wireless Headphones - Yumshoq charm yostiqchalar",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:28.374Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 58,
+  "fields": {
+    "product": 14,
+    "variant": 22,
+    "file": "products/2026/01/sony-wh-1000xm5-gallery-3.jpg",
+    "alt_text": "Sony WH-1000XM5 Wireless Headphones - Kiyilgan holatdagi zamonaviy dizayn",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:28.779Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 59,
+  "fields": {
+    "product": 14,
+    "variant": null,
+    "file": "products/2026/01/sony-wh-1000xm5-gallery-4.jpg",
+    "alt_text": "Sony WH-1000XM5 Wireless Headphones - Ixcham himoya g'ilofi",
+    "media_type": "image",
+    "is_main": false,
+    "order": 4,
+    "created_at": "2026-11-05T11:34:29.112Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 60,
+  "fields": {
+    "product": 15,
+    "variant": 23,
+    "file": "products/2026/01/airpods-pro-2-gallery-2.jpg",
+    "alt_text": "Apple AirPods Pro (2nd Gen, USB-C) - MagSafe g'ilofi va quloqchinlar",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:29.431Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 61,
+  "fields": {
+    "product": 15,
+    "variant": null,
+    "file": "products/2026/01/airpods-pro-2-gallery-3.jpg",
+    "alt_text": "Apple AirPods Pro (2nd Gen, USB-C) - Silikon nasadkalari bilan",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:29.847Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 62,
+  "fields": {
+    "product": 16,
+    "variant": 24,
+    "file": "products/2026/01/airpods-max-gallery-2.jpg",
+    "alt_text": "Apple AirPods Max - Smart Case g'ilofida",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:30.196Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 63,
+  "fields": {
+    "product": 16,
+    "variant": 25,
+    "file": "products/2026/01/airpods-max-gallery-3.jpg",
+    "alt_text": "Apple AirPods Max - Tafsilotli po'lat kamon",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:30.592Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 64,
+  "fields": {
+    "product": 17,
+    "variant": 26,
+    "file": "products/2026/01/galaxy-buds-2-pro-gallery-2.jpg",
+    "alt_text": "Samsung Galaxy Buds2 Pro - Kompakt zaryadlash qutisi",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:30.944Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 65,
+  "fields": {
+    "product": 17,
+    "variant": 27,
+    "file": "products/2026/01/galaxy-buds-2-pro-gallery-3.jpg",
+    "alt_text": "Samsung Galaxy Buds2 Pro - Ergonomik shakli",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:31.261Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 66,
+  "fields": {
+    "product": 18,
+    "variant": 28,
+    "file": "products/2026/01/jbl-charge-5-gallery-2.jpg",
+    "alt_text": "JBL Charge 5 Portable Speaker - Suv o'tkazmaydigan himoyasi",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:31.660Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 67,
+  "fields": {
+    "product": 18,
+    "variant": 29,
+    "file": "products/2026/01/jbl-charge-5-gallery-3.jpg",
+    "alt_text": "JBL Charge 5 Portable Speaker - Passiv bas radiatorlari",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:32.074Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 68,
+  "fields": {
+    "product": 19,
+    "variant": 30,
+    "file": "products/2026/01/marshall-emberton-2-gallery-2.jpg",
+    "alt_text": "Marshall Emberton II - Vintage panjara va oltin tugma",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:32.506Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 69,
+  "fields": {
+    "product": 19,
+    "variant": null,
+    "file": "products/2026/01/marshall-emberton-2-gallery-3.jpg",
+    "alt_text": "Marshall Emberton II - Mustahkam silikon qobiq",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:32.904Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 70,
+  "fields": {
+    "product": 20,
+    "variant": 31,
+    "file": "products/2026/01/apple-watch-ultra-2-gallery-2.jpg",
+    "alt_text": "Apple Watch Ultra 2 - Titan qirra va apelsinrang Action tugma",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:33.354Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 71,
+  "fields": {
+    "product": 20,
+    "variant": 32,
+    "file": "products/2026/01/apple-watch-ultra-2-gallery-3.jpg",
+    "alt_text": "Apple Watch Ultra 2 - Alpine Loop tasmasi bilan",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:33.672Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 72,
+  "fields": {
+    "product": 21,
+    "variant": 33,
+    "file": "products/2026/01/apple-watch-series-9-gallery-2.jpg",
+    "alt_text": "Apple Watch Series 9 - Always-On Retina ekrani",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:33.996Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 73,
+  "fields": {
+    "product": 21,
+    "variant": 34,
+    "file": "products/2026/01/apple-watch-series-9-gallery-3.jpg",
+    "alt_text": "Apple Watch Series 9 - Sport Loop tasmasi",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:34.458Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 74,
+  "fields": {
+    "product": 22,
+    "variant": 35,
+    "file": "products/2026/01/galaxy-watch-6-classic-gallery-2.jpg",
+    "alt_text": "Samsung Galaxy Watch 6 Classic - Aylanuvchi mexanik ramka",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:34.797Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 75,
+  "fields": {
+    "product": 22,
+    "variant": 36,
+    "file": "products/2026/01/galaxy-watch-6-classic-gallery-3.jpg",
+    "alt_text": "Samsung Galaxy Watch 6 Classic - Klassik charm tasma bilan",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:35.265Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 76,
+  "fields": {
+    "product": 23,
+    "variant": 37,
+    "file": "products/2026/01/xiaomi-smart-band-8-pro-gallery-2.jpg",
+    "alt_text": "Xiaomi Smart Band 8 Pro - Katta AMOLED ekran",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:35.712Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 77,
+  "fields": {
+    "product": 24,
+    "variant": 38,
+    "file": "products/2026/01/ipad-pro-13-m4-gallery-2.jpg",
+    "alt_text": "Apple iPad Pro 13\" M4 - Ultra yupqa 5.1mm korpus",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:36.136Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 78,
+  "fields": {
+    "product": 24,
+    "variant": 39,
+    "file": "products/2026/01/ipad-pro-13-m4-gallery-3.jpg",
+    "alt_text": "Apple iPad Pro 13\" M4 - Apple Pencil Pro bilan ishlash",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:36.580Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 79,
+  "fields": {
+    "product": 25,
+    "variant": 40,
+    "file": "products/2026/01/galaxy-tab-s9-ultra-gallery-2.jpg",
+    "alt_text": "Samsung Galaxy Tab S9 Ultra - 14.6 dyuymli Dynamic AMOLED ekrani",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:37.061Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 80,
+  "fields": {
+    "product": 25,
+    "variant": null,
+    "file": "products/2026/01/galaxy-tab-s9-ultra-gallery-3.jpg",
+    "alt_text": "Samsung Galaxy Tab S9 Ultra - S-Pen va klaviatura bilan",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:37.487Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 81,
+  "fields": {
+    "product": 26,
+    "variant": 41,
+    "file": "products/2026/01/playstation-5-slim-gallery-2.jpg",
+    "alt_text": "Sony PlayStation 5 Slim - DualSense pulti va konsol",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:37.835Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 82,
+  "fields": {
+    "product": 26,
+    "variant": 42,
+    "file": "products/2026/01/playstation-5-slim-gallery-3.jpg",
+    "alt_text": "Sony PlayStation 5 Slim - Vertikal taglikdagi ko'rinishi",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:38.261Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 83,
+  "fields": {
+    "product": 27,
+    "variant": 44,
+    "file": "products/2026/01/nike-air-force-1-gallery-2.jpg",
+    "alt_text": "Nike Air Force 1 '07 - Yon tomon Swoosh belgisi",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:38.701Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 84,
+  "fields": {
+    "product": 27,
+    "variant": 43,
+    "file": "products/2026/01/nike-air-force-1-gallery-3.jpg",
+    "alt_text": "Nike Air Force 1 '07 - Mustahkam kauchuk taglik",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:39.105Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 85,
+  "fields": {
+    "product": 4,
+    "variant": 5,
+    "file": "products/2026/01/nike-air-max-270-gallery-2.jpg",
+    "alt_text": "Nike Air Max 270 - Katta havo yostig'i (Air Unit)",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:39.507Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 86,
+  "fields": {
+    "product": 4,
+    "variant": null,
+    "file": "products/2026/01/nike-air-max-270-gallery-3.jpg",
+    "alt_text": "Nike Air Max 270 - Nafas oluvchi to'rli yuqori qism",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:39.929Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 87,
+  "fields": {
+    "product": 28,
+    "variant": 48,
+    "file": "products/2026/01/adidas-samba-og-gallery-2.jpg",
+    "alt_text": "Adidas Samba OG - T-burun zamsh va klassik taglik",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:40.403Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 88,
+  "fields": {
+    "product": 28,
+    "variant": 47,
+    "file": "products/2026/01/adidas-samba-og-gallery-3.jpg",
+    "alt_text": "Adidas Samba OG - 3 ta chiziq va oltin Samba yozuvi",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:40.844Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 89,
+  "fields": {
+    "product": 29,
+    "variant": 50,
+    "file": "products/2026/01/adidas-ultraboost-light-gallery-2.jpg",
+    "alt_text": "Adidas Ultraboost Light - Light Boost amortizatsiya tagligi",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:41.320Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 90,
+  "fields": {
+    "product": 29,
+    "variant": 51,
+    "file": "products/2026/01/adidas-ultraboost-light-gallery-3.jpg",
+    "alt_text": "Adidas Ultraboost Light - Continental kauchuk tutqichi",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:41.727Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 91,
+  "fields": {
+    "product": 30,
+    "variant": 52,
+    "file": "products/2026/01/puma-rs-x-gallery-2.jpg",
+    "alt_text": "Puma RS-X Reinvention - Rang-barang retro qatlamlar",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:42.128Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 92,
+  "fields": {
+    "product": 31,
+    "variant": 54,
+    "file": "products/2026/01/nike-club-fleece-hoodie-gallery-2.jpg",
+    "alt_text": "Nike Sportswear Club Fleece Hoodie - Kapushon va keng old cho'ntak",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:42.574Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 93,
+  "fields": {
+    "product": 32,
+    "variant": 57,
+    "file": "products/2026/01/adidas-tracksuit-gallery-2.jpg",
+    "alt_text": "Adidas Essentials 3-Stripes Tracksuit - Sport uslubidagi to'liq komplekt",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:43.029Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 94,
+  "fields": {
+    "product": 33,
+    "variant": 58,
+    "file": "products/2026/01/dyson-v15-detect-gallery-2.jpg",
+    "alt_text": "Dyson V15 Detect Absolute - Lazerli Fluffy cho'tkasi va nasadkalar",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:43.443Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 95,
+  "fields": {
+    "product": 33,
+    "variant": null,
+    "file": "products/2026/01/dyson-v15-detect-gallery-3.jpg",
+    "alt_text": "Dyson V15 Detect Absolute - LCD ekran va chang hisoblagichi",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:43.942Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 96,
+  "fields": {
+    "product": 34,
+    "variant": 59,
+    "file": "products/2026/01/xiaomi-robot-vacuum-x10-gallery-2.jpg",
+    "alt_text": "Xiaomi Robot Vacuum X10+ - Avtomatik bo'shatish stansiyasi",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:44.406Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 97,
+  "fields": {
+    "product": 34,
+    "variant": null,
+    "file": "products/2026/01/xiaomi-robot-vacuum-x10-gallery-3.jpg",
+    "alt_text": "Xiaomi Robot Vacuum X10+ - LiDAR navigatsiya va nam tozalash",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:44.824Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 98,
+  "fields": {
+    "product": 35,
+    "variant": 60,
+    "file": "products/2026/01/delonghi-magnifica-s-gallery-2.jpg",
+    "alt_text": "De'Longhi Magnifica S Smart Coffee Machine - Espresso quyilishi va qahva donalari",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:34:45.246Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 99,
+  "fields": {
+    "product": 35,
+    "variant": null,
+    "file": "products/2026/01/delonghi-magnifica-s-gallery-3.jpg",
+    "alt_text": "De'Longhi Magnifica S Smart Coffee Machine - Kapuchinator va boshqaruv paneli",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:34:45.785Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 100,
+  "fields": {
+    "product": 3,
+    "variant": 4,
+    "file": "products/2026/01/samsung-galaxy-s24-ultra-gallery-2.jpg",
+    "alt_text": "Samsung Galaxy S24 Ultra - S-Pen stilus bilan",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:36:29.546Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 101,
+  "fields": {
+    "product": 3,
+    "variant": null,
+    "file": "products/2026/01/samsung-galaxy-s24-ultra-gallery-3.jpg",
+    "alt_text": "Samsung Galaxy S24 Ultra - Orqa 200MP kamera tizimi",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:36:29.986Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 102,
+  "fields": {
+    "product": 1,
+    "variant": 1,
+    "file": "products/2026/01/macbook-pro-16-m3-max-gallery-2.jpg",
+    "alt_text": "Apple MacBook Pro 16\" M3 Max - Ochiq 120Hz Liquid Retina ekrani",
+    "media_type": "image",
+    "is_main": false,
+    "order": 2,
+    "created_at": "2026-11-05T11:36:30.412Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 103,
+  "fields": {
+    "product": 1,
+    "variant": 2,
+    "file": "products/2026/01/macbook-pro-16-m3-max-gallery-3.jpg",
+    "alt_text": "Apple MacBook Pro 16\" M3 Max - Magic Keyboard va trekpad",
+    "media_type": "image",
+    "is_main": false,
+    "order": 3,
+    "created_at": "2026-11-05T11:36:30.868Z"
+  }
+},
+{
+  "model": "products.productmedia",
+  "pk": 104,
+  "fields": {
+    "product": 1,
+    "variant": null,
+    "file": "products/2026/01/macbook-pro-16-m3-max-gallery-4.jpg",
+    "alt_text": "Apple MacBook Pro 16\" M3 Max - Yon tomon portlari va MagSafe",
+    "media_type": "image",
+    "is_main": false,
+    "order": 4,
+    "created_at": "2026-11-05T11:36:31.318Z"
+  }
+},
+{
   "model": "products.attribute",
   "pk": 1,
   "fields": {
@@ -4874,6 +6496,762 @@
   }
 },
 {
+  "model": "reviews.review",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "product": 1,
+    "order_item": 1,
+    "rating": 5,
+    "title": "Ajoyib noutbuk, dasturlash uchun ideal!",
+    "comment": "M3 Max protsessori va 16GB operativ xotirasi barcha og'ir vazifalarni juda tez bajaradi. Batareyasi ham 18 soatgacha yetadi. Tavsiya qilaman.",
+    "pros": "Tezkorlik, ekran sifati, akkumulyator",
+    "cons": "Narxi bir oz baland",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 1,
+    "dislikes_count": 0,
+    "created_at": "2026-10-22T16:00:00Z",
+    "updated_at": "2026-10-22T16:00:00Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 2,
+  "fields": {
+    "user": 3,
+    "product": 2,
+    "order_item": 2,
+    "rating": 4,
+    "title": "Kamera va korpus a'lo darajada",
+    "comment": "Titan korpusi juda yengil va qulay. Kamerasi tungi vaqtda ham tiniq suratga oladi.",
+    "pros": "Yengil titan korpus, 120Hz ekran, kamera",
+    "cons": "Batareya quvvati bir kunga yetadi xolos",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 1,
+    "dislikes_count": 0,
+    "created_at": "2026-10-23T14:00:00Z",
+    "updated_at": "2026-10-23T14:00:00Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 3,
+  "fields": {
+    "user": 2,
+    "product": 4,
+    "order_item": null,
+    "rating": 5,
+    "title": "Juda qulay krossovka",
+    "comment": "Yugurish va kundalik kiyish uchun juda mos. Oyoqda juda yumshoq turadi.",
+    "pros": "Yumshoq taglik, zamonaviy dizayn",
+    "cons": "",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": false,
+    "likes_count": 0,
+    "dislikes_count": 0,
+    "created_at": "2026-10-24T10:00:00Z",
+    "updated_at": "2026-10-24T10:00:00Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 4,
+  "fields": {
+    "user": 3,
+    "product": 1,
+    "order_item": null,
+    "rating": 3,
+    "title": "Katta va og'ir",
+    "comment": "Noutbuk kuchi zo'r, lekin ryukzakda olib yurishga biroz og'irlik qildi.",
+    "pros": "Katta ekran",
+    "cons": "Og'irligi",
+    "status": "PENDING",
+    "rejection_reason": "",
+    "is_verified_purchase": false,
+    "likes_count": 0,
+    "dislikes_count": 0,
+    "created_at": "2026-10-24T11:00:00Z",
+    "updated_at": "2026-10-24T11:00:00Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 5,
+  "fields": {
+    "user": 3,
+    "product": 5,
+    "order_item": null,
+    "rating": 5,
+    "title": "Eng yaxshi kamera!",
+    "comment": "Telefon nihoyatda tez ishlaydi, titan korpus tufayli avvalgilariga qaraganda ancha yengil.",
+    "pros": "Kamera, batareya, A17 Pro",
+    "cons": "Narxi qimmatroq",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:06:53.700Z",
+    "updated_at": "2026-11-05T10:06:53.700Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 6,
+  "fields": {
+    "user": 2,
+    "product": 5,
+    "order_item": null,
+    "rating": 5,
+    "title": "Mukammal smartfon",
+    "comment": "Batareyasi bemalol 1.5 kunga yetadi, displey 120Hz oqim kabi tekis.",
+    "pros": "Displey, Action Button",
+    "cons": "Yo'q",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:06:53.713Z",
+    "updated_at": "2026-11-05T10:06:53.713Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 7,
+  "fields": {
+    "user": 3,
+    "product": 6,
+    "order_item": null,
+    "rating": 5,
+    "title": "Qulay va ixcham",
+    "comment": "USB-C nihoyat qo'shilgani juda yaxshi bo'ldi, endi hamma qurilmaga bir kabel yetadi.",
+    "pros": "USB-C, Dynamic Island",
+    "cons": "60Hz ekran",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:06:54.080Z",
+    "updated_at": "2026-11-05T10:06:54.080Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 8,
+  "fields": {
+    "user": 2,
+    "product": 7,
+    "order_item": null,
+    "rating": 5,
+    "title": "Ish uchun tengsiz",
+    "comment": "Bir vaqtning o'zida 3 ta ilovani ochib ishlash mumkin. Ekran sifati ajoyib.",
+    "pros": "Katta ekran, kuchli protsessor",
+    "cons": "Og'irroq",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:06:54.521Z",
+    "updated_at": "2026-11-05T10:06:54.521Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 9,
+  "fields": {
+    "user": 3,
+    "product": 8,
+    "order_item": null,
+    "rating": 5,
+    "title": "Haqiqiy fotoapparat",
+    "comment": "Suratlari shunchaki fantastik, ayniqsa tunda va portret rejimida.",
+    "pros": "Kamera, tezkor quvvatlanish",
+    "cons": "Katta kamera moduli",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:06:55.068Z",
+    "updated_at": "2026-11-05T10:06:55.068Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 10,
+  "fields": {
+    "user": 2,
+    "product": 9,
+    "order_item": null,
+    "rating": 4,
+    "title": "AI imkoniyatlari hayratlanarli",
+    "comment": "Fotolarni tahrirlash sun'iy intellekt orqali juda qulay.",
+    "pros": "Kamera, sof interfeys",
+    "cons": "Batareya o'rtacha",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:06:55.557Z",
+    "updated_at": "2026-11-05T10:06:55.557Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 11,
+  "fields": {
+    "user": 3,
+    "product": 10,
+    "order_item": null,
+    "rating": 5,
+    "title": "Mukammal ishchi noutbuk",
+    "comment": "Dasturlash va ofis ishlari uchun ideal, batareyasi hech qachon pand bermaydi.",
+    "pros": "Sokinlik, katta displey, batareya",
+    "cons": "Portlar soni kam",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:06:55.933Z",
+    "updated_at": "2026-11-05T10:06:55.933Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 12,
+  "fields": {
+    "user": 2,
+    "product": 11,
+    "order_item": null,
+    "rating": 5,
+    "title": "O'yinlar uchun monstr",
+    "comment": "Cyberpunk 2077 ultra sozlamalarda yugurib ketadi. OLED displey ranglari shunchaki aql bovar qilmas darajada to'yingan.",
+    "pros": "Ekran, unumdorlik",
+    "cons": "Yuklama ostida shovqinli",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:06:56.379Z",
+    "updated_at": "2026-11-05T10:06:56.379Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 13,
+  "fields": {
+    "user": 3,
+    "product": 12,
+    "order_item": null,
+    "rating": 5,
+    "title": "Eng qulay klaviatura",
+    "comment": "Matn terish va biznes sayohatlar uchun bundan yaxshiroq noutbuk yo'q.",
+    "pros": "Klaviatura, engillik, xavfsizlik",
+    "cons": "Narxi baland",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:06:56.797Z",
+    "updated_at": "2026-11-05T10:06:56.797Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 14,
+  "fields": {
+    "user": 2,
+    "product": 13,
+    "order_item": null,
+    "rating": 5,
+    "title": "Dizayn va kuch uyg'unligi",
+    "comment": "4K video montajda Premiere Pro juda tez render qiladi.",
+    "pros": "Sensorli OLED ekran, ovoz tizimi",
+    "cons": "Faqat Type-C portlar",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:06:57.247Z",
+    "updated_at": "2026-11-05T10:06:57.247Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 15,
+  "fields": {
+    "user": 3,
+    "product": 14,
+    "order_item": null,
+    "rating": 5,
+    "title": "Shovqindan butkul uzilish",
+    "comment": "Samolyotda yoki gavjum ofisda shovqinni nol darajaga tushirib beradi.",
+    "pros": "Shovqin bosish, qulaylik",
+    "cons": "Buklanmaydigan korpus",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:06:57.690Z",
+    "updated_at": "2026-11-05T10:06:57.690Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 16,
+  "fields": {
+    "user": 2,
+    "product": 15,
+    "order_item": null,
+    "rating": 5,
+    "title": "Har kungi ajralmas hamroh",
+    "comment": "Quloqda juda mahkam va sezilarsiz turadi, baslari nihoyatda tiniq.",
+    "pros": "Shovqin bosish, mikrofon, ixchamlik",
+    "cons": "Oson chiziladigan keys",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:06:58.042Z",
+    "updated_at": "2026-11-05T10:06:58.042Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 17,
+  "fields": {
+    "user": 3,
+    "product": 16,
+    "order_item": null,
+    "rating": 5,
+    "title": "Premial ovoz sifati",
+    "comment": "Film ko'rishda xuddi kinoteatrdagi kabi effekt beradi.",
+    "pros": "Materiallar sifati, Spatial Audio",
+    "cons": "Og'irligi",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:06:58.412Z",
+    "updated_at": "2026-11-05T10:06:58.412Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 18,
+  "fields": {
+    "user": 2,
+    "product": 17,
+    "order_item": null,
+    "rating": 4,
+    "title": "Juda qulay",
+    "comment": "Quloqda juda mustahkam o'tiradi, yugurishda ham tushib ketmaydi.",
+    "pros": "Ovoz, ixchamlik",
+    "cons": "Batareya 5 soat",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:06:58.775Z",
+    "updated_at": "2026-11-05T10:06:58.775Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 19,
+  "fields": {
+    "user": 3,
+    "product": 18,
+    "order_item": null,
+    "rating": 5,
+    "title": "Baslari aqlbovar qilmas",
+    "comment": "Ochiq havoda ham ovozi juda baland va tiniq yangraydi.",
+    "pros": "Bas, batareya, suv o'tkazmaslik",
+    "cons": "Mikrofoni yo'q",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:06:59.197Z",
+    "updated_at": "2026-11-05T10:06:59.197Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 20,
+  "fields": {
+    "user": 2,
+    "product": 19,
+    "order_item": null,
+    "rating": 5,
+    "title": "Dizayn va musiqiy lazzat",
+    "comment": "Stol ustida ajoyib ko'rinadi, rok va klassik musiqalarni ajoyib ijro etadi.",
+    "pros": "Dizayn, toza vokal",
+    "cons": "Dasturi oddiy",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:06:59.662Z",
+    "updated_at": "2026-11-05T10:06:59.662Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 21,
+  "fields": {
+    "user": 3,
+    "product": 20,
+    "order_item": null,
+    "rating": 5,
+    "title": "Eng chidamli soat",
+    "comment": "Tog'larda navigatsiya va sport bilan shug'ullanishda tengi yo'q.",
+    "pros": "Ekran yorqinligi, titan mustahkamligi",
+    "cons": "Katta o'lcham",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:07:00.007Z",
+    "updated_at": "2026-11-05T10:07:00.007Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 22,
+  "fields": {
+    "user": 2,
+    "product": 21,
+    "order_item": null,
+    "rating": 5,
+    "title": "Double tap ajoyib",
+    "comment": "Qo'lingiz band bo'lsa ham barmoqlarni ikki marta tekkizib qo'ng'iroqqa javob berish juda qulay.",
+    "pros": "Double Tap, tezkorlik",
+    "cons": "Har kuni quvvatlash kerak",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:07:00.479Z",
+    "updated_at": "2026-11-05T10:07:00.479Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 23,
+  "fields": {
+    "user": 3,
+    "product": 22,
+    "order_item": null,
+    "rating": 5,
+    "title": "Klassik va juda qulay",
+    "comment": "Aylanuvchi bezeli orqali menyuni boshqarish sensorli ekranga qaraganda ancha yoqimli.",
+    "pros": "Mexanik bezel, safir shisha",
+    "cons": "Batareya 1-2 kun",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:07:00.921Z",
+    "updated_at": "2026-11-05T10:07:00.921Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 24,
+  "fields": {
+    "user": 2,
+    "product": 23,
+    "order_item": null,
+    "rating": 5,
+    "title": "Narxiga nisbatan ajoyib",
+    "comment": "Batareyasi deyarli 2 hafta bemalol yetadi, bildirishnomalar katta ekranda yaxshi o'qiladi.",
+    "pros": "Batareya, narx, ekran",
+    "cons": "NFC hamma joyda ishlamaydi",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:07:01.355Z",
+    "updated_at": "2026-11-05T10:07:01.355Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 25,
+  "fields": {
+    "user": 3,
+    "product": 24,
+    "order_item": null,
+    "rating": 5,
+    "title": "OLED displey shunchaki mo'jiza",
+    "comment": "Ranglar chuqurligi, yupqaligi va M4 tezligi hayratga soladi.",
+    "pros": "Ekran, noziklik, tezlik",
+    "cons": "iPadOS cheklovlari",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:07:01.821Z",
+    "updated_at": "2026-11-05T10:07:01.821Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 26,
+  "fields": {
+    "user": 2,
+    "product": 25,
+    "order_item": null,
+    "rating": 5,
+    "title": "Rasm chizish va kino ko'rish uchun 1-raqam",
+    "comment": "S Pen qalami bepul qutidan chiqishi juda yoqimli. Ekran esa televizordek katta.",
+    "pros": "Ulkan AMOLED ekran, S-Pen",
+    "cons": "Kattaligi sababli bir qo'lda ushlash qiyin",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:07:02.340Z",
+    "updated_at": "2026-11-05T10:07:02.340Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 27,
+  "fields": {
+    "user": 3,
+    "product": 26,
+    "order_item": null,
+    "rating": 5,
+    "title": "O'yin olamidagi cho'qqi",
+    "comment": "Yuklanish vaqti soniyalar ichida sodir bo'ladi, DualSense triggerlari hissi ajoyib.",
+    "pros": "Tezlik, DualSense, eksklyuziv o'yinlar",
+    "cons": "Aksessuarlar narxi",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:07:02.713Z",
+    "updated_at": "2026-11-05T10:07:02.713Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 28,
+  "fields": {
+    "user": 2,
+    "product": 27,
+    "order_item": null,
+    "rating": 5,
+    "title": "Universal uslub",
+    "comment": "Har qanday kiyim bilan mos tushadi, juda mustahkam.",
+    "pros": "Dizayn, chidamlilik",
+    "cons": "Oq rang tez kirlanadi",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:07:03.186Z",
+    "updated_at": "2026-11-05T10:07:03.186Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 29,
+  "fields": {
+    "user": 3,
+    "product": 28,
+    "order_item": null,
+    "rating": 5,
+    "title": "Trenddagi poyabzal",
+    "comment": "Jinsi va shimlar bilan ajoyib yarashadi, oyoqda engil turadi.",
+    "pros": "Retro uslub, sifatli charm",
+    "cons": "Yupqa taglik",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:07:03.554Z",
+    "updated_at": "2026-11-05T10:07:03.554Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 30,
+  "fields": {
+    "user": 2,
+    "product": 29,
+    "order_item": null,
+    "rating": 5,
+    "title": "Yugurish uchun tengsiz",
+    "comment": "Amortizatsiyasi bulut ustida yurgandek his beradi. Oyoq umuman charchamaydi.",
+    "pros": "Qulaylik, amortizatsiya",
+    "cons": "Narxi balandroq",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:07:03.927Z",
+    "updated_at": "2026-11-05T10:07:03.927Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 31,
+  "fields": {
+    "user": 3,
+    "product": 30,
+    "order_item": null,
+    "rating": 4,
+    "title": "Juda chiroyli dizayn",
+    "comment": "Yorqin ranglari bilan ko'chada darhol e'tibor tortadi.",
+    "pros": "Dizayn, narx",
+    "cons": "Kengroq bichim",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:07:04.377Z",
+    "updated_at": "2026-11-05T10:07:04.377Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 32,
+  "fields": {
+    "user": 2,
+    "product": 31,
+    "order_item": null,
+    "rating": 5,
+    "title": "Sifatli mato",
+    "comment": "Yuvilgandan keyin ham rangi o'chmaydi, ichki qismi yumshoq.",
+    "pros": "Sifat, qulaylik",
+    "cons": "Yo'q",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:07:04.849Z",
+    "updated_at": "2026-11-05T10:07:04.849Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 33,
+  "fields": {
+    "user": 3,
+    "product": 32,
+    "order_item": null,
+    "rating": 5,
+    "title": "Ajoyib kostyum",
+    "comment": "Materiali yengil, harakatlanishga hech xalal bermaydi.",
+    "pros": "Klassik ko'rinish, narx",
+    "cons": "Yo'q",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:07:05.332Z",
+    "updated_at": "2026-11-05T10:07:05.332Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 34,
+  "fields": {
+    "user": 2,
+    "product": 33,
+    "order_item": null,
+    "rating": 5,
+    "title": "Tozalikning yangi bosqichi",
+    "comment": "Lazer nuri gilam va poldagi ko'rinmas changlarni ko'rsatganda hayratda qoldim.",
+    "pros": "Tortish kuchi, lazer, noziklik",
+    "cons": "Narxi qimmat",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:07:05.776Z",
+    "updated_at": "2026-11-05T10:07:05.776Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 35,
+  "fields": {
+    "user": 3,
+    "product": 34,
+    "order_item": null,
+    "rating": 5,
+    "title": "Haqiqiy ozodlik",
+    "comment": "1 oy davomida umuman qo'l tekkizmadim, o'zi tozalab, stansiyaga axlatini to'kib qo'yadi.",
+    "pros": "To'liq avtomatizatsiya, quritish",
+    "cons": "Katta stansiya",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:07:06.284Z",
+    "updated_at": "2026-11-05T10:07:06.284Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 36,
+  "fields": {
+    "user": 2,
+    "product": 35,
+    "order_item": null,
+    "rating": 5,
+    "title": "Har tong xushbo'y qahva",
+    "comment": "Kofeshopdagi kabi ajoyib kapuchino qiladi. Tozalash va ishlatish juda oson.",
+    "pros": "Qahva sifati, po'lat tegirmon",
+    "cons": "Bir oz shovqinli yanchadi",
+    "status": "APPROVED",
+    "rejection_reason": "",
+    "is_verified_purchase": true,
+    "likes_count": 5,
+    "dislikes_count": 0,
+    "created_at": "2026-11-05T10:07:06.726Z",
+    "updated_at": "2026-11-05T10:07:06.726Z"
+  }
+},
+{
   "model": "reviews.reviewimage",
   "pk": 1,
   "fields": {
@@ -4891,6 +7269,37 @@
     "image": "reviews/iphone15_titanium.jpg",
     "caption": "Natural Titanium rangi",
     "created_at": "2026-10-23T14:05:00Z"
+  }
+},
+{
+  "model": "reviews.reviewreply",
+  "pk": 1,
+  "fields": {
+    "review": 1,
+    "user": 1,
+    "comment": "Xaridingiz va batafsil fikr-mulohazangiz uchun minnatdorchilik bildiramiz!",
+    "created_at": "2026-10-22T17:00:00Z",
+    "updated_at": "2026-10-22T17:00:00Z"
+  }
+},
+{
+  "model": "reviews.reviewvote",
+  "pk": 1,
+  "fields": {
+    "review": 1,
+    "user": 3,
+    "vote_type": "HELPFUL",
+    "created_at": "2026-10-23T09:00:00Z"
+  }
+},
+{
+  "model": "reviews.reviewvote",
+  "pk": 2,
+  "fields": {
+    "review": 2,
+    "user": 2,
+    "vote_type": "HELPFUL",
+    "created_at": "2026-10-23T15:00:00Z"
   }
 },
 {
@@ -5371,6 +7780,7 @@
 },
 {
   "model": "users.user",
+  "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$720000$Z5DKWMRZaswcNpUs9Me8RI$LfM2FQTHtDgO1Jn1L4eNLTYaihm6jbqfq9NbV4/pK3o=",
     "last_login": null,
@@ -5390,6 +7800,7 @@
 },
 {
   "model": "users.user",
+  "pk": 2,
   "fields": {
     "password": "pbkdf2_sha256$720000$Z5DKWMRZaswcNpUs9Me8RI$LfM2FQTHtDgO1Jn1L4eNLTYaihm6jbqfq9NbV4/pK3o=",
     "last_login": null,
@@ -5409,6 +7820,7 @@
 },
 {
   "model": "users.user",
+  "pk": 3,
   "fields": {
     "password": "pbkdf2_sha256$720000$Z5DKWMRZaswcNpUs9Me8RI$LfM2FQTHtDgO1Jn1L4eNLTYaihm6jbqfq9NbV4/pK3o=",
     "last_login": null,
@@ -5428,6 +7840,7 @@
 },
 {
   "model": "users.user",
+  "pk": 4,
   "fields": {
     "password": "pbkdf2_sha256$720000$Z5DKWMRZaswcNpUs9Me8RI$LfM2FQTHtDgO1Jn1L4eNLTYaihm6jbqfq9NbV4/pK3o=",
     "last_login": null,
@@ -5447,6 +7860,7 @@
 },
 {
   "model": "users.user",
+  "pk": 5,
   "fields": {
     "password": "pbkdf2_sha256$720000$nDQawCFqPLnhBn573oVi4e$W3H1W+GY8ojujinke6GJGgc+PjpIVKNZdE29z42oTTU=",
     "last_login": null,
@@ -5466,6 +7880,7 @@
 },
 {
   "model": "users.user",
+  "pk": 6,
   "fields": {
     "password": "",
     "last_login": null,
@@ -5485,6 +7900,7 @@
 },
 {
   "model": "users.user",
+  "pk": 7,
   "fields": {
     "password": "",
     "last_login": null,
@@ -5506,9 +7922,7 @@
   "model": "users.otpcode",
   "pk": 1,
   "fields": {
-    "user": [
-      "inactive.user@example.com"
-    ],
+    "user": 4,
     "code": "777111",
     "otp_type": "register",
     "expires_at": "2026-12-31T23:59:59Z",
@@ -5520,9 +7934,7 @@
   "model": "users.otpcode",
   "pk": 2,
   "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
+    "user": 2,
     "code": "888222",
     "otp_type": "password_reset",
     "expires_at": "2026-12-31T23:59:59Z",
@@ -5534,9 +7946,7 @@
   "model": "users.otpcode",
   "pk": 3,
   "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
+    "user": 3,
     "code": "999333",
     "otp_type": "login",
     "expires_at": "2026-01-01T00:00:00Z",
@@ -5548,1599 +7958,12 @@
   "model": "users.otpcode",
   "pk": 4,
   "fields": {
-    "user": [
-      "maqsudbekboltayev670@gmail.com"
-    ],
+    "user": 5,
     "code": "290259",
     "otp_type": "register",
     "expires_at": "2026-11-05T08:10:25.834Z",
     "is_used": false,
     "created_at": "2026-11-05T08:05:25.834Z"
-  }
-},
-{
-  "model": "reviews.reviewvote",
-  "pk": 1,
-  "fields": {
-    "review": 1,
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "vote_type": "HELPFUL",
-    "created_at": "2026-10-23T09:00:00Z"
-  }
-},
-{
-  "model": "reviews.reviewvote",
-  "pk": 2,
-  "fields": {
-    "review": 2,
-    "user": [
-      "john.doe@example.com"
-    ],
-    "vote_type": "HELPFUL",
-    "created_at": "2026-10-23T15:00:00Z"
-  }
-},
-{
-  "model": "reviews.reviewreply",
-  "pk": 1,
-  "fields": {
-    "review": 1,
-    "user": [
-      "admin@ecommerce.uz"
-    ],
-    "comment": "Xaridingiz va batafsil fikr-mulohazangiz uchun minnatdorchilik bildiramiz!",
-    "created_at": "2026-10-22T17:00:00Z",
-    "updated_at": "2026-10-22T17:00:00Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 1,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "product": 1,
-    "order_item": 1,
-    "rating": 5,
-    "title": "Ajoyib noutbuk, dasturlash uchun ideal!",
-    "comment": "M3 Max protsessori va 16GB operativ xotirasi barcha og'ir vazifalarni juda tez bajaradi. Batareyasi ham 18 soatgacha yetadi. Tavsiya qilaman.",
-    "pros": "Tezkorlik, ekran sifati, akkumulyator",
-    "cons": "Narxi bir oz baland",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 1,
-    "dislikes_count": 0,
-    "created_at": "2026-10-22T16:00:00Z",
-    "updated_at": "2026-10-22T16:00:00Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 2,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "product": 2,
-    "order_item": 2,
-    "rating": 4,
-    "title": "Kamera va korpus a'lo darajada",
-    "comment": "Titan korpusi juda yengil va qulay. Kamerasi tungi vaqtda ham tiniq suratga oladi.",
-    "pros": "Yengil titan korpus, 120Hz ekran, kamera",
-    "cons": "Batareya quvvati bir kunga yetadi xolos",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 1,
-    "dislikes_count": 0,
-    "created_at": "2026-10-23T14:00:00Z",
-    "updated_at": "2026-10-23T14:00:00Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 3,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "product": 4,
-    "order_item": null,
-    "rating": 5,
-    "title": "Juda qulay krossovka",
-    "comment": "Yugurish va kundalik kiyish uchun juda mos. Oyoqda juda yumshoq turadi.",
-    "pros": "Yumshoq taglik, zamonaviy dizayn",
-    "cons": "",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": false,
-    "likes_count": 0,
-    "dislikes_count": 0,
-    "created_at": "2026-10-24T10:00:00Z",
-    "updated_at": "2026-10-24T10:00:00Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 4,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "product": 1,
-    "order_item": null,
-    "rating": 3,
-    "title": "Katta va og'ir",
-    "comment": "Noutbuk kuchi zo'r, lekin ryukzakda olib yurishga biroz og'irlik qildi.",
-    "pros": "Katta ekran",
-    "cons": "Og'irligi",
-    "status": "PENDING",
-    "rejection_reason": "",
-    "is_verified_purchase": false,
-    "likes_count": 0,
-    "dislikes_count": 0,
-    "created_at": "2026-10-24T11:00:00Z",
-    "updated_at": "2026-10-24T11:00:00Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 5,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "product": 5,
-    "order_item": null,
-    "rating": 5,
-    "title": "Eng yaxshi kamera!",
-    "comment": "Telefon nihoyatda tez ishlaydi, titan korpus tufayli avvalgilariga qaraganda ancha yengil.",
-    "pros": "Kamera, batareya, A17 Pro",
-    "cons": "Narxi qimmatroq",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:06:53.700Z",
-    "updated_at": "2026-11-05T10:06:53.700Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 6,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "product": 5,
-    "order_item": null,
-    "rating": 5,
-    "title": "Mukammal smartfon",
-    "comment": "Batareyasi bemalol 1.5 kunga yetadi, displey 120Hz oqim kabi tekis.",
-    "pros": "Displey, Action Button",
-    "cons": "Yo'q",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:06:53.713Z",
-    "updated_at": "2026-11-05T10:06:53.713Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 7,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "product": 6,
-    "order_item": null,
-    "rating": 5,
-    "title": "Qulay va ixcham",
-    "comment": "USB-C nihoyat qo'shilgani juda yaxshi bo'ldi, endi hamma qurilmaga bir kabel yetadi.",
-    "pros": "USB-C, Dynamic Island",
-    "cons": "60Hz ekran",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:06:54.080Z",
-    "updated_at": "2026-11-05T10:06:54.080Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 8,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "product": 7,
-    "order_item": null,
-    "rating": 5,
-    "title": "Ish uchun tengsiz",
-    "comment": "Bir vaqtning o'zida 3 ta ilovani ochib ishlash mumkin. Ekran sifati ajoyib.",
-    "pros": "Katta ekran, kuchli protsessor",
-    "cons": "Og'irroq",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:06:54.521Z",
-    "updated_at": "2026-11-05T10:06:54.521Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 9,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "product": 8,
-    "order_item": null,
-    "rating": 5,
-    "title": "Haqiqiy fotoapparat",
-    "comment": "Suratlari shunchaki fantastik, ayniqsa tunda va portret rejimida.",
-    "pros": "Kamera, tezkor quvvatlanish",
-    "cons": "Katta kamera moduli",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:06:55.068Z",
-    "updated_at": "2026-11-05T10:06:55.068Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 10,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "product": 9,
-    "order_item": null,
-    "rating": 4,
-    "title": "AI imkoniyatlari hayratlanarli",
-    "comment": "Fotolarni tahrirlash sun'iy intellekt orqali juda qulay.",
-    "pros": "Kamera, sof interfeys",
-    "cons": "Batareya o'rtacha",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:06:55.557Z",
-    "updated_at": "2026-11-05T10:06:55.557Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 11,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "product": 10,
-    "order_item": null,
-    "rating": 5,
-    "title": "Mukammal ishchi noutbuk",
-    "comment": "Dasturlash va ofis ishlari uchun ideal, batareyasi hech qachon pand bermaydi.",
-    "pros": "Sokinlik, katta displey, batareya",
-    "cons": "Portlar soni kam",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:06:55.933Z",
-    "updated_at": "2026-11-05T10:06:55.933Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 12,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "product": 11,
-    "order_item": null,
-    "rating": 5,
-    "title": "O'yinlar uchun monstr",
-    "comment": "Cyberpunk 2077 ultra sozlamalarda yugurib ketadi. OLED displey ranglari shunchaki aql bovar qilmas darajada to'yingan.",
-    "pros": "Ekran, unumdorlik",
-    "cons": "Yuklama ostida shovqinli",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:06:56.379Z",
-    "updated_at": "2026-11-05T10:06:56.379Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 13,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "product": 12,
-    "order_item": null,
-    "rating": 5,
-    "title": "Eng qulay klaviatura",
-    "comment": "Matn terish va biznes sayohatlar uchun bundan yaxshiroq noutbuk yo'q.",
-    "pros": "Klaviatura, engillik, xavfsizlik",
-    "cons": "Narxi baland",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:06:56.797Z",
-    "updated_at": "2026-11-05T10:06:56.797Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 14,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "product": 13,
-    "order_item": null,
-    "rating": 5,
-    "title": "Dizayn va kuch uyg'unligi",
-    "comment": "4K video montajda Premiere Pro juda tez render qiladi.",
-    "pros": "Sensorli OLED ekran, ovoz tizimi",
-    "cons": "Faqat Type-C portlar",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:06:57.247Z",
-    "updated_at": "2026-11-05T10:06:57.247Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 15,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "product": 14,
-    "order_item": null,
-    "rating": 5,
-    "title": "Shovqindan butkul uzilish",
-    "comment": "Samolyotda yoki gavjum ofisda shovqinni nol darajaga tushirib beradi.",
-    "pros": "Shovqin bosish, qulaylik",
-    "cons": "Buklanmaydigan korpus",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:06:57.690Z",
-    "updated_at": "2026-11-05T10:06:57.690Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 16,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "product": 15,
-    "order_item": null,
-    "rating": 5,
-    "title": "Har kungi ajralmas hamroh",
-    "comment": "Quloqda juda mahkam va sezilarsiz turadi, baslari nihoyatda tiniq.",
-    "pros": "Shovqin bosish, mikrofon, ixchamlik",
-    "cons": "Oson chiziladigan keys",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:06:58.042Z",
-    "updated_at": "2026-11-05T10:06:58.042Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 17,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "product": 16,
-    "order_item": null,
-    "rating": 5,
-    "title": "Premial ovoz sifati",
-    "comment": "Film ko'rishda xuddi kinoteatrdagi kabi effekt beradi.",
-    "pros": "Materiallar sifati, Spatial Audio",
-    "cons": "Og'irligi",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:06:58.412Z",
-    "updated_at": "2026-11-05T10:06:58.412Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 18,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "product": 17,
-    "order_item": null,
-    "rating": 4,
-    "title": "Juda qulay",
-    "comment": "Quloqda juda mustahkam o'tiradi, yugurishda ham tushib ketmaydi.",
-    "pros": "Ovoz, ixchamlik",
-    "cons": "Batareya 5 soat",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:06:58.775Z",
-    "updated_at": "2026-11-05T10:06:58.775Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 19,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "product": 18,
-    "order_item": null,
-    "rating": 5,
-    "title": "Baslari aqlbovar qilmas",
-    "comment": "Ochiq havoda ham ovozi juda baland va tiniq yangraydi.",
-    "pros": "Bas, batareya, suv o'tkazmaslik",
-    "cons": "Mikrofoni yo'q",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:06:59.197Z",
-    "updated_at": "2026-11-05T10:06:59.197Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 20,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "product": 19,
-    "order_item": null,
-    "rating": 5,
-    "title": "Dizayn va musiqiy lazzat",
-    "comment": "Stol ustida ajoyib ko'rinadi, rok va klassik musiqalarni ajoyib ijro etadi.",
-    "pros": "Dizayn, toza vokal",
-    "cons": "Dasturi oddiy",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:06:59.662Z",
-    "updated_at": "2026-11-05T10:06:59.662Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 21,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "product": 20,
-    "order_item": null,
-    "rating": 5,
-    "title": "Eng chidamli soat",
-    "comment": "Tog'larda navigatsiya va sport bilan shug'ullanishda tengi yo'q.",
-    "pros": "Ekran yorqinligi, titan mustahkamligi",
-    "cons": "Katta o'lcham",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:07:00.007Z",
-    "updated_at": "2026-11-05T10:07:00.007Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 22,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "product": 21,
-    "order_item": null,
-    "rating": 5,
-    "title": "Double tap ajoyib",
-    "comment": "Qo'lingiz band bo'lsa ham barmoqlarni ikki marta tekkizib qo'ng'iroqqa javob berish juda qulay.",
-    "pros": "Double Tap, tezkorlik",
-    "cons": "Har kuni quvvatlash kerak",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:07:00.479Z",
-    "updated_at": "2026-11-05T10:07:00.479Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 23,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "product": 22,
-    "order_item": null,
-    "rating": 5,
-    "title": "Klassik va juda qulay",
-    "comment": "Aylanuvchi bezeli orqali menyuni boshqarish sensorli ekranga qaraganda ancha yoqimli.",
-    "pros": "Mexanik bezel, safir shisha",
-    "cons": "Batareya 1-2 kun",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:07:00.921Z",
-    "updated_at": "2026-11-05T10:07:00.921Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 24,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "product": 23,
-    "order_item": null,
-    "rating": 5,
-    "title": "Narxiga nisbatan ajoyib",
-    "comment": "Batareyasi deyarli 2 hafta bemalol yetadi, bildirishnomalar katta ekranda yaxshi o'qiladi.",
-    "pros": "Batareya, narx, ekran",
-    "cons": "NFC hamma joyda ishlamaydi",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:07:01.355Z",
-    "updated_at": "2026-11-05T10:07:01.355Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 25,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "product": 24,
-    "order_item": null,
-    "rating": 5,
-    "title": "OLED displey shunchaki mo'jiza",
-    "comment": "Ranglar chuqurligi, yupqaligi va M4 tezligi hayratga soladi.",
-    "pros": "Ekran, noziklik, tezlik",
-    "cons": "iPadOS cheklovlari",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:07:01.821Z",
-    "updated_at": "2026-11-05T10:07:01.821Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 26,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "product": 25,
-    "order_item": null,
-    "rating": 5,
-    "title": "Rasm chizish va kino ko'rish uchun 1-raqam",
-    "comment": "S Pen qalami bepul qutidan chiqishi juda yoqimli. Ekran esa televizordek katta.",
-    "pros": "Ulkan AMOLED ekran, S-Pen",
-    "cons": "Kattaligi sababli bir qo'lda ushlash qiyin",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:07:02.340Z",
-    "updated_at": "2026-11-05T10:07:02.340Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 27,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "product": 26,
-    "order_item": null,
-    "rating": 5,
-    "title": "O'yin olamidagi cho'qqi",
-    "comment": "Yuklanish vaqti soniyalar ichida sodir bo'ladi, DualSense triggerlari hissi ajoyib.",
-    "pros": "Tezlik, DualSense, eksklyuziv o'yinlar",
-    "cons": "Aksessuarlar narxi",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:07:02.713Z",
-    "updated_at": "2026-11-05T10:07:02.713Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 28,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "product": 27,
-    "order_item": null,
-    "rating": 5,
-    "title": "Universal uslub",
-    "comment": "Har qanday kiyim bilan mos tushadi, juda mustahkam.",
-    "pros": "Dizayn, chidamlilik",
-    "cons": "Oq rang tez kirlanadi",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:07:03.186Z",
-    "updated_at": "2026-11-05T10:07:03.186Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 29,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "product": 28,
-    "order_item": null,
-    "rating": 5,
-    "title": "Trenddagi poyabzal",
-    "comment": "Jinsi va shimlar bilan ajoyib yarashadi, oyoqda engil turadi.",
-    "pros": "Retro uslub, sifatli charm",
-    "cons": "Yupqa taglik",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:07:03.554Z",
-    "updated_at": "2026-11-05T10:07:03.554Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 30,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "product": 29,
-    "order_item": null,
-    "rating": 5,
-    "title": "Yugurish uchun tengsiz",
-    "comment": "Amortizatsiyasi bulut ustida yurgandek his beradi. Oyoq umuman charchamaydi.",
-    "pros": "Qulaylik, amortizatsiya",
-    "cons": "Narxi balandroq",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:07:03.927Z",
-    "updated_at": "2026-11-05T10:07:03.927Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 31,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "product": 30,
-    "order_item": null,
-    "rating": 4,
-    "title": "Juda chiroyli dizayn",
-    "comment": "Yorqin ranglari bilan ko'chada darhol e'tibor tortadi.",
-    "pros": "Dizayn, narx",
-    "cons": "Kengroq bichim",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:07:04.377Z",
-    "updated_at": "2026-11-05T10:07:04.377Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 32,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "product": 31,
-    "order_item": null,
-    "rating": 5,
-    "title": "Sifatli mato",
-    "comment": "Yuvilgandan keyin ham rangi o'chmaydi, ichki qismi yumshoq.",
-    "pros": "Sifat, qulaylik",
-    "cons": "Yo'q",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:07:04.849Z",
-    "updated_at": "2026-11-05T10:07:04.849Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 33,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "product": 32,
-    "order_item": null,
-    "rating": 5,
-    "title": "Ajoyib kostyum",
-    "comment": "Materiali yengil, harakatlanishga hech xalal bermaydi.",
-    "pros": "Klassik ko'rinish, narx",
-    "cons": "Yo'q",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:07:05.332Z",
-    "updated_at": "2026-11-05T10:07:05.332Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 34,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "product": 33,
-    "order_item": null,
-    "rating": 5,
-    "title": "Tozalikning yangi bosqichi",
-    "comment": "Lazer nuri gilam va poldagi ko'rinmas changlarni ko'rsatganda hayratda qoldim.",
-    "pros": "Tortish kuchi, lazer, noziklik",
-    "cons": "Narxi qimmat",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:07:05.776Z",
-    "updated_at": "2026-11-05T10:07:05.776Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 35,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "product": 34,
-    "order_item": null,
-    "rating": 5,
-    "title": "Haqiqiy ozodlik",
-    "comment": "1 oy davomida umuman qo'l tekkizmadim, o'zi tozalab, stansiyaga axlatini to'kib qo'yadi.",
-    "pros": "To'liq avtomatizatsiya, quritish",
-    "cons": "Katta stansiya",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:07:06.284Z",
-    "updated_at": "2026-11-05T10:07:06.284Z"
-  }
-},
-{
-  "model": "reviews.review",
-  "pk": 36,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "product": 35,
-    "order_item": null,
-    "rating": 5,
-    "title": "Har tong xushbo'y qahva",
-    "comment": "Kofeshopdagi kabi ajoyib kapuchino qiladi. Tozalash va ishlatish juda oson.",
-    "pros": "Qahva sifati, po'lat tegirmon",
-    "cons": "Bir oz shovqinli yanchadi",
-    "status": "APPROVED",
-    "rejection_reason": "",
-    "is_verified_purchase": true,
-    "likes_count": 5,
-    "dislikes_count": 0,
-    "created_at": "2026-11-05T10:07:06.726Z",
-    "updated_at": "2026-11-05T10:07:06.726Z"
-  }
-},
-{
-  "model": "payments.savedcard",
-  "pk": 1,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "provider": "PAYME",
-    "card_token": "tok_payme_uzcard_1234",
-    "card_mask": "8600 **** **** 1234",
-    "card_holder": "JOHN DOE",
-    "card_type": "UZCARD",
-    "expire_month": "12",
-    "expire_year": "28",
-    "is_default": true,
-    "is_verified": true,
-    "created_at": "2026-10-01T10:00:00Z",
-    "updated_at": "2026-10-01T10:00:00Z"
-  }
-},
-{
-  "model": "payments.savedcard",
-  "pk": 2,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "provider": "CLICK",
-    "card_token": "tok_click_humo_5678",
-    "card_mask": "9860 **** **** 5678",
-    "card_holder": "JANE DOE",
-    "card_type": "HUMO",
-    "expire_month": "08",
-    "expire_year": "27",
-    "is_default": true,
-    "is_verified": true,
-    "created_at": "2026-10-05T14:30:00Z",
-    "updated_at": "2026-10-05T14:30:00Z"
-  }
-},
-{
-  "model": "payments.refund",
-  "pk": 1,
-  "fields": {
-    "refund_number": "REF-20261024-0001",
-    "payment": 4,
-    "order": 4,
-    "amount": "2499.00",
-    "currency": "UZS",
-    "status": "COMPLETED",
-    "reason": "Mijoz buyurtmani bekor qildi va to'lov summasi to'liq qaytarildi.",
-    "provider_refund_id": "payme_ref_40004",
-    "created_by": [
-      "admin@ecommerce.uz"
-    ],
-    "processed_at": "2026-10-21T09:30:00Z",
-    "metadata": {
-      "source": "admin_panel"
-    },
-    "created_at": "2026-10-21T09:30:00Z",
-    "updated_at": "2026-10-21T09:30:00Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 1,
-  "fields": {
-    "payment_number": "PAY-20261024-0001",
-    "order": 1,
-    "user": [
-      "john.doe@example.com"
-    ],
-    "amount": "2249.00",
-    "currency": "UZS",
-    "provider": "PAYME",
-    "status": "SUCCESS",
-    "provider_transaction_id": "payme_tx_10001",
-    "provider_state": "STATE_PAID",
-    "fee_amount": "0.00",
-    "refunded_amount": "0.00",
-    "checkout_url": null,
-    "metadata": {
-      "card_mask": "8600 **** **** 1234"
-    },
-    "failure_reason": null,
-    "paid_at": "2026-10-20T10:15:00Z",
-    "failed_at": null,
-    "cancelled_at": null,
-    "created_at": "2026-10-20T10:00:00Z",
-    "updated_at": "2026-10-20T10:15:00Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 2,
-  "fields": {
-    "payment_number": "PAY-20261024-0002",
-    "order": 2,
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "amount": "1019.00",
-    "currency": "UZS",
-    "provider": "CLICK",
-    "status": "SUCCESS",
-    "provider_transaction_id": "click_tx_20002",
-    "provider_state": "CLICK_CONFIRMED",
-    "fee_amount": "0.00",
-    "refunded_amount": "0.00",
-    "checkout_url": null,
-    "metadata": {
-      "card_mask": "9860 **** **** 5678"
-    },
-    "failure_reason": null,
-    "paid_at": "2026-10-23T12:00:00Z",
-    "failed_at": null,
-    "cancelled_at": null,
-    "created_at": "2026-10-23T11:45:00Z",
-    "updated_at": "2026-10-23T12:00:00Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 3,
-  "fields": {
-    "payment_number": "PAY-20261024-0003",
-    "order": 3,
-    "user": [
-      "john.doe@example.com"
-    ],
-    "amount": "130.00",
-    "currency": "UZS",
-    "provider": "UZUM",
-    "status": "PENDING",
-    "provider_transaction_id": "uzum_tx_30003",
-    "provider_state": "WAITING_FOR_PAYMENT",
-    "fee_amount": "0.00",
-    "refunded_amount": "0.00",
-    "checkout_url": "https://checkout.uzumpay.uz/pay/uzum_tx_30003",
-    "metadata": {},
-    "failure_reason": null,
-    "paid_at": null,
-    "failed_at": null,
-    "cancelled_at": null,
-    "created_at": "2026-10-24T09:00:00Z",
-    "updated_at": "2026-10-24T09:00:00Z"
-  }
-},
-{
-  "model": "payments.payment",
-  "pk": 4,
-  "fields": {
-    "payment_number": "PAY-20261024-0004",
-    "order": 4,
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "amount": "2499.00",
-    "currency": "UZS",
-    "provider": "PAYME",
-    "status": "REFUNDED",
-    "provider_transaction_id": "payme_tx_40004",
-    "provider_state": "STATE_REFUNDED",
-    "fee_amount": "0.00",
-    "refunded_amount": "2499.00",
-    "checkout_url": null,
-    "metadata": {
-      "refund_reason": "Order cancelled by customer"
-    },
-    "failure_reason": null,
-    "paid_at": "2026-10-21T08:00:00Z",
-    "failed_at": null,
-    "cancelled_at": null,
-    "created_at": "2026-10-21T07:50:00Z",
-    "updated_at": "2026-10-21T09:30:00Z"
-  }
-},
-{
-  "model": "orders.couponusage",
-  "pk": 1,
-  "fields": {
-    "coupon": 2,
-    "user": [
-      "john.doe@example.com"
-    ],
-    "order": 1,
-    "discount_amount": "50.00",
-    "used_at": "2026-10-20T10:00:00Z"
-  }
-},
-{
-  "model": "orders.orderstatushistory",
-  "pk": 1,
-  "fields": {
-    "order": 1,
-    "old_status": null,
-    "new_status": "PENDING",
-    "comment": "Buyurtma yaratildi.",
-    "created_by": [
-      "john.doe@example.com"
-    ],
-    "is_customer_visible": true,
-    "created_at": "2026-10-20T10:00:00Z"
-  }
-},
-{
-  "model": "orders.orderstatushistory",
-  "pk": 2,
-  "fields": {
-    "order": 1,
-    "old_status": "PENDING",
-    "new_status": "CONFIRMED",
-    "comment": "To'lov muvaffaqiyatli qabul qilindi.",
-    "created_by": null,
-    "is_customer_visible": true,
-    "created_at": "2026-10-20T10:15:00Z"
-  }
-},
-{
-  "model": "orders.orderstatushistory",
-  "pk": 3,
-  "fields": {
-    "order": 1,
-    "old_status": "CONFIRMED",
-    "new_status": "PROCESSING",
-    "comment": "Buyurtma omborda qadoqlanmoqda.",
-    "created_by": [
-      "admin@ecommerce.uz"
-    ],
-    "is_customer_visible": true,
-    "created_at": "2026-10-21T09:00:00Z"
-  }
-},
-{
-  "model": "orders.orderstatushistory",
-  "pk": 4,
-  "fields": {
-    "order": 1,
-    "old_status": "PROCESSING",
-    "new_status": "SHIPPED",
-    "comment": "Kuryerga yetkazish uchun topshirildi.",
-    "created_by": [
-      "admin@ecommerce.uz"
-    ],
-    "is_customer_visible": true,
-    "created_at": "2026-10-21T15:00:00Z"
-  }
-},
-{
-  "model": "orders.orderstatushistory",
-  "pk": 5,
-  "fields": {
-    "order": 1,
-    "old_status": "SHIPPED",
-    "new_status": "DELIVERED",
-    "comment": "Mijoz tomonidan qabul qilib olindi.",
-    "created_by": [
-      "admin@ecommerce.uz"
-    ],
-    "is_customer_visible": true,
-    "created_at": "2026-10-22T14:30:00Z"
-  }
-},
-{
-  "model": "orders.orderstatushistory",
-  "pk": 6,
-  "fields": {
-    "order": 2,
-    "old_status": null,
-    "new_status": "PENDING",
-    "comment": "Buyurtma yaratildi.",
-    "created_by": [
-      "jane.doe@example.com"
-    ],
-    "is_customer_visible": true,
-    "created_at": "2026-10-23T11:45:00Z"
-  }
-},
-{
-  "model": "orders.orderstatushistory",
-  "pk": 7,
-  "fields": {
-    "order": 2,
-    "old_status": "PENDING",
-    "new_status": "CONFIRMED",
-    "comment": "To'lov Click orqali o'tkazildi.",
-    "created_by": null,
-    "is_customer_visible": true,
-    "created_at": "2026-10-23T12:00:00Z"
-  }
-},
-{
-  "model": "orders.orderstatushistory",
-  "pk": 8,
-  "fields": {
-    "order": 2,
-    "old_status": "CONFIRMED",
-    "new_status": "PROCESSING",
-    "comment": "Buyurtma yig'ilmoqda.",
-    "created_by": [
-      "admin@ecommerce.uz"
-    ],
-    "is_customer_visible": true,
-    "created_at": "2026-10-23T12:05:00Z"
-  }
-},
-{
-  "model": "orders.orderstatushistory",
-  "pk": 9,
-  "fields": {
-    "order": 4,
-    "old_status": null,
-    "new_status": "PENDING",
-    "comment": "Buyurtma yaratildi.",
-    "created_by": [
-      "jane.doe@example.com"
-    ],
-    "is_customer_visible": true,
-    "created_at": "2026-10-21T07:50:00Z"
-  }
-},
-{
-  "model": "orders.orderstatushistory",
-  "pk": 10,
-  "fields": {
-    "order": 4,
-    "old_status": "PENDING",
-    "new_status": "CANCELLED",
-    "comment": "Mijoz buyurtmani bekor qildi.",
-    "created_by": [
-      "jane.doe@example.com"
-    ],
-    "is_customer_visible": true,
-    "created_at": "2026-10-21T09:30:00Z"
-  }
-},
-{
-  "model": "orders.order",
-  "pk": 1,
-  "fields": {
-    "order_number": "ORD-20261024-0001",
-    "user": [
-      "john.doe@example.com"
-    ],
-    "cart": "c1000000-0000-0000-0000-000000000001",
-    "coupon": 2,
-    "status": "DELIVERED",
-    "payment_status": "PAID",
-    "payment_method": "PAYME",
-    "shipping_method": "STANDARD",
-    "subtotal": "2299.00",
-    "shipping_fee": "0.00",
-    "discount_amount": "50.00",
-    "total_price": "2249.00",
-    "currency": "UZS",
-    "tracking_number": "TRK-UZ-987654",
-    "customer_notes": "Iltimos, soat 18:00 dan keyin yetkazing.",
-    "cancellation_reason": "",
-    "admin_notes": "Muvaffaqiyatli yetkazildi.",
-    "paid_at": "2026-10-20T10:15:00Z",
-    "delivered_at": "2026-10-22T14:30:00Z",
-    "cancelled_at": null,
-    "created_at": "2026-10-20T10:00:00Z",
-    "updated_at": "2026-10-22T14:30:00Z"
-  }
-},
-{
-  "model": "orders.order",
-  "pk": 2,
-  "fields": {
-    "order_number": "ORD-20261024-0002",
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "cart": null,
-    "coupon": null,
-    "status": "PROCESSING",
-    "payment_status": "PAID",
-    "payment_method": "CLICK",
-    "shipping_method": "EXPRESS",
-    "subtotal": "999.00",
-    "shipping_fee": "20.00",
-    "discount_amount": "0.00",
-    "total_price": "1019.00",
-    "currency": "UZS",
-    "tracking_number": "TRK-UZ-112233",
-    "customer_notes": "Eshik qo'ng'irog'i ishlamaydi, telefon qiling.",
-    "cancellation_reason": "",
-    "admin_notes": "Kuryerga topshirildi.",
-    "paid_at": "2026-10-23T12:00:00Z",
-    "delivered_at": null,
-    "cancelled_at": null,
-    "created_at": "2026-10-23T11:45:00Z",
-    "updated_at": "2026-10-23T12:05:00Z"
-  }
-},
-{
-  "model": "orders.order",
-  "pk": 3,
-  "fields": {
-    "order_number": "ORD-20261024-0003",
-    "user": [
-      "john.doe@example.com"
-    ],
-    "cart": null,
-    "coupon": null,
-    "status": "PENDING",
-    "payment_status": "PENDING",
-    "payment_method": "UZUM",
-    "shipping_method": "STANDARD",
-    "subtotal": "130.00",
-    "shipping_fee": "0.00",
-    "discount_amount": "0.00",
-    "total_price": "130.00",
-    "currency": "UZS",
-    "tracking_number": "",
-    "customer_notes": "",
-    "cancellation_reason": "",
-    "admin_notes": "",
-    "paid_at": null,
-    "delivered_at": null,
-    "cancelled_at": null,
-    "created_at": "2026-10-24T09:00:00Z",
-    "updated_at": "2026-10-24T09:00:00Z"
-  }
-},
-{
-  "model": "orders.order",
-  "pk": 4,
-  "fields": {
-    "order_number": "ORD-20261024-0004",
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "cart": null,
-    "coupon": null,
-    "status": "CANCELLED",
-    "payment_status": "REFUNDED",
-    "payment_method": "PAYME",
-    "shipping_method": "STANDARD",
-    "subtotal": "2499.00",
-    "shipping_fee": "0.00",
-    "discount_amount": "0.00",
-    "total_price": "2499.00",
-    "currency": "UZS",
-    "tracking_number": "",
-    "customer_notes": "Xato model tanlangan.",
-    "cancellation_reason": "Mijoz so'roviga binoan bekor qilindi.",
-    "admin_notes": "Refund to'liq amalga oshirildi.",
-    "paid_at": "2026-10-21T08:00:00Z",
-    "delivered_at": null,
-    "cancelled_at": "2026-10-21T09:30:00Z",
-    "created_at": "2026-10-21T07:50:00Z",
-    "updated_at": "2026-10-21T09:30:00Z"
-  }
-},
-{
-  "model": "notifications.notificationpreference",
-  "pk": 1,
-  "fields": {
-    "user": [
-      "admin@ecommerce.uz"
-    ],
-    "email_order_updates": true,
-    "email_payment_receipts": true,
-    "email_promotions": true,
-    "email_security_alerts": true,
-    "in_app_order_updates": true,
-    "in_app_payment_updates": true,
-    "in_app_promotions": true,
-    "created_at": "2026-10-01T00:00:00Z",
-    "updated_at": "2026-10-01T00:00:00Z"
-  }
-},
-{
-  "model": "notifications.notificationpreference",
-  "pk": 2,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "email_order_updates": true,
-    "email_payment_receipts": true,
-    "email_promotions": false,
-    "email_security_alerts": true,
-    "in_app_order_updates": true,
-    "in_app_payment_updates": true,
-    "in_app_promotions": true,
-    "created_at": "2026-10-01T00:00:00Z",
-    "updated_at": "2026-10-01T00:00:00Z"
-  }
-},
-{
-  "model": "notifications.notificationpreference",
-  "pk": 3,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "email_order_updates": true,
-    "email_payment_receipts": true,
-    "email_promotions": true,
-    "email_security_alerts": true,
-    "in_app_order_updates": true,
-    "in_app_payment_updates": true,
-    "in_app_promotions": true,
-    "created_at": "2026-10-01T00:00:00Z",
-    "updated_at": "2026-10-01T00:00:00Z"
-  }
-},
-{
-  "model": "notifications.emailnotification",
-  "pk": 1,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "recipient_email": "john.doe@example.com",
-    "subject": "Buyurtmangiz tasdiqlandi: #ORD-20261024-0001",
-    "body_text": "Hurmatli John Doe! Sizning #ORD-20261024-0001 raqamli buyurtmangiz qabul qilindi.",
-    "body_html": "<p>Hurmatli John Doe! Sizning <b>#ORD-20261024-0001</b> raqamli buyurtmangiz qabul qilindi.</p>",
-    "template_code": "ORDER_CONFIRMED",
-    "context_data": {
-      "amount": "2249.00",
-      "order_number": "ORD-20261024-0001"
-    },
-    "status": "SENT",
-    "priority": "HIGH",
-    "attempts": 1,
-    "max_retries": 3,
-    "last_attempt_at": "2026-10-20T10:01:00Z",
-    "sent_at": "2026-10-20T10:01:00Z",
-    "scheduled_at": "2026-10-20T10:00:00Z",
-    "error_message": null,
-    "provider_message_id": "smtp-msg-001-john",
-    "created_at": "2026-10-20T10:00:00Z",
-    "updated_at": "2026-10-20T10:01:00Z"
-  }
-},
-{
-  "model": "notifications.emailnotification",
-  "pk": 2,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "recipient_email": "jane.doe@example.com",
-    "subject": "Buyurtmangiz tasdiqlandi: #ORD-20261024-0002",
-    "body_text": "Hurmatli Jane Doe! Sizning #ORD-20261024-0002 raqamli buyurtmangiz qabul qilindi.",
-    "body_html": "<p>Hurmatli Jane Doe! Sizning <b>#ORD-20261024-0002</b> raqamli buyurtmangiz qabul qilindi.</p>",
-    "template_code": "ORDER_CONFIRMED",
-    "context_data": {
-      "amount": "1019.00",
-      "order_number": "ORD-20261024-0002"
-    },
-    "status": "SENT",
-    "priority": "HIGH",
-    "attempts": 1,
-    "max_retries": 3,
-    "last_attempt_at": "2026-10-23T11:46:00Z",
-    "sent_at": "2026-10-23T11:46:00Z",
-    "scheduled_at": "2026-10-23T11:45:00Z",
-    "error_message": null,
-    "provider_message_id": "smtp-msg-002-jane",
-    "created_at": "2026-10-23T11:45:00Z",
-    "updated_at": "2026-10-23T11:46:00Z"
-  }
-},
-{
-  "model": "notifications.emailnotification",
-  "pk": 3,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "recipient_email": "john.doe@example.com",
-    "subject": "Haftalik maxsus chegirmalar xabarnomasi",
-    "body_text": "Yangi chegirmalar katalogi bilan tanishing.",
-    "body_html": "<p>Yangi chegirmalar katalogi bilan tanishing.</p>",
-    "template_code": null,
-    "context_data": {},
-    "status": "PENDING",
-    "priority": "LOW",
-    "attempts": 0,
-    "max_retries": 3,
-    "last_attempt_at": null,
-    "sent_at": null,
-    "scheduled_at": "2026-10-25T10:00:00Z",
-    "error_message": null,
-    "provider_message_id": null,
-    "created_at": "2026-10-24T12:00:00Z",
-    "updated_at": "2026-10-24T12:00:00Z"
-  }
-},
-{
-  "model": "notifications.notification",
-  "pk": 1,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "notification_type": "ORDER",
-    "priority": "HIGH",
-    "title": "Buyurtmangiz yetkazildi! (#ORD-20261024-0001)",
-    "message": "Sizning Apple MacBook Pro 16\" buyurtmangiz muvaffaqiyatli topshirildi. Mahsulotga baho bering!",
-    "is_read": true,
-    "read_at": "2026-10-22T15:00:00Z",
-    "action_url": "/orders/ORD-20261024-0001/",
-    "data": {
-      "product_id": 1,
-      "order_number": "ORD-20261024-0001"
-    },
-    "created_at": "2026-10-22T14:30:00Z",
-    "updated_at": "2026-10-22T15:00:00Z"
-  }
-},
-{
-  "model": "notifications.notification",
-  "pk": 2,
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "notification_type": "PAYMENT",
-    "priority": "NORMAL",
-    "title": "To'lov qabul qilindi",
-    "message": "#ORD-20261024-0002 raqamli buyurtmangiz uchun 1,019.00 UZS to'lov Click orqali muvaffaqiyatli qabul qilindi.",
-    "is_read": false,
-    "read_at": null,
-    "action_url": "/orders/ORD-20261024-0002/",
-    "data": {
-      "order_number": "ORD-20261024-0002",
-      "payment_provider": "CLICK"
-    },
-    "created_at": "2026-10-23T12:00:00Z",
-    "updated_at": "2026-10-23T12:00:00Z"
-  }
-},
-{
-  "model": "notifications.notification",
-  "pk": 3,
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "notification_type": "PROMOTION",
-    "priority": "LOW",
-    "title": "Yozgi chegirmalar mavsumi boshlandi!",
-    "message": "Barcha elektronika mahsulotlariga 15% gacha maxsus chegirmalar taqdim etilmoqda.",
-    "is_read": false,
-    "read_at": null,
-    "action_url": "/promotions/summer-sale/",
-    "data": {
-      "campaign": "summer_2026"
-    },
-    "created_at": "2026-10-24T08:00:00Z",
-    "updated_at": "2026-10-24T08:00:00Z"
-  }
-},
-{
-  "model": "carts.cart",
-  "pk": "c1000000-0000-0000-0000-000000000001",
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "session_key": null,
-    "status": "OPEN",
-    "created_at": "2026-01-05T10:00:00Z",
-    "updated_at": "2026-01-05T10:00:00Z"
-  }
-},
-{
-  "model": "carts.cart",
-  "pk": "c2000000-0000-0000-0000-000000000002",
-  "fields": {
-    "user": null,
-    "session_key": "guest_session_alpha_123",
-    "status": "OPEN",
-    "created_at": "2026-01-06T11:00:00Z",
-    "updated_at": "2026-01-06T11:00:00Z"
-  }
-},
-{
-  "model": "carts.cart",
-  "pk": "c3000000-0000-0000-0000-000000000003",
-  "fields": {
-    "user": [
-      "john.doe@example.com"
-    ],
-    "session_key": "old_guest_session_456",
-    "status": "MERGED",
-    "created_at": "2026-01-04T09:00:00Z",
-    "updated_at": "2026-01-05T10:00:00Z"
-  }
-},
-{
-  "model": "carts.cart",
-  "pk": "c4000000-0000-0000-0000-000000000004",
-  "fields": {
-    "user": [
-      "jane.doe@example.com"
-    ],
-    "session_key": null,
-    "status": "CONVERTED",
-    "created_at": "2026-01-03T08:00:00Z",
-    "updated_at": "2026-01-03T12:00:00Z"
-  }
-},
-{
-  "model": "carts.cart",
-  "pk": "cd8dfe34-af2a-4ad4-b4a6-25aa9e1de5b0",
-  "fields": {
-    "user": null,
-    "session_key": "test-session-123",
-    "status": "OPEN",
-    "created_at": "2026-11-04T12:30:47.312Z",
-    "updated_at": "2026-11-04T12:30:47.312Z"
   }
 }
 ]
