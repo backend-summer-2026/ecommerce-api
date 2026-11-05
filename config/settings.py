@@ -81,6 +81,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
+# URL Configuration
+APPEND_SLASH = False
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -170,32 +173,12 @@ AUTH_USER_MODEL = 'users.User'
 
 # CORS (Cross-Origin Resource Sharing) Settings
 # https://github.com/adamchainz/django-cors-headers
-CORS_ALLOW_ALL_ORIGINS = env.bool('CORS_ALLOW_ALL_ORIGINS', default=DEBUG)
-CORS_ALLOWED_ORIGINS = env.list(
-    'CORS_ALLOWED_ORIGINS',
-    default=[
-        'http://localhost:3000',
-        'http://127.0.0.1:3000',
-        'http://localhost:5173',
-        'http://127.0.0.1:5173',
-        'http://localhost:8000',
-        'http://127.0.0.1:8000',
-    ]
-)
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = ["https://b008-84-54-70-20.ngrok-free.app"]
 CORS_ALLOW_CREDENTIALS = True
 
 # CSRF Trusted Origins (required for Django 4.0+ cross-origin requests)
-CSRF_TRUSTED_ORIGINS = env.list(
-    'CSRF_TRUSTED_ORIGINS',
-    default=[
-        'http://localhost:3000',
-        'http://127.0.0.1:3000',
-        'http://localhost:5173',
-        'http://127.0.0.1:5173',
-        'http://localhost:8000',
-        'http://127.0.0.1:8000',
-    ]
-)
+CSRF_TRUSTED_ORIGINS = ["https://b008-84-54-70-20.ngrok-free.app"]
 
 # Django REST Framework
 REST_FRAMEWORK = {
