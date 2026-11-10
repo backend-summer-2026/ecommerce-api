@@ -22,6 +22,7 @@ from .variant_serializers import (
 from .product_serializers import (
     ProductListSerializer,
     ProductDetailSerializer,
+    ProductCreateSerializer,
 )
 
 __all__ = [
@@ -38,4 +39,5 @@ __all__ = [
     'ProductVariantSerializer',
     'ProductListSerializer',
     'ProductDetailSerializer',
+    'ProductCreateSerializer',
 ]

@@ -40,12 +40,14 @@ class CheckoutPreviewInputSerializer(serializers.Serializer):
         max_length=50,
         required=False,
         allow_blank=True,
+        allow_null=True,
         default=None,
     )
     region = serializers.CharField(
         max_length=100,
         required=False,
         allow_blank=True,
+        allow_null=True,
         default='',
     )
 

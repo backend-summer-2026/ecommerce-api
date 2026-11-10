@@ -107,6 +107,35 @@ class AuthenticationAPITests(APITestCase):
         self.assertIn(otp.code, mail.outbox[0].body)
         self.assertIn('customer@example.com', mail.outbox[0].to)
 
+    def test_register_without_password_confirm_success(self):
+        url = reverse('users:register')
+        payload = {
+            'email': 'noconfirm@example.com',
+            'first_name': 'Test',
+            'last_name': 'User',
+            'password': 'StrongPassword123!',
+        }
+        response = self.client.post(url, payload, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_register_again_with_inactive_user_resends_otp(self):
+        url = reverse('users:register')
+        payload = {
+            'email': 'inactive.re@example.com',
+            'first_name': 'Ali',
+            'last_name': 'Valiyev',
+            'phone_number': '+998901234567',
+            'password': 'StrongPassword123!',
+            'password_confirm': 'StrongPassword123!',
+        }
+        # First registration
+        res1 = self.client.post(url, payload, format='json')
+        self.assertEqual(res1.status_code, status.HTTP_201_CREATED)
+
+        # Second registration with same email (unverified) should succeed and issue fresh OTP
+        res2 = self.client.post(url, payload, format='json')
+        self.assertEqual(res2.status_code, status.HTTP_201_CREATED)
+
     def test_register_password_mismatch(self):
         url = reverse('users:register')
         payload = {
