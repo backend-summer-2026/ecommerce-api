@@ -254,6 +254,9 @@ if not EMAIL_HOST_USER:
 else:
     EMAIL_BACKEND = env('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
 
+# OTP Verification settings
+OTP_COOLDOWN_SECONDS = env.int('OTP_COOLDOWN_SECONDS', default=5 if DEBUG else 60)
+
 # Payment Gateways Configuration
 PAYME_SETTINGS = {
     'MERCHANT_ID': env('PAYME_MERCHANT_ID', default='test_merchant_id'),

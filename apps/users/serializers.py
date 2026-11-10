@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
+from django.db import transaction
 from django.utils import timezone
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -34,6 +35,10 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     Creates an inactive user (is_active=False) and sends an OTP code via email.
     """
 
+    email = serializers.EmailField(
+        required=True,
+        validators=[],
+    )
     password = serializers.CharField(
         write_only=True,
         required=True,
@@ -41,7 +46,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     )
     password_confirm = serializers.CharField(
         write_only=True,
-        required=True,
+        required=False,
         style={'input_type': 'password'},
     )
 
@@ -61,27 +66,28 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     def validate_email(self, value):
         normalized_email = value.lower().strip()
         user = User.objects.filter(email=normalized_email).first()
-        if user:
-            if user.is_active:
-                raise serializers.ValidationError('A user with this email already exists.')
-            # If user exists but is not active yet, we can delete the old inactive record
-            # to allow re-registration fresh.
-            user.delete()
+        if user and user.is_active:
+            raise serializers.ValidationError('A user with this email already exists.')
         return normalized_email
 
     def validate(self, attrs):
         password = attrs.get('password')
         password_confirm = attrs.get('password_confirm')
 
-        if password != password_confirm:
+        if password_confirm is not None and password != password_confirm:
             raise serializers.ValidationError({'password_confirm': 'Passwords do not match.'})
 
         validate_password(password)
         return attrs
 
+    @transaction.atomic
     def create(self, validated_data):
-        validated_data.pop('password_confirm')
+        validated_data.pop('password_confirm', None)
         password = validated_data.pop('password')
+        email = validated_data.get('email')
+
+        # Clean up any existing unverified user with this email to allow fresh registration
+        User.objects.filter(email=email, is_active=False).delete()
 
         user = User.objects.create_user(
             password=password,
@@ -92,13 +98,14 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         # Generate and dispatch OTP
         otp_instance = create_otp_for_user(user, otp_type=OTPCode.OTPType.REGISTER)
         send_otp_email(user, otp_instance.code, otp_type=OTPCode.OTPType.REGISTER)
+        user.last_otp_code = otp_instance.code
 
         return user
 
 
 class VerifyOTPSerializer(serializers.Serializer):
     """
-    Serializer for verifying registration OTP and activating the user account.
+    Serializer for verifying registration or login OTP and activating/logging in the user account.
     """
 
     email = serializers.EmailField(required=True)
@@ -112,12 +119,9 @@ class VerifyOTPSerializer(serializers.Serializer):
         if not user:
             raise serializers.ValidationError({'email': 'User with this email not found.'})
 
-        if user.is_active:
-            raise serializers.ValidationError({'email': 'Account is already verified and active.'})
-
         otp = OTPCode.objects.filter(
             user=user,
-            otp_type=OTPCode.OTPType.REGISTER,
+            otp_type__in=[OTPCode.OTPType.REGISTER, OTPCode.OTPType.LOGIN],
             is_used=False,
         ).order_by('-created_at').first()
 
@@ -142,8 +146,9 @@ class VerifyOTPSerializer(serializers.Serializer):
         otp.is_used = True
         otp.save(update_fields=['is_used'])
 
-        user.is_active = True
-        user.save(update_fields=['is_active'])
+        if not user.is_active:
+            user.is_active = True
+            user.save(update_fields=['is_active'])
 
         # Generate JWT tokens
         refresh = RefreshToken.for_user(user)
@@ -158,7 +163,8 @@ class VerifyOTPSerializer(serializers.Serializer):
 
 class ResendOTPSerializer(serializers.Serializer):
     """
-    Serializer for resending OTP code with cooldown enforcement.
+    Serializer for sending/resending OTP code with cooldown enforcement.
+    Supports both registration verification and OTP-based login.
     """
 
     email = serializers.EmailField(required=True)
@@ -168,22 +174,26 @@ class ResendOTPSerializer(serializers.Serializer):
         user = User.objects.filter(email=normalized_email).first()
         if not user:
             raise serializers.ValidationError('No account found with this email.')
-        if user.is_active:
-            raise serializers.ValidationError('This account is already verified.')
 
-        can_request, remaining = can_request_new_otp(user, otp_type=OTPCode.OTPType.REGISTER)
+        otp_type = OTPCode.OTPType.LOGIN if user.is_active else OTPCode.OTPType.REGISTER
+        can_request, remaining = can_request_new_otp(user, otp_type=otp_type)
         if not can_request:
             raise serializers.ValidationError(
                 f'Please wait {remaining} seconds before requesting a new code.'
             )
 
         self.context['user'] = user
+        self.context['otp_type'] = otp_type
         return normalized_email
 
     def save(self):
         user = self.context['user']
-        otp_instance = create_otp_for_user(user, otp_type=OTPCode.OTPType.REGISTER)
-        send_otp_email(user, otp_instance.code, otp_type=OTPCode.OTPType.REGISTER)
+        otp_type = self.context.get(
+            'otp_type',
+            OTPCode.OTPType.LOGIN if user.is_active else OTPCode.OTPType.REGISTER,
+        )
+        otp_instance = create_otp_for_user(user, otp_type=otp_type)
+        send_otp_email(user, otp_instance.code, otp_type=otp_type)
         return otp_instance
 
 

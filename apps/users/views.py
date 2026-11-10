@@ -1,3 +1,4 @@
+from django.conf import settings
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 
@@ -23,11 +24,14 @@ class RegisterAPIView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        data = {
+            'message': 'User registered successfully. A verification OTP code has been sent to your email.',
+            'email': user.email,
+        }
+        if settings.DEBUG:
+            data['otp_code'] = getattr(user, 'last_otp_code', None)
         return Response(
-            {
-                'message': 'User registered successfully. A verification OTP code has been sent to your email.',
-                'email': user.email,
-            },
+            data,
             status=status.HTTP_201_CREATED,
         )
 
@@ -35,7 +39,7 @@ class RegisterAPIView(generics.GenericAPIView):
 class VerifyOTPAPIView(generics.GenericAPIView):
     """
     Verify OTP code sent to user's email.
-    Upon successful validation, activates user account and returns JWT tokens.
+    Upon successful validation, activates user account (if new) and returns JWT tokens.
     """
 
     serializer_class = VerifyOTPSerializer
@@ -47,7 +51,7 @@ class VerifyOTPAPIView(generics.GenericAPIView):
         result = serializer.save()
         return Response(
             {
-                'message': 'Account verified successfully.',
+                'message': 'Verification and login successful.',
                 'user': result['user'],
                 'tokens': result['tokens'],
                 'access': result['tokens']['access'],
@@ -59,8 +63,8 @@ class VerifyOTPAPIView(generics.GenericAPIView):
 
 class ResendOTPAPIView(generics.GenericAPIView):
     """
-    Resend OTP verification code to unverified user's email.
-    Enforces a 60-second cooldown period between requests.
+    Send or resend OTP verification code to user's email.
+    Enforces a cooldown period between requests.
     """
 
     serializer_class = ResendOTPSerializer
@@ -69,11 +73,14 @@ class ResendOTPAPIView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        otp_instance = serializer.save()
+        data = {
+            'message': 'A verification OTP code has been sent to your email.',
+        }
+        if settings.DEBUG and otp_instance:
+            data['otp_code'] = otp_instance.code
         return Response(
-            {
-                'message': 'A new OTP verification code has been sent to your email.',
-            },
+            data,
             status=status.HTTP_200_OK,
         )
 

@@ -20,11 +20,18 @@ def generate_otp_code(length: int = 6) -> str:
     return str(secrets.randbelow(range_end - range_start + 1) + range_start)
 
 
-def can_request_new_otp(user: User, otp_type: str = OTPCode.OTPType.REGISTER, cooldown_seconds: int = 60) -> tuple[bool, int]:
+def can_request_new_otp(
+    user: User,
+    otp_type: str = OTPCode.OTPType.REGISTER,
+    cooldown_seconds: int | None = None,
+) -> tuple[bool, int]:
     """
     Check if the user is allowed to request a new OTP code based on the cooldown window.
     Returns (can_request: bool, remaining_seconds: int).
     """
+    if cooldown_seconds is None:
+        cooldown_seconds = getattr(settings, 'OTP_COOLDOWN_SECONDS', 5 if settings.DEBUG else 60)
+
     last_otp = OTPCode.objects.filter(user=user, otp_type=otp_type).order_by('-created_at').first()
     if not last_otp:
         return True, 0
@@ -85,6 +92,12 @@ def send_otp_email(user: User, otp_code: str, otp_type: str = OTPCode.OTPType.RE
         f"Hurmat bilan,\nEcommerce jamoasi"
     )
 
+    if settings.DEBUG:
+        print(f"\n==========================================")
+        print(f"📧 [OTP EMAIL] Qabul qiluvchi: {user.email}")
+        print(f"🔑 [OTP KOD]   Kod: {otp_code} ({otp_type})")
+        print(f"==========================================\n")
+
     try:
         send_mail(
             subject=subject,
@@ -97,4 +110,6 @@ def send_otp_email(user: User, otp_code: str, otp_type: str = OTPCode.OTPType.RE
         return True
     except Exception as exc:
         logger.error(f"Failed to send OTP email to {user.email}: {exc}", exc_info=True)
+        if settings.DEBUG:
+            print(f"❌ [EMAIL YUBORISHDA XATOLIK]: {exc}\n")
         return False

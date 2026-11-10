@@ -28,6 +28,7 @@ from apps.products.serializers import (
     ProductDetailSerializer,
     ProductListSerializer,
     ProductVariantSerializer,
+    ProductCreateSerializer,
 )
 
 
@@ -111,6 +112,15 @@ class ProductListAPIView(APIView):
     permission_classes = [permissions.AllowAny]
     pagination_class = StandardResultsSetPagination
 
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            from django.conf import settings
+            if settings.DEBUG:
+                return [permissions.AllowAny()]
+            from apps.dashboard.permissions import IsStaffOrAdminUser
+            return [IsStaffOrAdminUser()]
+        return [permissions.AllowAny()]
+
     def get(self, request):
         base_queryset = (
             Product.objects.filter(is_active=True)
@@ -134,6 +144,30 @@ class ProductListAPIView(APIView):
 
         serializer = ProductListSerializer(filtered_queryset, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        serializer = ProductCreateSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        product = serializer.save()
+
+        # Audit log if user is logged in
+        if request.user and request.user.is_authenticated:
+            try:
+                from apps.dashboard.models import StaffActivityLog
+                StaffActivityLog.objects.create(
+                    user=request.user,
+                    action=f"Mahsulot yaratildi: {product.name}",
+                    entity_type='Product',
+                    entity_id=str(product.id),
+                    ip_address=request.META.get('REMOTE_ADDR'),
+                )
+            except Exception:
+                pass
+
+        out_serializer = ProductListSerializer(product, context={'request': request})
+        return Response(out_serializer.data, status=status.HTTP_201_CREATED)
 
 
 class ProductDetailAPIView(APIView):

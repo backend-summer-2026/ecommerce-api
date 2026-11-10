@@ -50,6 +50,21 @@
       "key": "template_code",
       "value": "order_confirmed",
       "type": "string"
+    },
+    {
+      "key": "user_email",
+      "value": "user@example.com",
+      "type": "string"
+    },
+    {
+      "key": "user_password",
+      "value": "SecurePass123!",
+      "type": "string"
+    },
+    {
+      "key": "otp_code",
+      "value": "",
+      "type": "string"
     }
   ],
   "item": [
@@ -59,6 +74,34 @@
       "item": [
         {
           "name": "Register User",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "try {",
+                  "    var req = JSON.parse(pm.request.body.raw);",
+                  "    if (req.email) pm.collectionVariables.set(\"user_email\", req.email);",
+                  "    if (req.password) pm.collectionVariables.set(\"user_password\", req.password);",
+                  "} catch(e) {}"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var data = pm.response.json();",
+                  "    if (data.email) pm.collectionVariables.set(\"user_email\", data.email);",
+                  "    if (data.otp_code) pm.collectionVariables.set(\"otp_code\", data.otp_code);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -69,7 +112,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"email\": \"user@example.com\",\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"password\": \"SecurePass123!\"\n}"
+              "raw": "{\n    \"email\": \"{{user_email}}\",\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"password\": \"{{user_password}}\",\n    \"password_confirm\": \"{{user_password}}\"\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/v1/auth/register/",
@@ -84,12 +127,26 @@
                 ""
               ]
             },
-            "description": "Registers a new user account and triggers OTP dispatch for verification."
+            "description": "Registers a new user account and triggers OTP dispatch for verification. In DEBUG mode, otp_code is also returned directly in response."
           },
           "response": []
         },
         {
-          "name": "Send / Resend OTP",
+          "name": "Resend OTP (Optional)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var data = pm.response.json();",
+                  "    if (data.otp_code) pm.collectionVariables.set(\"otp_code\", data.otp_code);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -100,7 +157,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"email\": \"user@example.com\"\n}"
+              "raw": "{\n    \"email\": \"{{user_email}}\"\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/v1/auth/send-otp/",
@@ -115,7 +172,7 @@
                 ""
               ]
             },
-            "description": "Sends a 6-digit one-time verification code to the user's email address via SMTP."
+            "description": "Optional: Resends OTP verification code if not received or expired. Note: Register already generates and sends the first OTP automatically."
           },
           "response": []
         },
@@ -153,7 +210,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"email\": \"user@example.com\",\n    \"code\": \"123456\"\n}"
+              "raw": "{\n    \"email\": \"{{user_email}}\",\n    \"code\": \"{{otp_code}}\"\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/v1/auth/verify-otp/",
@@ -203,7 +260,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"SecurePass123!\"\n}"
+              "raw": "{\n    \"email\": \"{{user_email}}\",\n    \"password\": \"{{user_password}}\"\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/v1/auth/login/",

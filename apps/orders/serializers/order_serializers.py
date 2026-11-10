@@ -24,11 +24,13 @@ class OrderCreateSerializer(serializers.Serializer):
         max_length=50,
         required=False,
         allow_blank=True,
+        allow_null=True,
         default=None,
     )
     customer_notes = serializers.CharField(
         required=False,
         allow_blank=True,
+        allow_null=True,
         default='',
     )
 
