@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third-party apps
+    'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
     'drf_spectacular',
@@ -68,6 +69,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -78,6 +80,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
+
+# URL Configuration
+APPEND_SLASH = False
 
 TEMPLATES = [
     {
@@ -165,6 +170,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Custom User Model
 AUTH_USER_MODEL = 'users.User'
+
+# CORS (Cross-Origin Resource Sharing) Settings
+# https://github.com/adamchainz/django-cors-headers
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = ["https://b008-84-54-70-20.ngrok-free.app"]
+CORS_ALLOW_CREDENTIALS = True
+
+# CSRF Trusted Origins (required for Django 4.0+ cross-origin requests)
+CSRF_TRUSTED_ORIGINS = ["https://b008-84-54-70-20.ngrok-free.app"]
 
 # Django REST Framework
 REST_FRAMEWORK = {
